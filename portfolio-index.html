@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gece Web Atölyesi — Küçük İşletmeler İçin Web Tasarım</title>
+<meta name="description" content="Küçük işletmeler için modern, mobil uyumlu web siteleri. Sektörlere göre hazırlanan demoları inceleyin.">
+<meta property="og:title" content="Gece Web Atölyesi">
+<meta property="og:description" content="Küçük işletmeler için modern, mobil uyumlu web siteleri.">
+<meta property="og:type" content="business.business">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;900&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0e1a2e; --navy-deep:#0a1422; --navy-panel:#132339;
+    --teal:#3ecfc0; --teal-deep:#2a9c92; --cream:#f3ecd9; --cream-dim:#b9c4c8;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--navy);color:var(--cream);font-family:'Karla',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:1080px;margin-inline:auto;padding-inline:1.5rem;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:2px;}
+
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem 0;transition:background .3s ease,box-shadow .3s ease,padding .3s ease;}
+  .site-nav.scrolled{background:rgba(10,20,34,.92);backdrop-filter:blur(6px);box-shadow:0 6px 24px rgba(0,0,0,.3);padding:.7rem 0;}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .logo{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.05rem;color:var(--cream);}
+  .logo svg{width:34px;height:22px;}
+  .nav-inner > a.ig{font-weight:700;font-size:.9rem;color:var(--teal);}
+
+  .hero{min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 1.5rem 4rem;position:relative;overflow:hidden;}
+  .hero::before{content:"";position:absolute;top:-160px;right:-160px;width:480px;height:480px;border-radius:50%;background:var(--navy-panel);z-index:-1;}
+  .hero::after{content:"";position:absolute;bottom:-140px;left:-140px;width:360px;height:360px;border-radius:50%;background:#123330;z-index:-1;}
+  .hero-mark{width:150px;height:auto;margin-bottom:1.6rem;}
+  .hero .eyebrow{font-weight:700;font-size:.85rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem;}
+  .hero h1{font-weight:900;font-size:clamp(2.6rem,8vw,4.6rem);line-height:1.05;margin-bottom:1rem;}
+  .hero p{max-width:32rem;color:var(--cream-dim);font-size:1.08rem;margin:0 auto 2rem;}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.6rem;border-radius:100px;font-weight:700;font-size:.95rem;border:1.5px solid transparent;transition:transform .2s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--teal);color:var(--navy-deep);}
+  .btn-secondary{background:transparent;border-color:var(--cream-dim);color:var(--cream);}
+
+  .demos{padding:5rem 0 6rem;}
+  .demos > .container > .eyebrow{font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);}
+  .demos h2{font-weight:700;font-size:clamp(1.8rem,4vw,2.4rem);margin:.4rem 0 2.5rem;}
+
+  .cat-block{margin-bottom:2.6rem;}
+  .cat-block h3{font-size:1.05rem;font-weight:700;color:var(--cream-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.08);}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.1rem;}
+  .card{display:block;background:var(--navy-panel);border-radius:14px;padding:1.5rem;border:1px solid rgba(255,255,255,.06);border-top:4px solid var(--accent,var(--teal));transition:transform .2s ease,border-color .2s ease;}
+  .card:hover{transform:translateY(-4px);}
+  .card-name{display:block;font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:var(--cream);margin-bottom:.4rem;}
+  .card-tag{display:block;color:var(--cream-dim);font-size:.88rem;margin-bottom:1rem;}
+  .card-link{display:inline-block;font-weight:700;font-size:.85rem;color:var(--accent,var(--teal));}
+
+  .coming-soon{margin-top:1rem;padding:1.4rem;border:1px dashed rgba(255,255,255,.15);border-radius:14px;color:var(--cream-dim);font-size:.92rem;text-align:center;}
+
+  .site-footer{padding:3rem 1.5rem;text-align:center;border-top:1px solid rgba(255,255,255,.08);}
+  .site-footer p{margin:.4rem 0;font-size:.85rem;color:var(--cream-dim);}
+  .site-footer .credit{color:var(--teal);font-weight:700;}
+  .site-footer .copy{font-size:.75rem;opacity:.6;margin-top:1rem;}
+
+  @media (max-width:600px){ .hero{padding-top:7rem;} }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 160 100" aria-hidden="true">
+        <circle cx="26" cy="50" r="22" fill="#f3ecd9"/>
+        <circle cx="36" cy="43" r="20" fill="#0e1a2e"/>
+        <g transform="translate(64,14)">
+          <rect x="0" y="0" width="72" height="72" rx="9" fill="none" stroke="#3ecfc0" stroke-width="4"/>
+          <line x1="0" y1="20" x2="72" y2="20" stroke="#3ecfc0" stroke-width="4"/>
+          <circle cx="13" cy="10" r="2.6" fill="#f3ecd9"/>
+          <circle cx="24" cy="10" r="2.6" fill="#f3ecd9"/>
+          <text x="36" y="53" text-anchor="middle" font-family="Karla" font-weight="700" font-size="24" fill="#f3ecd9">&lt;/&gt;</text>
+        </g>
+      </svg>
+      Gece Web Atölyesi
+    </a>
+    <a class="ig" href="https://instagram.com/gecewebatolyesi" target="_blank" rel="noopener">@gecewebatolyesi</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <svg class="hero-mark" viewBox="0 0 160 100" aria-hidden="true">
+      <circle cx="26" cy="50" r="22" fill="#f3ecd9"/>
+      <circle cx="36" cy="43" r="20" fill="#0e1a2e"/>
+      <g transform="translate(64,14)">
+        <rect x="0" y="0" width="72" height="72" rx="9" fill="none" stroke="#3ecfc0" stroke-width="4"/>
+        <line x1="0" y1="20" x2="72" y2="20" stroke="#3ecfc0" stroke-width="4"/>
+        <circle cx="13" cy="10" r="2.6" fill="#f3ecd9"/>
+        <circle cx="24" cy="10" r="2.6" fill="#f3ecd9"/>
+        <text x="36" y="53" text-anchor="middle" font-family="Karla" font-weight="700" font-size="24" fill="#f3ecd9">&lt;/&gt;</text>
+      </g>
+    </svg>
+    <span class="eyebrow">Yeni Bir Başlangıç</span>
+    <h1>Gece Web Atölyesi</h1>
+    <p>Küçük işletmeler için modern web siteleri. Mobil uyumlu, hızlı, size özel. Aşağıda sektörlere göre hazırladığımız demoları inceleyebilirsiniz.</p>
+    <div class="hero-actions">
+      <a href="https://instagram.com/gecewebatolyesi" target="_blank" rel="noopener" class="btn btn-primary">Instagram'da Takip Et</a>
+      <a href="https://wa.me/905000000000" class="btn btn-secondary">WhatsApp'tan Yaz</a>
+    </div>
+  </section>
+
+  <section class="demos">
+    <div class="container">
+      <span class="eyebrow">Demolarımız</span>
+      <h2>Her Gece Yeni Bir Vitrin</h2>
+      <div id="demo-grid"></div>
+      <div class="coming-soon">🌙 Yeni sektörler her gece ekleniyor — güzellik &amp; bakım, emlak, sağlık ve daha fazlası yolda.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Demo ve teklif için DM 📩 <span class="credit">@gecewebatolyesi</span></p>
+  <p class="copy">© 2026 Gece Web Atölyesi</p>
+</footer>
+
+<script>
+  // Yeni bir demo eklemek için: aşağıdaki DEMOS listesine tek satır ekle, dosyayı tekrar yükle. Hepsi bu kadar.
+  var DEMOS = [
+    { category: 'Yeme-İçme', name: 'Kahve Molası', tagline: 'Sıcak, samimi bir kafe demo sitesi — QR menülü.', url: 'yeme-icme/kahve-molasi/', color: '#c98a4b' }
+  ];
+
+  var byCategory = {};
+  var order = [];
+  DEMOS.forEach(function(d){
+    if (!byCategory[d.category]) { byCategory[d.category] = []; order.push(d.category); }
+    byCategory[d.category].push(d);
+  });
+
+  var html = '';
+  order.forEach(function(cat){
+    html += '<div class="cat-block"><h3>' + cat + '</h3><div class="cards">';
+    byCategory[cat].forEach(function(d){
+      html += '<a class="card" style="--accent:' + d.color + '" href="' + d.url + '">' +
+        '<span class="card-name">' + d.name + '</span>' +
+        '<span class="card-tag">' + d.tagline + '</span>' +
+        '<span class="card-link">İncele &#8594;</span></a>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('demo-grid').innerHTML = html;
+
+  var nav = document.querySelector('.site-nav');
+  function onScroll(){ if (window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+</body>
+</html>
