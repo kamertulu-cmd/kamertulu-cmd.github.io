@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Oluşturucu — Gece Web Atölyesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#161210; --panel:#1e1a17; --line:#3a332c;
+    --text:#f2e8d8; --dim:#a99c8a;
+    --accent:#c98a4b; --accent-deep:#a86f38;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;}
+  h1{font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;margin:0;}
+  h2{font-family:'Karla',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 1rem;}
+  header{padding:1.2rem 1.5rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+  header p{margin:.2rem 0 0;color:var(--dim);font-size:.85rem;}
+  .quickfill{display:flex;gap:.6rem;flex-wrap:wrap;}
+  .layout{display:grid;grid-template-columns:minmax(320px,440px) 1fr;gap:0;align-items:start;}
+  .form-col{padding:1.5rem;max-height:calc(100vh - 74px);overflow-y:auto;border-right:1px solid var(--line);}
+  .preview-col{position:sticky;top:0;padding:1.5rem;max-height:100vh;display:flex;flex-direction:column;gap:1rem;}
+  fieldset{border:1px solid var(--line);border-radius:12px;padding:1.1rem;margin:0 0 1.2rem;}
+  legend{padding:0 .5rem;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);}
+  label{display:block;font-size:.82rem;color:var(--dim);margin:.7rem 0 .3rem;}
+  label:first-child{margin-top:0;}
+  input[type=text], textarea, select{
+    width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    color:var(--text);padding:.55rem .7rem;font-family:'Karla',sans-serif;font-size:.9rem;
+  }
+  input[type=color]{width:56px;height:36px;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:2px;}
+  textarea{resize:vertical;min-height:70px;line-height:1.5;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+  .hint{font-size:.74rem;color:var(--dim);margin-top:.3rem;}
+  button{cursor:pointer;font-family:'Karla',sans-serif;font-weight:700;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);padding:.6rem 1rem;font-size:.85rem;}
+  button:hover{border-color:var(--accent);}
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:#1c130d;font-size:.95rem;padding:.8rem 1.2rem;}
+  .btn-primary:hover{background:var(--accent-deep);}
+  .download-row{display:flex;gap:.7rem;flex-wrap:wrap;}
+  iframe{width:100%;flex:1;min-height:520px;border:1px solid var(--line);border-radius:12px;background:#2b1d16;}
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;}
+    .form-col{max-height:none;border-right:none;border-bottom:1px solid var(--line);}
+    .preview-col{position:static;max-height:none;}
+    iframe{min-height:70vh;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🌙 Site Oluşturucu</h1>
+    <p>Bir sonraki sipariş geldiğinde: sektörü seç, alanları doldur, indir, GitHub'a yükle.</p>
+  </div>
+  <div class="quickfill">
+    <button id="btn-fill-kahve" type="button">Örnek: Kahve Molası</button>
+    <button id="btn-fill-berber" type="button">Örnek: Mavi Makas Berber</button>
+  </div>
+</header>
+
+<div class="layout">
+  <div class="form-col">
+
+    <fieldset>
+      <legend>Sektör &amp; Kimlik</legend>
+      <label for="f-sector">Sektör</label>
+      <select id="f-sector">
+        <option value="kafe">Kafe / Restoran</option>
+        <option value="guzellik">Güzellik &amp; Bakım</option>
+        <option value="emlak">Emlak &amp; Danışmanlık</option>
+        <option value="diger">Diğer</option>
+      </select>
+      <div class="hint">Sektör seçimi, aşağıdaki "Bölüm Adı"nı ve önerilen renkleri otomatik günceller — istersen sen de elle değiştirebilirsin.</div>
+
+      <label for="f-name">İşletme Adı</label>
+      <input type="text" id="f-name" placeholder="Kahve Molası">
+
+      <label for="f-eyebrow">Etiket / Konum (küçük yazı)</label>
+      <input type="text" id="f-eyebrow" placeholder="Moda · Kadıköy">
+
+      <label for="f-sectionLabel">Bölüm Adı (Menü / Hizmetlerimiz)</label>
+      <input type="text" id="f-sectionLabel" placeholder="Menü">
+    </fieldset>
+
+    <fieldset>
+      <legend>Metinler</legend>
+      <label for="f-tagline">Slogan (hero altındaki cümle)</label>
+      <textarea id="f-tagline"></textarea>
+
+      <label for="f-aboutHeading">Hakkımızda Başlığı</label>
+      <input type="text" id="f-aboutHeading">
+
+      <label for="f-aboutP1">Hakkımızda — Paragraf 1</label>
+      <textarea id="f-aboutP1"></textarea>
+
+      <label for="f-aboutP2">Hakkımızda — Paragraf 2</label>
+      <textarea id="f-aboutP2"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Galeri (4 kutu)</legend>
+      <div class="row2"><input type="text" id="f-g1title" placeholder="Başlık 1"><input type="text" id="f-g1cap" placeholder="Açıklama 1"></div>
+      <div class="row2" style="margin-top:.5rem;"><input type="text" id="f-g2title" placeholder="Başlık 2"><input type="text" id="f-g2cap" placeholder="Açıklama 2"></div>
+      <div class="row2" style="margin-top:.5rem;"><input type="text" id="f-g3title" placeholder="Başlık 3"><input type="text" id="f-g3cap" placeholder="Açıklama 3"></div>
+      <div class="row2" style="margin-top:.5rem;"><input type="text" id="f-g4title" placeholder="Başlık 4"><input type="text" id="f-g4cap" placeholder="Açıklama 4"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Menü / Hizmetler (3 kategori)</legend>
+      <label for="f-cat1label">Kategori 1 adı</label>
+      <input type="text" id="f-cat1label">
+      <label for="f-cat1items">Kategori 1 ürünleri — her satıra bir tane: "İsim - Fiyat"</label>
+      <textarea id="f-cat1items" rows="5"></textarea>
+
+      <label for="f-cat2label">Kategori 2 adı</label>
+      <input type="text" id="f-cat2label">
+      <label for="f-cat2items">Kategori 2 ürünleri</label>
+      <textarea id="f-cat2items" rows="4"></textarea>
+
+      <label for="f-cat3label">Kategori 3 adı</label>
+      <input type="text" id="f-cat3label">
+      <label for="f-cat3items">Kategori 3 ürünleri</label>
+      <textarea id="f-cat3items" rows="4"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Saatler &amp; İletişim</legend>
+      <div class="row2"><input type="text" id="f-hour1label" placeholder="Pazartesi – Cuma"><input type="text" id="f-hour1value" placeholder="07:00 – 22:00"></div>
+      <div class="row2" style="margin-top:.5rem;"><input type="text" id="f-hour2label" placeholder="Cumartesi – Pazar"><input type="text" id="f-hour2value" placeholder="08:00 – 23:00"></div>
+
+      <label for="f-address">Adres / Konum yazısı</label>
+      <input type="text" id="f-address">
+
+      <label for="f-whatsapp">WhatsApp numarası (90 ile, sadece rakam)</label>
+      <input type="text" id="f-whatsapp" placeholder="905XXXXXXXXX">
+
+      <label for="f-instagram">Instagram kullanıcı adı</label>
+      <input type="text" id="f-instagram" placeholder="@kullaniciadi">
+    </fieldset>
+
+    <fieldset>
+      <legend>Renkler</legend>
+      <div style="display:flex;gap:1.5rem;align-items:center;">
+        <div><label style="margin-top:0;">Ana Vurgu</label><input type="color" id="f-colorPrimary"></div>
+        <div><label style="margin-top:0;">İkincil Vurgu</label><input type="color" id="f-colorSecondary"></div>
+      </div>
+      <div class="hint">Arkaplan (koyu/gece teması) her demoda sabit kalır — bu, "Gece Web Atölyesi" imzan. Sadece bu iki vurgu rengi müşteriden müşteriye değişir.</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Google Ads (opsiyonel)</legend>
+      <label for="f-gtag">Google Tag ID</label>
+      <input type="text" id="f-gtag" placeholder="G-XXXXXXXXXX veya AW-XXXXXXXXXX">
+      <div class="hint">Google Ads/Analytics hesabın olduğunda oradan alacağın kimlik. Boş bırakırsan site yine çalışır, sadece izleme etiketi eklenmez — istediğin zaman geri gelip ekleyebilirsin.</div>
+    </fieldset>
+
+  </div>
+
+  <div class="preview-col">
+    <div class="download-row">
+      <button class="btn-primary" id="btn-download-index" type="button">⬇ index.html indir</button>
+      <button class="btn-primary" id="btn-download-menu" type="button">⬇ menu.html indir</button>
+    </div>
+    <iframe id="preview-frame" title="Önizleme"></iframe>
+  </div>
+</div>
+
+<script>
+function el(id){ return document.getElementById(id); }
+function escapeHtml(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function parseItems(text){
+  return String(text).split('\n').map(function(l){return l.trim();}).filter(Boolean).map(function(line){
+    var idx = line.indexOf(' - ');
+    if (idx === -1) return {name: line.trim(), price: ''};
+    return {name: line.slice(0, idx).trim(), price: line.slice(idx + 3).trim()};
+  });
+}
+
+var SECTOR_LABELS = { kafe: 'Menü', guzellik: 'Hizmetlerimiz', emlak: 'Hizmetlerimiz', diger: 'Hizmetlerimiz' };
+var SECTOR_COLORS = {
+  kafe: {p:'#c98a4b', s:'#8a9678'},
+  guzellik: {p:'#6b8cae', s:'#b0a99f'},
+  emlak: {p:'#b08d57', s:'#7c9188'},
+  diger: {p:'#c98a4b', s:'#8a9678'}
+};
+
+el('f-sector').addEventListener('change', function(){
+  var sector = this.value;
+  el('f-sectionLabel').value = SECTOR_LABELS[sector];
+  el('f-colorPrimary').value = SECTOR_COLORS[sector].p;
+  el('f-colorSecondary').value = SECTOR_COLORS[sector].s;
+  scheduleRender();
+});
+
+function readForm(){
+  return {
+    sector: el('f-sector').value,
+    sectionLabel: el('f-sectionLabel').value || 'Menü',
+    name: el('f-name').value || 'İşletme Adı',
+    eyebrow: el('f-eyebrow').value,
+    tagline: el('f-tagline').value,
+    aboutHeading: el('f-aboutHeading').value,
+    aboutP1: el('f-aboutP1').value,
+    aboutP2: el('f-aboutP2').value,
+    gallery: [1,2,3,4].map(function(i){ return {title: el('f-g'+i+'title').value, caption: el('f-g'+i+'cap').value}; }),
+    categories: [1,2,3].map(function(i){ return {label: el('f-cat'+i+'label').value, items: parseItems(el('f-cat'+i+'items').value)}; }),
+    hours: [1,2].map(function(i){ return {label: el('f-hour'+i+'label').value, value: el('f-hour'+i+'value').value}; }),
+    address: el('f-address').value,
+    whatsapp: el('f-whatsapp').value.replace(/[^0-9]/g,''),
+    instagram: el('f-instagram').value,
+    colorPrimary: el('f-colorPrimary').value,
+    colorSecondary: el('f-colorSecondary').value,
+    gtag: el('f-gtag').value.trim()
+  };
+}
+
+function gtagHead(id){
+  if(!id) return '<!-- Google Tag henüz eklenmedi. Google Ads/Analytics kimliğini admin panelindeki "Google Tag ID" kutusuna yazınca burası otomatik dolar. -->';
+  return '<script async src="https://www.googletagmanager.com/gtag/js?id=' + id + '"><' + '/script>\n' +
+    '<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag(\'js\', new Date());\n  gtag(\'config\', \'' + id + '\');\n<' + '/script>';
+}
+
+function renderCategoryTabs(categories){
+  return categories.map(function(c,i){
+    return '<button class="menu-tab' + (i===0?' active':'') + '" data-target="panel-' + i + '">' + escapeHtml(c.label) + '</button>';
+  }).join('\n        ');
+}
+function renderCategoryPanels(categories){
+  return categories.map(function(c,i){
+    var rows = c.items.map(function(it){
+      return '<div class="menu-item"><span class="item-name">' + escapeHtml(it.name) + '</span><span class="dots"></span><span class="item-price">' + escapeHtml(it.price) + '</span></div>';
+    }).join('\n        ');
+    return '<div class="menu-panel' + (i===0?' active':'') + '" id="panel-' + i + '">\n        ' + rows + '\n      </div>';
+  }).join('\n\n      ');
+}
+function renderGallery(gallery){
+  var icons = [
+    '<rect x="5" y="4" width="22" height="24" rx="2"/><line x1="16" y1="4" x2="16" y2="28"/><line x1="5" y1="16" x2="27" y2="16"/>',
+    '<polygon points="8,8 24,8 17,22 15,22"/><circle cx="16" cy="26" r="1.4" fill="currentColor" stroke="none"/><circle cx="13" cy="29" r="1.1" fill="currentColor" stroke="none"/>',
+    '<rect x="6" y="14" width="20" height="12" rx="6"/><circle cx="12" cy="14" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="23" cy="15" r="1.5" fill="currentColor" stroke="none"/>',
+    '<rect x="5" y="20" width="22" height="5" rx="1.5"/><rect x="7" y="14" width="18" height="5" rx="1.5"/><rect x="9" y="8" width="14" height="5" rx="1.5"/>'
+  ];
+  return gallery.map(function(g,i){
+    return '<div class="tile reveal"><div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true">' + icons[i] + '</svg></div><h3>' + escapeHtml(g.title) + '</h3><p>' + escapeHtml(g.caption) + '</p></div>';
+  }).join('\n        ');
+}
+function renderHours(hours){
+  return hours.map(function(h){
+    return '<div class="hours-row"><span>' + escapeHtml(h.label) + '</span><span>' + escapeHtml(h.value) + '</span></div>';
+  }).join('\n        ');
+}
+
+function renderSite(d){
+  return '<!DOCTYPE html>\n<html lang="tr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+'<title>' + escapeHtml(d.name) + ' — ' + escapeHtml(d.eyebrow) + '</title>\n' +
+'<meta name="description" content="' + escapeHtml(d.tagline) + '">\n' +
+'<meta property="og:title" content="' + escapeHtml(d.name) + '">\n' +
+'<meta property="og:description" content="' + escapeHtml(d.tagline) + '">\n' +
+'<meta property="og:type" content="business.business">\n' +
+gtagHead(d.gtag) + '\n' +
+'<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+'<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;900&family=Caveat:wght@500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">\n' +
+'<style>\n' +
+':root{--espresso:#2b1d16;--espresso-deep:#1c130d;--slate:#33302b;--slate-line:#4a4038;--cream:#f2e8d8;--cream-dim:#cdbea3;--caramel:' + d.colorPrimary + ';--caramel-deep:' + d.colorPrimary + ';--sage:' + d.colorSecondary + ';--chalk:#ece4d3;--max:1120px;}\n' +
+'*{box-sizing:border-box;} html{scroll-behavior:smooth;} body{margin:0;background:var(--espresso);color:var(--cream);font-family:\'Karla\',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}\n' +
+'img,svg{display:block;max-width:100%;} a{color:inherit;text-decoration:none;} ul{list-style:none;margin:0;padding:0;} h1,h2,h3{font-family:\'Fraunces\',serif;margin:0;}\n' +
+'.container{max-width:var(--max);margin-inline:auto;padding-inline:1.5rem;} a:focus-visible,button:focus-visible{outline:2px solid var(--caramel);outline-offset:3px;border-radius:2px;}\n' +
+'.eyebrow{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:.6rem;}\n' +
+'.section-title{font-weight:700;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--cream);margin-bottom:1rem;}\n' +
+'.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.6rem;border-radius:100px;font-weight:700;font-size:.95rem;cursor:pointer;border:1.5px solid transparent;transition:transform .2s ease, background .2s ease, border-color .2s ease;}\n' +
+'.btn:hover{transform:translateY(-2px);} .btn-primary{background:var(--caramel);color:var(--espresso-deep);} .btn-secondary{background:transparent;border-color:var(--cream-dim);color:var(--cream);}\n' +
+'.icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}\n' +
+'.site-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem 0;transition:background .3s ease, box-shadow .3s ease, padding .3s ease;}\n' +
+'.site-nav.scrolled{background:rgba(28,19,13,.92);backdrop-filter:blur(6px);box-shadow:0 6px 24px rgba(0,0,0,.25);padding:.7rem 0;}\n' +
+'.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;} .logo{display:flex;align-items:center;gap:.55rem;font-family:\'Fraunces\',serif;font-weight:700;font-size:1.25rem;color:var(--cream);}\n' +
+'.logo .icon{width:22px;height:22px;stroke:var(--cream-dim);} .nav-toggle{display:none;background:none;border:1.5px solid var(--cream-dim);border-radius:8px;padding:.4rem .6rem;color:var(--cream);}\n' +
+'#nav-links{display:flex;align-items:center;gap:1.8rem;} #nav-links a{font-weight:600;font-size:.95rem;color:var(--cream-dim);} #nav-links a:hover{color:var(--cream);}\n' +
+'.hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 1.5rem 4rem;background:radial-gradient(60% 60% at 50% 20%, rgba(0,0,0,0), transparent 70%), var(--espresso);}\n' +
+'.monogram{width:110px;height:110px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--espresso-deep);border:2px solid var(--caramel);margin-bottom:1.4rem;position:relative;}\n' +
+'.monogram span{font-family:\'Fraunces\',serif;font-weight:900;font-size:3rem;color:var(--caramel);}\n' +
+'.monogram::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid var(--caramel);opacity:.35;}\n' +
+'@media (prefers-reduced-motion:no-preference){.monogram{animation:pulse 3.2s ease-in-out infinite;}@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,0,0,0);}50%{box-shadow:0 0 0 10px rgba(201,138,75,.06);}}}\n' +
+'.hero h1{font-weight:900;font-size:clamp(2.6rem,8vw,5rem);line-height:1.05;margin:.3rem 0;} .hero p{max-width:34rem;color:var(--cream-dim);font-size:1.08rem;margin:1rem auto 2rem;}\n' +
+'.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;} .reveal{opacity:1;}\n' +
+'.about{background:var(--espresso-deep);padding:6rem 0;} .about-grid{display:grid;grid-template-columns:1fr;gap:1rem;align-items:center;} .about p{color:var(--cream-dim);margin:0 0 1rem;}\n' +
+'.gallery{background:var(--espresso);padding:6rem 0;} .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-top:2.5rem;}\n' +
+'.tile{padding:1.8rem 1.5rem;border-radius:16px;background:rgba(0,0,0,.14);border:1px solid var(--slate-line);} .tile-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--espresso-deep);margin-bottom:1rem;}\n' +
+'.tile-icon .icon{stroke:var(--caramel);} .tile h3{font-size:1.15rem;font-weight:600;margin-bottom:.35rem;} .tile p{color:var(--cream-dim);font-size:.92rem;margin:0;}\n' +
+'.menu{background:repeating-linear-gradient(135deg, rgba(255,255,255,.015) 0 2px, transparent 2px 6px), var(--slate);padding:6rem 0;border-top:1px solid var(--slate-line);border-bottom:1px solid var(--slate-line);}\n' +
+'.menu-heading{text-align:center;margin-bottom:2.4rem;} .menu-heading h2{font-family:\'Caveat\',cursive;font-weight:700;font-size:clamp(2.4rem,6vw,3.6rem);color:var(--chalk);}\n' +
+'.menu-tabs{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;} .menu-tab{background:none;color:var(--cream-dim);border:1.5px dashed var(--slate-line);border-radius:10px;padding:.6rem 1.2rem;font-weight:700;font-size:.9rem;cursor:pointer;}\n' +
+'.menu-tab.active{color:var(--chalk);border-color:var(--caramel);} .menu-panel{display:none;max-width:640px;margin-inline:auto;} .menu-panel.active{display:block;}\n' +
+'.menu-item{display:flex;align-items:baseline;gap:.5rem;padding:.6rem 0;} .item-name{font-family:\'Caveat\',cursive;font-size:1.5rem;color:var(--chalk);white-space:nowrap;}\n' +
+'.dots{flex:1;border-bottom:2px dotted var(--slate-line);margin-bottom:.4rem;} .item-price{font-weight:700;color:var(--caramel);white-space:nowrap;}\n' +
+'.qr-block{margin-top:3rem;padding-top:2.5rem;border-top:1px dashed var(--slate-line);display:flex;align-items:center;justify-content:center;gap:1.8rem;flex-wrap:wrap;text-align:left;}\n' +
+'.qr-card{background:var(--cream);padding:.8rem;border-radius:14px;line-height:0;flex-shrink:0;} .qr-text{max-width:280px;} .qr-text h3{font-weight:700;font-size:1.05rem;color:var(--chalk);margin-bottom:.4rem;}\n' +
+'.qr-text p{color:var(--cream-dim);font-size:.9rem;margin:0 0 .5rem;} .qr-fallback-url{font-size:.72rem!important;color:var(--sage)!important;word-break:break-all;}\n' +
+'.details{background:var(--espresso-deep);padding:6rem 0;} .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;} .details h3{font-size:1.3rem;font-weight:600;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;}\n' +
+'.details h3 .icon{stroke:var(--caramel);width:20px;height:20px;} .hours-row{display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--slate-line);color:var(--cream-dim);}\n' +
+'.hours-row span:last-child{color:var(--cream);font-weight:600;} .location-card{border:1px solid var(--slate-line);border-radius:16px;padding:1.6rem;display:flex;gap:1.1rem;align-items:flex-start;}\n' +
+'.location-card .icon{stroke:var(--caramel);width:34px;height:42px;flex-shrink:0;} .location-card p{margin:.15rem 0;color:var(--cream-dim);} .location-card .addr{color:var(--cream);font-weight:600;}\n' +
+'.contact{background:var(--espresso);padding:6rem 0;} .contact-card{max-width:640px;margin-inline:auto;text-align:center;border:1px solid var(--caramel-deep);border-radius:20px;padding:3rem 2rem;background:rgba(0,0,0,.1);}\n' +
+'.contact-card p{color:var(--cream-dim);margin:.6rem 0 1.8rem;} .contact-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;} .ig-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--cream-dim);font-weight:600;}\n' +
+'.site-footer{padding:2.6rem 1.5rem;text-align:center;border-top:1px solid var(--slate-line);background:var(--espresso-deep);} .site-footer p{margin:.4rem 0;font-size:.85rem;color:var(--cream-dim);}\n' +
+'.footer-cta{color:var(--caramel)!important;font-weight:600;}\n' +
+'@media (min-width:860px){.about-grid{grid-template-columns:1.3fr 1fr;}}\n' +
+'@media (max-width:860px){.details-grid{grid-template-columns:1fr;}}\n' +
+'@media (max-width:720px){.nav-toggle{display:inline-flex;align-items:center;justify-content:center;}#nav-links{position:fixed;top:64px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:0;background:rgba(28,19,13,.97);max-height:0;overflow:hidden;transition:max-height .3s ease;padding-inline:1.5rem;}#nav-links.open{max-height:320px;padding-block:1rem;}#nav-links a{padding:.75rem 0;width:100%;border-bottom:1px solid var(--slate-line);}.qr-block{flex-direction:column;text-align:center;}.qr-text{max-width:none;}}\n' +
+'</style>\n</head>\n<body>\n\n' +
+'<header class="site-nav">\n  <div class="container nav-inner">\n    <a href="#top" class="logo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>' + escapeHtml(d.name) + '</a>\n' +
+'    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menüyü aç/kapat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>\n' +
+'    <nav id="nav-links"><a href="#hakkimizda">Hakkımızda</a><a href="#menu">' + escapeHtml(d.sectionLabel) + '</a><a href="#saatler">Saatler</a><a href="#konum">Konum</a><a href="#iletisim">İletişim</a></nav>\n' +
+'  </div>\n</header>\n\n' +
+'<main>\n  <section class="hero" id="top">\n    <div class="monogram"><span>' + escapeHtml((d.name||'?').trim().charAt(0).toUpperCase()) + '</span></div>\n' +
+'    <span class="eyebrow">' + escapeHtml(d.eyebrow) + '</span>\n    <h1>' + escapeHtml(d.name) + '</h1>\n    <p>' + escapeHtml(d.tagline) + '</p>\n' +
+'    <div class="hero-actions"><a href="#menu" class="btn btn-primary">' + escapeHtml(d.sectionLabel) + '\'yi Gör</a><a href="#konum" class="btn btn-secondary">Konumu Gör</a></div>\n' +
+'  </section>\n\n' +
+'  <section class="about" id="hakkimizda">\n    <div class="container about-grid">\n      <div>\n        <span class="eyebrow">Hakkımızda</span>\n        <h2 class="section-title">' + escapeHtml(d.aboutHeading) + '</h2>\n' +
+'        <p>' + escapeHtml(d.aboutP1) + '</p>\n        <p>' + escapeHtml(d.aboutP2) + '</p>\n      </div>\n    </div>\n  </section>\n\n' +
+'  <section class="gallery" id="galeri">\n    <div class="container">\n      <div style="text-align:center;"><span class="eyebrow">Galeri</span><h2 class="section-title">Bizden Kareler</h2></div>\n' +
+'      <div class="gallery-grid">\n        ' + renderGallery(d.gallery) + '\n      </div>\n    </div>\n  </section>\n\n' +
+'  <section class="menu" id="menu">\n    <div class="container">\n      <div class="menu-heading"><h2>' + escapeHtml(d.sectionLabel) + '</h2></div>\n' +
+'      <div class="menu-tabs">\n        ' + renderCategoryTabs(d.categories) + '\n      </div>\n\n      ' + renderCategoryPanels(d.categories) + '\n\n' +
+'      <div class="qr-block">\n        <div class="qr-card"><div id="qr-holder"></div></div>\n        <div class="qr-text"><h3>Masanızdan Görüntüleyin</h3><p>QR kodu telefon kameranızla okutun, ' + escapeHtml(d.sectionLabel.toLowerCase()) + ' anında karşınıza gelsin.</p><p class="qr-fallback-url" id="qr-fallback"></p></div>\n      </div>\n' +
+'    </div>\n  </section>\n\n' +
+'  <section class="details">\n    <div class="container details-grid">\n      <div id="saatler">\n        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="15.5" y2="14"/></svg>Çalışma Saatleri</h3>\n' +
+'        ' + renderHours(d.hours) + '\n      </div>\n      <div id="konum">\n        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>Konum</h3>\n' +
+'        <div class="location-card"><svg class="icon" viewBox="0 0 32 40" aria-hidden="true"><circle cx="16" cy="14" r="12"/><polygon points="16,38 8,20 24,20"/><circle cx="16" cy="14" r="4" fill="currentColor" stroke="none"/></svg><div><p class="addr">' + escapeHtml(d.address) + '</p></div></div>\n' +
+'      </div>\n    </div>\n  </section>\n\n' +
+'  <section class="contact" id="iletisim">\n    <div class="container">\n      <div class="contact-card">\n        <span class="eyebrow">İletişim</span>\n        <h2 class="section-title">Bize Ulaşın</h2>\n        <p>Sorularınız ve rezervasyon için bize yazın.</p>\n' +
+'        <div class="contact-actions">\n          <a href="https://wa.me/' + escapeHtml(d.whatsapp) + '" class="btn btn-primary" onclick="if(typeof gtag===\'function\'){gtag(\'event\',\'conversion\',{\'send_to\':\'' + escapeHtml(d.gtag) + '\'});}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="stroke:var(--espresso-deep);width:18px;height:18px;"><path d="M4,4 h16 v12 h-9 l-4,4 v-4 h-3 z"/></svg>WhatsApp\'tan Yaz</a>\n' +
+'          <a href="#" class="ig-link"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8,7 L10,4 h4 l2,3"/><circle cx="12" cy="13.5" r="3.5"/></svg>' + escapeHtml(d.instagram) + '</a>\n' +
+'        </div>\n      </div>\n    </div>\n  </section>\n</main>\n\n' +
+'<footer class="site-footer">\n  <p>🌙 Bu site <span class="footer-cta">Gece Web Atölyesi</span> tarafından hazırlanmıştır.</p>\n  <p class="copy">© 2026 ' + escapeHtml(d.name) + '</p>\n</footer>\n\n' +
+'<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><' + '/script>\n' +
+'<script>\n' +
+'  if (typeof QRCode !== \'undefined\') {\n    var qrTarget = new URL(\'menu.html\', window.location.href).href;\n    new QRCode(document.getElementById(\'qr-holder\'), { text: qrTarget, width: 128, height: 128, colorDark: \'#2b1d16\', colorLight: \'#f2e8d8\', correctLevel: QRCode.CorrectLevel.M });\n' +
+'    var fb = document.getElementById(\'qr-fallback\'); if (fb) fb.textContent = qrTarget;\n  }\n' +
+'  var nav = document.querySelector(\'.site-nav\');\n  function onScroll(){ if (window.scrollY > 40) nav.classList.add(\'scrolled\'); else nav.classList.remove(\'scrolled\'); }\n' +
+'  window.addEventListener(\'scroll\', onScroll, { passive: true }); onScroll();\n' +
+'  var toggle = document.querySelector(\'.nav-toggle\'); var links = document.getElementById(\'nav-links\');\n' +
+'  toggle.addEventListener(\'click\', function(){ var o = links.classList.toggle(\'open\'); toggle.setAttribute(\'aria-expanded\', String(o)); });\n' +
+'  var tabButtons = document.querySelectorAll(\'.menu-tab\'); var panels = document.querySelectorAll(\'.menu-panel\');\n' +
+'  tabButtons.forEach(function(btn){ btn.addEventListener(\'click\', function(){ tabButtons.forEach(function(b){b.classList.remove(\'active\');}); panels.forEach(function(p){p.classList.remove(\'active\');}); btn.classList.add(\'active\'); document.getElementById(btn.dataset.target).classList.add(\'active\'); }); });\n' +
+'<' + '/script>\n</body>\n</html>';
+}
+
+function renderMenuPage(d){
+  return '<!DOCTYPE html>\n<html lang="tr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + escapeHtml(d.name) + ' — ' + escapeHtml(d.sectionLabel) + '</title>\n' +
+'<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+'<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;900&family=Caveat:wght@500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">\n' +
+'<style>\n:root{--slate:#33302b;--slate-line:#4a4038;--cream:#f2e8d8;--cream-dim:#cdbea3;--caramel:' + d.colorPrimary + ';--chalk:#ece4d3;}\n' +
+'*{box-sizing:border-box;} body{margin:0;background:repeating-linear-gradient(135deg, rgba(255,255,255,.015) 0 2px, transparent 2px 6px), var(--slate);color:var(--cream);font-family:\'Karla\',sans-serif;line-height:1.6;min-height:100vh;}\n' +
+'a{color:inherit;} .container{max-width:640px;margin-inline:auto;padding:1.5rem;}\n' +
+'header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;border-bottom:1px solid var(--slate-line);}\n' +
+'header a{font-size:.88rem;font-weight:700;color:var(--cream-dim);} header .brand{font-family:\'Fraunces\',serif;font-weight:700;font-size:1.05rem;color:var(--cream);}\n' +
+'.menu-heading{text-align:center;margin:2.2rem 0 2rem;} .menu-heading h1{font-family:\'Caveat\',cursive;font-weight:700;font-size:clamp(2.2rem,8vw,3rem);color:var(--chalk);margin:0;}\n' +
+'.menu-heading p{color:var(--cream-dim);font-size:.9rem;margin:.3rem 0 0;}\n' +
+'.menu-tabs{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;} .menu-tab{background:none;color:var(--cream-dim);border:1.5px dashed var(--slate-line);border-radius:10px;padding:.55rem 1rem;font-weight:700;font-size:.85rem;cursor:pointer;}\n' +
+'.menu-tab.active{color:var(--chalk);border-color:var(--caramel);} .menu-panel{display:none;} .menu-panel.active{display:block;}\n' +
+'.menu-item{display:flex;align-items:baseline;gap:.5rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04);} .item-name{font-family:\'Caveat\',cursive;font-size:1.5rem;color:var(--chalk);white-space:nowrap;}\n' +
+'.dots{flex:1;border-bottom:2px dotted var(--slate-line);margin-bottom:.4rem;} .item-price{font-weight:700;color:var(--caramel);white-space:nowrap;}\n' +
+'footer{text-align:center;padding:2.2rem 1.5rem 2.6rem;border-top:1px solid var(--slate-line);margin-top:1rem;} footer p{margin:.35rem 0;font-size:.78rem;color:var(--cream-dim);} footer .credit{color:var(--caramel);font-weight:600;}\n' +
+'</style>\n</head>\n<body>\n<header><a href="index.html">← ' + escapeHtml(d.name) + '\'na Dön</a><span class="brand">' + escapeHtml(d.name) + '</span></header>\n' +
+'<main class="container">\n  <div class="menu-heading"><h1>' + escapeHtml(d.sectionLabel) + '</h1><p>Sipariş / randevu için lütfen bize ulaşın.</p></div>\n' +
+'  <div class="menu-tabs">\n    ' + renderCategoryTabs(d.categories) + '\n  </div>\n\n  ' + renderCategoryPanels(d.categories) + '\n</main>\n' +
+'<footer><p>Bu bir demo sayfasıdır.</p><p>🌙 <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır.</p></footer>\n' +
+'<script>\n  var tabButtons = document.querySelectorAll(\'.menu-tab\'); var panels = document.querySelectorAll(\'.menu-panel\');\n' +
+'  tabButtons.forEach(function(btn){ btn.addEventListener(\'click\', function(){ tabButtons.forEach(function(b){b.classList.remove(\'active\');}); panels.forEach(function(p){p.classList.remove(\'active\');}); btn.classList.add(\'active\'); document.getElementById(btn.dataset.target).classList.add(\'active\'); }); });\n' +
+'<' + '/script>\n</body>\n</html>';
+}
+
+function downloadFile(filename, content){
+  var blob = new Blob([content], {type: 'text/html'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+var renderTimer = null;
+function scheduleRender(){
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(function(){
+    var data = readForm();
+    el('preview-frame').srcdoc = renderSite(data);
+  }, 250);
+}
+
+document.querySelectorAll('input, textarea, select').forEach(function(input){
+  input.addEventListener('input', scheduleRender);
+});
+
+el('btn-download-index').addEventListener('click', function(){
+  downloadFile('index.html', renderSite(readForm()));
+});
+el('btn-download-menu').addEventListener('click', function(){
+  downloadFile('menu.html', renderMenuPage(readForm()));
+});
+
+function fillKahve(){
+  el('f-sector').value = 'kafe';
+  el('f-sectionLabel').value = 'Menü';
+  el('f-name').value = 'Kahve Molası';
+  el('f-eyebrow').value = 'Moda · Kadıköy';
+  el('f-tagline').value = 'Şehrin telaşına küçük bir mola. Taze demlenmiş kahveler, ev yapımı tatlılar ve oturup nefes alabileceğiniz sessiz bir köşe.';
+  el('f-aboutHeading').value = 'Kapıdan girer girmez telefonu unutun.';
+  el('f-aboutP1').value = 'Kahve Molası, Moda\'nın sakin sokaklarından birinde küçük bir soluklanma noktası. Sıcak bir fincanla pencere kenarına yerleşin, saatinize bakmayı unutun.';
+  el('f-aboutP2').value = 'Kahvelerimizi özenle seçtiğimiz çekirdeklerden demliyor, tatlılarımızı her sabah kendi mutfağımızda hazırlıyoruz.';
+  var g = [['Pencere Kenarı','Sabah ışığının en güzel düştüğü masa.'],['Filtre Demleme','Her fincan, damla damla özenle hazırlanır.'],['Ev Yapımı Tatlılar','Her sabah kendi mutfağımızda, taze taze.'],['Sessiz Bir Köşe','Kitabınızla ya da hiçbir şeyle baş başa.']];
+  g.forEach(function(pair,i){ el('f-g'+(i+1)+'title').value = pair[0]; el('f-g'+(i+1)+'cap').value = pair[1]; });
+  el('f-cat1label').value = 'Sıcak İçecekler';
+  el('f-cat1items').value = 'Filtre Kahve - 95₺\nAmericano - 110₺\nCappuccino - 130₺\nLatte - 140₺\nSıcak Çikolata - 145₺\nBitki Çayı - 90₺';
+  el('f-cat2label').value = 'Soğuk İçecekler';
+  el('f-cat2items').value = 'Cold Brew - 135₺\nIce Latte - 150₺\nLimonata - 110₺\nFrozen Karamel - 160₺';
+  el('f-cat3label').value = 'Tatlı & Atıştırmalık';
+  el('f-cat3items').value = 'Cheesecake - 170₺\nBrownie - 140₺\nKruvasan - 130₺\nSimit & Peynir Tabağı - 120₺';
+  el('f-hour1label').value = 'Pazartesi – Cuma'; el('f-hour1value').value = '07:00 – 22:00';
+  el('f-hour2label').value = 'Cumartesi – Pazar'; el('f-hour2value').value = '08:00 – 23:00';
+  el('f-address').value = 'Moda, Kadıköy / İstanbul';
+  el('f-whatsapp').value = '905000000000';
+  el('f-instagram').value = '@kahvemolasi';
+  el('f-colorPrimary').value = '#c98a4b';
+  el('f-colorSecondary').value = '#8a9678';
+  el('f-gtag').value = '';
+}
+
+function fillBerber(){
+  el('f-sector').value = 'guzellik';
+  el('f-sectionLabel').value = 'Hizmetlerimiz';
+  el('f-name').value = 'Mavi Makas Berber';
+  el('f-eyebrow').value = 'Caddebostan · Kadıköy';
+  el('f-tagline').value = 'Yıllardır aynı özenle, yeni nesil bir görünüm. Randevulu, sakin ve işini bilen bir berber deneyimi.';
+  el('f-aboutHeading').value = 'Ustalık, yıllar içinde birikir.';
+  el('f-aboutP1').value = 'Mavi Makas, Caddebostan\'da klasik berberlik geleneğini modern bir anlayışla sürdürüyor. Her müşteri için zaman ayırıyor, aceleye getirmiyoruz.';
+  el('f-aboutP2').value = 'Randevulu çalışıyoruz, bu yüzden beklemeden, sakin bir ortamda hizmet alıyorsunuz.';
+  var g = [['Klasik Tıraş','Ustura ile geleneksel tıraş deneyimi.'],['Sakal Bakımı','Şekillendirme ve bakım bir arada.'],['Bekleme Köşesi','Keyifli bir çay eşliğinde sıranızı bekleyin.'],['Detaylara Özen','Her müşteriye özel saç/sakal analizi.']];
+  g.forEach(function(pair,i){ el('f-g'+(i+1)+'title').value = pair[0]; el('f-g'+(i+1)+'cap').value = pair[1]; });
+  el('f-cat1label').value = 'Saç';
+  el('f-cat1items').value = 'Saç Kesimi - 350₺\nYıkama + Fön - 150₺\nÇocuk Saç Kesimi - 250₺';
+  el('f-cat2label').value = 'Sakal & Cilt Bakımı';
+  el('f-cat2items').value = 'Sakal Tıraşı - 200₺\nSakal Şekillendirme - 180₺\nCilt Bakımı - 220₺';
+  el('f-cat3label').value = 'Paket Hizmetler';
+  el('f-cat3items').value = 'Saç + Sakal Paketi - 500₺\nDamat Paketi - 900₺';
+  el('f-hour1label').value = 'Pazartesi – Cumartesi'; el('f-hour1value').value = '09:00 – 20:00';
+  el('f-hour2label').value = 'Pazar'; el('f-hour2value').value = 'Kapalı';
+  el('f-address').value = 'Caddebostan, Kadıköy / İstanbul';
+  el('f-whatsapp').value = '905000000000';
+  el('f-instagram').value = '@mavimakasberber';
+  el('f-colorPrimary').value = '#6b8cae';
+  el('f-colorSecondary').value = '#b0a99f';
+  el('f-gtag').value = '';
+}
+
+el('btn-fill-kahve').addEventListener('click', function(){ fillKahve(); scheduleRender(); });
+el('btn-fill-berber').addEventListener('click', function(){ fillBerber(); scheduleRender(); });
+
+fillKahve();
+scheduleRender();
+</script>
+</body>
+</html>
