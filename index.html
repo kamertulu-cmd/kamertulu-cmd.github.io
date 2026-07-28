@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kahve Molası — Moda, Kadıköy</title>
+<meta name="description" content="Kahve Molası — Moda'da küçük, sıcak bir kahve durağı. Taze demlenmiş kahveler, ev yapımı tatlılar, sessiz bir köşe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;900&family=Caveat:wght@500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#2b1d16;
+    --espresso-deep:#1c130d;
+    --slate:#33302b;
+    --slate-line:#4a4038;
+    --cream:#f2e8d8;
+    --cream-dim:#cdbea3;
+    --caramel:#c98a4b;
+    --caramel-deep:#a86f38;
+    --sage:#8a9678;
+    --chalk:#ece4d3;
+    --max:1120px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--espresso);
+    color:var(--cream);
+    font-family:'Karla',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;margin:0;padding:0;}
+  h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
+
+  .container{max-width:var(--max);margin-inline:auto;padding-inline:1.5rem;}
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--caramel);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .eyebrow{
+    display:inline-block;
+    font-weight:700;
+    font-size:.78rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--sage);
+    margin-bottom:.6rem;
+  }
+
+  .section-title{
+    font-weight:700;
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    color:var(--cream);
+    margin-bottom:1rem;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.85rem 1.6rem;
+    border-radius:100px;
+    font-weight:700;
+    font-size:.95rem;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--caramel);color:var(--espresso-deep);}
+  .btn-primary:hover{background:var(--caramel-deep);}
+  .btn-secondary{background:transparent;border-color:var(--cream-dim);color:var(--cream);}
+  .btn-secondary:hover{border-color:var(--cream);}
+
+  .icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* ---------- Nav ---------- */
+  .site-nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    padding:1.1rem 0;
+    transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  }
+  .site-nav.scrolled{
+    background:rgba(28,19,13,.92);
+    backdrop-filter:blur(6px);
+    box-shadow:0 6px 24px rgba(0,0,0,.25);
+    padding:.7rem 0;
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .logo{display:flex;align-items:center;gap:.55rem;font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:var(--cream);}
+  .logo .icon{width:26px;height:26px;stroke:var(--caramel);}
+
+  .nav-toggle{
+    display:none;
+    background:none;border:1.5px solid var(--cream-dim);
+    border-radius:8px;padding:.4rem .6rem;color:var(--cream);
+  }
+  .nav-toggle .icon{width:20px;height:20px;}
+
+  #nav-links{display:flex;align-items:center;gap:1.8rem;}
+  #nav-links a{font-weight:600;font-size:.95rem;color:var(--cream-dim);transition:color .2s ease;}
+  #nav-links a:hover{color:var(--cream);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    padding:8rem 1.5rem 4rem;
+    background:radial-gradient(60% 60% at 50% 20%, rgba(201,138,75,.14), transparent 70%), var(--espresso);
+  }
+  .steam-cup{width:120px;height:130px;margin-bottom:1.2rem;}
+  .steam-cup .wisp{stroke:var(--cream-dim);stroke-width:3;fill:none;stroke-linecap:round;opacity:.55;}
+  .steam-cup .cup-body{fill:var(--slate);stroke:var(--caramel);stroke-width:3;}
+  .steam-cup .cup-handle{fill:none;stroke:var(--caramel);stroke-width:3;}
+  .steam-cup .saucer{fill:var(--caramel);}
+
+  @media (prefers-reduced-motion:no-preference){
+    .wisp-1{animation:rise 3.4s ease-in-out infinite;}
+    .wisp-2{animation:rise 3.4s ease-in-out infinite;animation-delay:.5s;}
+    .wisp-3{animation:rise 3.4s ease-in-out infinite;animation-delay:1s;}
+    @keyframes rise{
+      0%{opacity:0;transform:translateY(6px) scaleY(.9);}
+      30%{opacity:.75;}
+      70%{opacity:.75;}
+      100%{opacity:0;transform:translateY(-10px) scaleY(1.05);}
+    }
+  }
+
+  .hero h1{font-weight:900;font-size:clamp(3rem,9vw,5.4rem);line-height:1.03;margin:.3rem 0;}
+  .hero p{max-width:34rem;color:var(--cream-dim);font-size:1.08rem;margin:1rem auto 2rem;}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1;transform:none;}
+
+  /* ---------- About ---------- */
+  .about{background:var(--espresso-deep);padding:6rem 0;}
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center;}
+  .about p{color:var(--cream-dim);margin:0 0 1rem;}
+  .about-art{justify-self:center;width:100%;max-width:280px;}
+  .about-art .icon{stroke:var(--sage);width:100%;height:auto;}
+
+  /* ---------- Gallery ---------- */
+  .gallery{background:var(--espresso);padding:6rem 0;}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.25rem;
+    margin-top:2.5rem;
+  }
+  .tile{
+    padding:1.8rem 1.5rem;
+    border-radius:16px;
+    background:rgba(201,138,75,.07);
+    border:1px solid var(--slate-line);
+  }
+  .tile:nth-child(even){background:rgba(138,150,120,.08);}
+  .tile-icon{
+    width:44px;height:44px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--espresso-deep);margin-bottom:1rem;
+  }
+  .tile:nth-child(odd) .tile-icon .icon{stroke:var(--caramel);}
+  .tile:nth-child(even) .tile-icon .icon{stroke:var(--sage);}
+  .tile h3{font-size:1.15rem;font-weight:600;margin-bottom:.35rem;}
+  .tile p{color:var(--cream-dim);font-size:.92rem;margin:0;}
+
+  /* ---------- Menu (chalkboard) ---------- */
+  .menu{
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,.015) 0 2px, transparent 2px 6px),
+      var(--slate);
+    padding:6rem 0;
+    border-top:1px solid var(--slate-line);
+    border-bottom:1px solid var(--slate-line);
+  }
+  .menu-heading{text-align:center;margin-bottom:2.4rem;}
+  .menu-heading h2{
+    font-family:'Caveat',cursive;font-weight:700;
+    font-size:clamp(2.4rem,6vw,3.6rem);
+    color:var(--chalk);
+  }
+  .chalk-swash{width:180px;margin:.4rem auto 0;color:var(--cream-dim);opacity:.7;}
+
+  .menu-tabs{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;}
+  .menu-tab{
+    background:none;color:var(--cream-dim);
+    border:1.5px dashed var(--slate-line);
+    border-radius:10px;padding:.6rem 1.2rem;
+    font-family:'Karla',sans-serif;font-weight:700;font-size:.9rem;
+    cursor:pointer;transition:color .2s ease, border-color .2s ease;
+  }
+  .menu-tab.active{color:var(--chalk);border-color:var(--caramel);}
+
+  .menu-panel{display:none;max-width:640px;margin-inline:auto;}
+  .menu-panel.active{display:block;}
+  .menu-item{display:flex;align-items:baseline;gap:.5rem;padding:.6rem 0;}
+  .item-name{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--chalk);white-space:nowrap;}
+  .dots{flex:1;border-bottom:2px dotted var(--slate-line);margin-bottom:.4rem;}
+  .item-price{font-weight:700;color:var(--caramel);white-space:nowrap;}
+
+  .qr-block{
+    margin-top:3rem;padding-top:2.5rem;
+    border-top:1px dashed var(--slate-line);
+    display:flex;align-items:center;justify-content:center;gap:1.8rem;
+    flex-wrap:wrap;text-align:left;
+  }
+  .qr-card{
+    background:var(--cream);padding:.8rem;border-radius:14px;
+    line-height:0;flex-shrink:0;
+  }
+  .qr-text{max-width:280px;}
+  .qr-text h3{font-family:'Karla',sans-serif;font-weight:700;font-size:1.05rem;color:var(--chalk);margin-bottom:.4rem;}
+  .qr-text p{color:var(--cream-dim);font-size:.9rem;margin:0 0 .5rem;}
+  .qr-fallback-url{font-size:.72rem!important;color:var(--sage)!important;word-break:break-all;}
+  @media (max-width:600px){.qr-block{flex-direction:column;text-align:center;}.qr-text{max-width:none;}}
+
+  /* ---------- Hours + Location ---------- */
+  .details{background:var(--espresso-deep);padding:6rem 0;}
+  .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+  .details h3{font-size:1.3rem;font-weight:600;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;}
+  .details h3 .icon{stroke:var(--caramel);width:20px;height:20px;}
+  .hours-row{display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--slate-line);color:var(--cream-dim);}
+  .hours-row span:last-child{color:var(--cream);font-weight:600;}
+  .location-card{
+    border:1px solid var(--slate-line);border-radius:16px;padding:1.6rem;
+    display:flex;gap:1.1rem;align-items:flex-start;
+  }
+  .location-card .icon{stroke:var(--caramel);width:34px;height:42px;flex-shrink:0;}
+  .location-card p{margin:.15rem 0;color:var(--cream-dim);}
+  .location-card .addr{color:var(--cream);font-weight:600;}
+  .note{font-size:.82rem;color:var(--sage);}
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--espresso);padding:6rem 0;}
+  .contact-card{
+    max-width:640px;margin-inline:auto;text-align:center;
+    border:1px solid var(--caramel-deep);border-radius:20px;
+    padding:3rem 2rem;
+    background:radial-gradient(60% 100% at 50% 0%, rgba(201,138,75,.1), transparent 70%);
+  }
+  .contact-card p{color:var(--cream-dim);margin:.6rem 0 1.8rem;}
+  .contact-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .ig-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--cream-dim);font-weight:600;}
+  .ig-link:hover{color:var(--cream);}
+
+  /* ---------- Footer ---------- */
+  .site-footer{padding:2.6rem 1.5rem;text-align:center;border-top:1px solid var(--slate-line);background:var(--espresso-deep);}
+  .site-footer p{margin:.4rem 0;font-size:.85rem;color:var(--cream-dim);}
+  .footer-cta{color:var(--caramel)!important;font-weight:600;}
+  .site-footer .copy{font-size:.75rem;color:var(--slate-line);margin-top:1rem;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:860px){
+    .about-grid, .details-grid{grid-template-columns:1fr;}
+    .about-art{max-width:200px;}
+  }
+
+  @media (max-width:720px){
+    .nav-toggle{display:inline-flex;align-items:center;justify-content:center;}
+    #nav-links{
+      position:fixed;top:64px;left:0;right:0;
+      flex-direction:column;align-items:flex-start;gap:0;
+      background:rgba(28,19,13,.97);backdrop-filter:blur(6px);
+      max-height:0;overflow:hidden;transition:max-height .3s ease;
+      padding-inline:1.5rem;
+    }
+    #nav-links.open{max-height:320px;padding-block:1rem;}
+    #nav-links a{padding:.75rem 0;width:100%;border-bottom:1px solid var(--slate-line);}
+  }
+
+  noscript .reveal{opacity:1!important;transform:none!important;}
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4,8 h14 v6 a7,6 0 0 1 -14,0 z"/><path d="M18,10 q5,0 5,4 q0,4 -5,4"/><line x1="7" y1="4" x2="7" y2="6"/><line x1="11" y1="3" x2="11" y2="6"/></svg>
+      Kahve Molası
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menüyü aç/kapat">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav id="nav-links">
+      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="#menu">Menü</a>
+      <a href="#saatler">Saatler</a>
+      <a href="#konum">Konum</a>
+      <a href="#iletisim">İletişim</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" id="top">
+    <svg class="steam-cup" viewBox="0 0 120 140" aria-hidden="true">
+      <g>
+        <path class="wisp wisp-1" d="M40,72 Q46,57 40,44 Q34,32 40,20"/>
+        <path class="wisp wisp-2" d="M60,72 Q66,54 60,40 Q54,26 60,12"/>
+        <path class="wisp wisp-3" d="M80,72 Q86,57 80,44 Q74,32 80,20"/>
+      </g>
+      <rect class="saucer" x="14" y="66" width="76" height="9" rx="4.5"/>
+      <path class="cup-body" d="M20,73 h60 v18 a30,24 0 0 1 -60,0 z"/>
+      <path class="cup-handle" d="M82,82 q16,0 16,12 q0,12 -16,12"/>
+    </svg>
+    <span class="eyebrow">Moda · Kadıköy</span>
+    <h1>Kahve Molası</h1>
+    <p>Şehrin telaşına küçük bir mola. Taze demlenmiş kahveler, ev yapımı tatlılar ve oturup nefes alabileceğiniz sessiz bir köşe.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn btn-primary">Menüyü Gör</a>
+      <a href="#konum" class="btn btn-secondary">Konumu Gör</a>
+    </div>
+  </section>
+
+  <section class="about" id="hakkimizda">
+    <div class="container about-grid">
+      <div class="reveal">
+        <span class="eyebrow">Hakkımızda</span>
+        <h2 class="section-title">Kapıdan girer girmez telefonu unutun.</h2>
+        <p>Kahve Molası, Moda'nın sakin sokaklarından birinde küçük bir soluklanma noktası. Sıcak bir fincanla pencere kenarına yerleşin, saatinize bakmayı unutun.</p>
+        <p>Kahvelerimizi özenle seçtiğimiz çekirdeklerden demliyor, tatlılarımızı her sabah kendi mutfağımızda hazırlıyoruz. Ne kadar kalırsanız kalın, sizi aceleye getirmeyiz.</p>
+      </div>
+      <div class="about-art reveal">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <g class="icon" style="stroke-width:2.4;">
+            <path d="M40,120 h90 v20 a45,36 0 0 1 -90,0 z"/>
+            <path d="M130,132 q22,0 22,16 q0,16 -22,16"/>
+            <line x1="85" y1="30" x2="85" y2="100"/>
+            <path d="M85,30 q-18,10 -10,26"/>
+            <path d="M85,55 q14,8 4,22"/>
+            <circle cx="150" cy="60" r="14"/>
+            <line x1="150" y1="46" x2="150" y2="30"/>
+            <line x1="140" y1="52" x2="128" y2="42"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeri">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <span class="eyebrow">Galeri</span>
+        <h2 class="section-title">Köşemizden</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="tile reveal">
+          <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="4" width="22" height="24" rx="2"/><line x1="16" y1="4" x2="16" y2="28"/><line x1="5" y1="16" x2="27" y2="16"/></svg></div>
+          <h3>Pencere Kenarı</h3>
+          <p>Sabah ışığının en güzel düştüğü masa.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><polygon points="8,8 24,8 17,22 15,22"/><circle cx="16" cy="26" r="1.4" fill="currentColor" stroke="none"/><circle cx="13" cy="29" r="1.1" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Filtre Demleme</h3>
+          <p>Her fincan, damla damla özenle hazırlanır.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="14" width="20" height="12" rx="6"/><circle cx="12" cy="14" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="23" cy="15" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Ev Yapımı Tatlılar</h3>
+          <p>Her sabah kendi mutfağımızda, taze taze.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="20" width="22" height="5" rx="1.5"/><rect x="7" y="14" width="18" height="5" rx="1.5"/><rect x="9" y="8" width="14" height="5" rx="1.5"/></svg></div>
+          <h3>Sessiz Bir Köşe</h3>
+          <p>Kitabınızla ya da hiçbir şeyle baş başa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="container">
+      <div class="menu-heading reveal">
+        <h2>Menü</h2>
+        <svg class="chalk-swash" viewBox="0 0 200 20" aria-hidden="true"><path d="M4,10 Q30,2 60,10 T120,10 T196,10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      </div>
+
+      <div class="menu-tabs reveal">
+        <button class="menu-tab active" data-target="panel-sicak">Sıcak İçecekler</button>
+        <button class="menu-tab" data-target="panel-soguk">Soğuk İçecekler</button>
+        <button class="menu-tab" data-target="panel-tatli">Tatlı &amp; Atıştırmalık</button>
+      </div>
+
+      <div class="menu-panel active reveal" id="panel-sicak">
+        <div class="menu-item"><span class="item-name">Filtre Kahve</span><span class="dots"></span><span class="item-price">95₺</span></div>
+        <div class="menu-item"><span class="item-name">Americano</span><span class="dots"></span><span class="item-price">110₺</span></div>
+        <div class="menu-item"><span class="item-name">Cappuccino</span><span class="dots"></span><span class="item-price">130₺</span></div>
+        <div class="menu-item"><span class="item-name">Latte</span><span class="dots"></span><span class="item-price">140₺</span></div>
+        <div class="menu-item"><span class="item-name">Sıcak Çikolata</span><span class="dots"></span><span class="item-price">145₺</span></div>
+        <div class="menu-item"><span class="item-name">Bitki Çayı</span><span class="dots"></span><span class="item-price">90₺</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-soguk">
+        <div class="menu-item"><span class="item-name">Cold Brew</span><span class="dots"></span><span class="item-price">135₺</span></div>
+        <div class="menu-item"><span class="item-name">Ice Latte</span><span class="dots"></span><span class="item-price">150₺</span></div>
+        <div class="menu-item"><span class="item-name">Limonata</span><span class="dots"></span><span class="item-price">110₺</span></div>
+        <div class="menu-item"><span class="item-name">Frozen Karamel</span><span class="dots"></span><span class="item-price">160₺</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-tatli">
+        <div class="menu-item"><span class="item-name">Cheesecake</span><span class="dots"></span><span class="item-price">170₺</span></div>
+        <div class="menu-item"><span class="item-name">Brownie</span><span class="dots"></span><span class="item-price">140₺</span></div>
+        <div class="menu-item"><span class="item-name">Kruvasan</span><span class="dots"></span><span class="item-price">130₺</span></div>
+        <div class="menu-item"><span class="item-name">Simit &amp; Peynir Tabağı</span><span class="dots"></span><span class="item-price">120₺</span></div>
+      </div>
+
+      <div class="qr-block reveal">
+        <div class="qr-card">
+          <div id="qr-holder"></div>
+        </div>
+        <div class="qr-text">
+          <h3>Masanızdan Görüntüleyin</h3>
+          <p>QR kodu telefon kameranızla okutun, menü anında karşınıza gelsin.</p>
+          <p class="qr-fallback-url" id="qr-fallback"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="details">
+    <div class="container details-grid">
+      <div class="reveal" id="saatler">
+        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="15.5" y2="14"/></svg>Çalışma Saatleri</h3>
+        <div class="hours-row"><span>Pazartesi – Cuma</span><span>07:00 – 22:00</span></div>
+        <div class="hours-row"><span>Cumartesi – Pazar</span><span>08:00 – 23:00</span></div>
+      </div>
+      <div class="reveal" id="konum">
+        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>Konum</h3>
+        <div class="location-card">
+          <svg class="icon" viewBox="0 0 32 40" aria-hidden="true"><circle cx="16" cy="14" r="12"/><polygon points="16,38 8,20 24,20"/><circle cx="16" cy="14" r="4" fill="currentColor" stroke="none"/></svg>
+          <div>
+            <p class="addr">Moda, Kadıköy / İstanbul</p>
+            <p class="note">(örnek / kurgusal konum)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="iletisim">
+    <div class="container">
+      <div class="contact-card reveal">
+        <span class="eyebrow">İletişim</span>
+        <h2 class="section-title">Bize Uğrayın</h2>
+        <p>Sorularınız ve rezervasyon için bize yazın.</p>
+        <div class="contact-actions">
+          <a href="https://wa.me/905000000000" class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="stroke:var(--espresso-deep);width:18px;height:18px;"><path d="M4,4 h16 v12 h-9 l-4,4 v-4 h-3 z"/></svg>
+            WhatsApp'tan Yaz
+          </a>
+          <a href="#" class="ig-link">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8,7 L10,4 h4 l2,3"/><circle cx="12" cy="13.5" r="3.5"/></svg>
+            @kahvemolasi
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Bu bir demo sitesidir. Kahve Molası kurgusal bir işletmedir ve gerçek bir mekânla bağlantısı yoktur.</p>
+  <p>🌙 Bu demoyu <span class="footer-cta">Gece Web Atölyesi</span> hazırladı — işletmeniz için böyle bir site ister misiniz? Instagram: @gecewebatolyesi</p>
+  <p class="copy">© 2026 Kahve Molası (demo)</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // QR code -> points to menu.html next to this file, works on any domain/folder it's hosted in
+  if (typeof QRCode !== 'undefined') {
+    var qrTarget = new URL('menu.html', window.location.href).href;
+    new QRCode(document.getElementById('qr-holder'), {
+      text: qrTarget,
+      width: 128,
+      height: 128,
+      colorDark: '#2b1d16',
+      colorLight: '#f2e8d8',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+    var fallback = document.getElementById('qr-fallback');
+    if (fallback) fallback.textContent = qrTarget;
+  }
+
+  var nav = document.querySelector('.site-nav');
+  function onScroll(){
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.getElementById('nav-links');
+  toggle.addEventListener('click', function(){
+    var isOpen = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var tabButtons = document.querySelectorAll('.menu-tab');
+  var panels = document.querySelectorAll('.menu-panel');
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabButtons.forEach(function(b){ b.classList.remove('active'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).classList.add('active');
+    });
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('visible'); });
+  }
+</script>
+
+</body>
+</html>

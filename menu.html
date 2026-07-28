@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kahve Molası — Menü</title>
+<meta name="description" content="Kahve Molası menüsü — sıcak, soğuk içecekler ve tatlılar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;900&family=Caveat:wght@500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#33302b;
+    --slate-line:#4a4038;
+    --cream:#f2e8d8;
+    --cream-dim:#cdbea3;
+    --caramel:#c98a4b;
+    --chalk:#ece4d3;
+    --espresso-deep:#1c130d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,.015) 0 2px, transparent 2px 6px),
+      var(--slate);
+    color:var(--cream);
+    font-family:'Karla',sans-serif;
+    line-height:1.6;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--caramel);outline-offset:3px;}
+
+  .container{max-width:640px;margin-inline:auto;padding:1.5rem;}
+
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.1rem 1.5rem;border-bottom:1px solid var(--slate-line);
+  }
+  header a{font-size:.88rem;font-weight:700;color:var(--cream-dim);}
+  header a:hover{color:var(--cream);}
+  header .brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem;color:var(--cream);}
+
+  .menu-heading{text-align:center;margin:2.2rem 0 2rem;}
+  .menu-heading h1{
+    font-family:'Caveat',cursive;font-weight:700;
+    font-size:clamp(2.2rem,8vw,3rem);color:var(--chalk);margin:0;
+  }
+  .menu-heading p{color:var(--cream-dim);font-size:.9rem;margin:.3rem 0 0;}
+
+  .menu-tabs{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;}
+  .menu-tab{
+    background:none;color:var(--cream-dim);
+    border:1.5px dashed var(--slate-line);
+    border-radius:10px;padding:.55rem 1rem;
+    font-family:'Karla',sans-serif;font-weight:700;font-size:.85rem;
+    cursor:pointer;transition:color .2s ease, border-color .2s ease;
+  }
+  .menu-tab.active{color:var(--chalk);border-color:var(--caramel);}
+
+  .menu-panel{display:none;}
+  .menu-panel.active{display:block;}
+  .menu-item{display:flex;align-items:baseline;gap:.5rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+  .item-name{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--chalk);white-space:nowrap;}
+  .dots{flex:1;border-bottom:2px dotted var(--slate-line);margin-bottom:.4rem;}
+  .item-price{font-weight:700;color:var(--caramel);white-space:nowrap;}
+
+  footer{
+    text-align:center;padding:2.2rem 1.5rem 2.6rem;
+    border-top:1px solid var(--slate-line);margin-top:1rem;
+  }
+  footer p{margin:.35rem 0;font-size:.78rem;color:var(--cream-dim);}
+  footer .credit{color:var(--caramel);font-weight:600;}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← Kahve Molası'na Dön</a>
+  <span class="brand">Kahve Molası</span>
+</header>
+
+<main class="container">
+  <div class="menu-heading">
+    <h1>Menü</h1>
+    <p>Sipariş vermek için lütfen personelimize seslenin.</p>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="menu-tab active" data-target="panel-sicak">Sıcak İçecekler</button>
+    <button class="menu-tab" data-target="panel-soguk">Soğuk İçecekler</button>
+    <button class="menu-tab" data-target="panel-tatli">Tatlı &amp; Atıştırmalık</button>
+  </div>
+
+  <div class="menu-panel active" id="panel-sicak">
+    <div class="menu-item"><span class="item-name">Filtre Kahve</span><span class="dots"></span><span class="item-price">95₺</span></div>
+    <div class="menu-item"><span class="item-name">Americano</span><span class="dots"></span><span class="item-price">110₺</span></div>
+    <div class="menu-item"><span class="item-name">Cappuccino</span><span class="dots"></span><span class="item-price">130₺</span></div>
+    <div class="menu-item"><span class="item-name">Latte</span><span class="dots"></span><span class="item-price">140₺</span></div>
+    <div class="menu-item"><span class="item-name">Sıcak Çikolata</span><span class="dots"></span><span class="item-price">145₺</span></div>
+    <div class="menu-item"><span class="item-name">Bitki Çayı</span><span class="dots"></span><span class="item-price">90₺</span></div>
+  </div>
+
+  <div class="menu-panel" id="panel-soguk">
+    <div class="menu-item"><span class="item-name">Cold Brew</span><span class="dots"></span><span class="item-price">135₺</span></div>
+    <div class="menu-item"><span class="item-name">Ice Latte</span><span class="dots"></span><span class="item-price">150₺</span></div>
+    <div class="menu-item"><span class="item-name">Limonata</span><span class="dots"></span><span class="item-price">110₺</span></div>
+    <div class="menu-item"><span class="item-name">Frozen Karamel</span><span class="dots"></span><span class="item-price">160₺</span></div>
+  </div>
+
+  <div class="menu-panel" id="panel-tatli">
+    <div class="menu-item"><span class="item-name">Cheesecake</span><span class="dots"></span><span class="item-price">170₺</span></div>
+    <div class="menu-item"><span class="item-name">Brownie</span><span class="dots"></span><span class="item-price">140₺</span></div>
+    <div class="menu-item"><span class="item-name">Kruvasan</span><span class="dots"></span><span class="item-price">130₺</span></div>
+    <div class="menu-item"><span class="item-name">Simit &amp; Peynir Tabağı</span><span class="dots"></span><span class="item-price">120₺</span></div>
+  </div>
+</main>
+
+<footer>
+  <p>Bu bir demo menüdür. Kahve Molası kurgusal bir işletmedir.</p>
+  <p>🌙 <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır.</p>
+</footer>
+
+<script>
+  var tabButtons = document.querySelectorAll('.menu-tab');
+  var panels = document.querySelectorAll('.menu-panel');
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabButtons.forEach(function(b){ b.classList.remove('active'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
