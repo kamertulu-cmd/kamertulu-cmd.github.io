@@ -42,6 +42,9 @@
   header a{font-size:.88rem;font-weight:700;color:var(--cream-dim);}
   header a:hover{color:var(--cream);}
   header .brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem;color:var(--cream);}
+  .lang-switch{display:flex;gap:.3rem;}
+  .lang-btn{background:none;border:1px solid var(--slate-line);color:var(--cream-dim);border-radius:6px;padding:.25rem .5rem;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Karla',sans-serif;}
+  .lang-btn.active{border-color:var(--caramel);color:var(--caramel);}
 
   .menu-heading{text-align:center;margin:2.2rem 0 2rem;}
   .menu-heading h1{
@@ -78,52 +81,119 @@
 <body>
 
 <header>
-  <a href="index.html">← Kahve Molası'na Dön</a>
+  <a href="index.html" data-i18n="back_link">← Kahve Molası'na Dön</a>
   <span class="brand">Kahve Molası</span>
+  <span class="lang-switch" role="group" aria-label="Language">
+    <button type="button" class="lang-btn active" data-lang="tr">TR</button>
+    <button type="button" class="lang-btn" data-lang="en">EN</button>
+    <button type="button" class="lang-btn" data-lang="de">DE</button>
+    <button type="button" class="lang-btn" data-lang="ru">RU</button>
+  </span>
 </header>
 
 <main class="container">
   <div class="menu-heading">
-    <h1>Menü</h1>
-    <p>Sipariş vermek için lütfen personelimize seslenin.</p>
+    <h1 data-i18n="menu_heading">Menü</h1>
+    <p data-i18n="menu_subtitle">Sipariş vermek için lütfen personelimize seslenin.</p>
   </div>
 
   <div class="menu-tabs">
-    <button class="menu-tab active" data-target="panel-sicak">Sıcak İçecekler</button>
-    <button class="menu-tab" data-target="panel-soguk">Soğuk İçecekler</button>
-    <button class="menu-tab" data-target="panel-tatli">Tatlı &amp; Atıştırmalık</button>
+    <button class="menu-tab active" data-target="panel-sicak" data-i18n="menu_tab_hot">Sıcak İçecekler</button>
+    <button class="menu-tab" data-target="panel-soguk" data-i18n="menu_tab_cold">Soğuk İçecekler</button>
+    <button class="menu-tab" data-target="panel-tatli" data-i18n="menu_tab_sweet">Tatlı &amp; Atıştırmalık</button>
   </div>
 
   <div class="menu-panel active" id="panel-sicak">
-    <div class="menu-item"><span class="item-name">Filtre Kahve</span><span class="dots"></span><span class="item-price">95₺</span></div>
-    <div class="menu-item"><span class="item-name">Americano</span><span class="dots"></span><span class="item-price">110₺</span></div>
-    <div class="menu-item"><span class="item-name">Cappuccino</span><span class="dots"></span><span class="item-price">130₺</span></div>
-    <div class="menu-item"><span class="item-name">Latte</span><span class="dots"></span><span class="item-price">140₺</span></div>
-    <div class="menu-item"><span class="item-name">Sıcak Çikolata</span><span class="dots"></span><span class="item-price">145₺</span></div>
-    <div class="menu-item"><span class="item-name">Bitki Çayı</span><span class="dots"></span><span class="item-price">90₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_filtre">Filtre Kahve</span><span class="dots"></span><span class="item-price">95₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_americano">Americano</span><span class="dots"></span><span class="item-price">110₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_cappuccino">Cappuccino</span><span class="dots"></span><span class="item-price">130₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_latte">Latte</span><span class="dots"></span><span class="item-price">140₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_sicakcikolata">Sıcak Çikolata</span><span class="dots"></span><span class="item-price">145₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_bitkicayi">Bitki Çayı</span><span class="dots"></span><span class="item-price">90₺</span></div>
   </div>
 
   <div class="menu-panel" id="panel-soguk">
-    <div class="menu-item"><span class="item-name">Cold Brew</span><span class="dots"></span><span class="item-price">135₺</span></div>
-    <div class="menu-item"><span class="item-name">Ice Latte</span><span class="dots"></span><span class="item-price">150₺</span></div>
-    <div class="menu-item"><span class="item-name">Limonata</span><span class="dots"></span><span class="item-price">110₺</span></div>
-    <div class="menu-item"><span class="item-name">Frozen Karamel</span><span class="dots"></span><span class="item-price">160₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_coldbrew">Cold Brew</span><span class="dots"></span><span class="item-price">135₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_icelatte">Ice Latte</span><span class="dots"></span><span class="item-price">150₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_limonata">Limonata</span><span class="dots"></span><span class="item-price">110₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_frozenkaramel">Frozen Karamel</span><span class="dots"></span><span class="item-price">160₺</span></div>
   </div>
 
   <div class="menu-panel" id="panel-tatli">
-    <div class="menu-item"><span class="item-name">Cheesecake</span><span class="dots"></span><span class="item-price">170₺</span></div>
-    <div class="menu-item"><span class="item-name">Brownie</span><span class="dots"></span><span class="item-price">140₺</span></div>
-    <div class="menu-item"><span class="item-name">Kruvasan</span><span class="dots"></span><span class="item-price">130₺</span></div>
-    <div class="menu-item"><span class="item-name">Simit &amp; Peynir Tabağı</span><span class="dots"></span><span class="item-price">120₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_cheesecake">Cheesecake</span><span class="dots"></span><span class="item-price">170₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_brownie">Brownie</span><span class="dots"></span><span class="item-price">140₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_kruvasan">Kruvasan</span><span class="dots"></span><span class="item-price">130₺</span></div>
+    <div class="menu-item"><span class="item-name" data-i18n="mi_simit">Simit &amp; Peynir Tabağı</span><span class="dots"></span><span class="item-price">120₺</span></div>
   </div>
 </main>
 
 <footer>
-  <p>Bu bir demo menüdür. Kahve Molası kurgusal bir işletmedir.</p>
-  <p>🌙 <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır.</p>
+  <p data-i18n="menu_footer_disclaimer">Bu bir demo menüdür. Kahve Molası kurgusal bir işletmedir.</p>
+  <p data-i18n-html="menu_footer_credit">🌙 <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır.</p>
 </footer>
 
 <script>
+  var TRANSLATIONS = {
+    tr: {
+      back_link:"← Kahve Molası'na Dön", menu_heading:"Menü", menu_subtitle:"Sipariş vermek için lütfen personelimize seslenin.",
+      menu_tab_hot:"Sıcak İçecekler", menu_tab_cold:"Soğuk İçecekler", menu_tab_sweet:"Tatlı & Atıştırmalık",
+      mi_filtre:"Filtre Kahve", mi_americano:"Americano", mi_cappuccino:"Cappuccino", mi_latte:"Latte",
+      mi_sicakcikolata:"Sıcak Çikolata", mi_bitkicayi:"Bitki Çayı", mi_coldbrew:"Cold Brew", mi_icelatte:"Ice Latte",
+      mi_limonata:"Limonata", mi_frozenkaramel:"Frozen Karamel", mi_cheesecake:"Cheesecake", mi_brownie:"Brownie",
+      mi_kruvasan:"Kruvasan", mi_simit:"Simit & Peynir Tabağı",
+      menu_footer_disclaimer:"Bu bir demo menüdür. Kahve Molası kurgusal bir işletmedir.",
+      menu_footer_credit:'🌙 <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır.'
+    },
+    en: {
+      back_link:"← Back to Kahve Molası", menu_heading:"Menu", menu_subtitle:"Please call our staff to place your order.",
+      menu_tab_hot:"Hot Drinks", menu_tab_cold:"Cold Drinks", menu_tab_sweet:"Sweets & Snacks",
+      mi_filtre:"Filter Coffee", mi_americano:"Americano", mi_cappuccino:"Cappuccino", mi_latte:"Latte",
+      mi_sicakcikolata:"Hot Chocolate", mi_bitkicayi:"Herbal Tea", mi_coldbrew:"Cold Brew", mi_icelatte:"Iced Latte",
+      mi_limonata:"Lemonade", mi_frozenkaramel:"Frozen Caramel", mi_cheesecake:"Cheesecake", mi_brownie:"Brownie",
+      mi_kruvasan:"Croissant", mi_simit:"Simit & Cheese Plate",
+      menu_footer_disclaimer:"This is a demo menu. Kahve Molası is a fictional business.",
+      menu_footer_credit:'🌙 Made by <span class="credit">Gece Web Atölyesi</span>.'
+    },
+    de: {
+      back_link:"← Zurück zu Kahve Molası", menu_heading:"Speisekarte", menu_subtitle:"Bitte sprechen Sie unser Personal an, um zu bestellen.",
+      menu_tab_hot:"Heiße Getränke", menu_tab_cold:"Kalte Getränke", menu_tab_sweet:"Süßes & Snacks",
+      mi_filtre:"Filterkaffee", mi_americano:"Americano", mi_cappuccino:"Cappuccino", mi_latte:"Latte",
+      mi_sicakcikolata:"Heiße Schokolade", mi_bitkicayi:"Kräutertee", mi_coldbrew:"Cold Brew", mi_icelatte:"Ice Latte",
+      mi_limonata:"Limonade", mi_frozenkaramel:"Frozen Karamell", mi_cheesecake:"Cheesecake", mi_brownie:"Brownie",
+      mi_kruvasan:"Croissant", mi_simit:"Simit & Käseteller",
+      menu_footer_disclaimer:"Dies ist eine Demo-Speisekarte. Kahve Molası ist ein fiktives Unternehmen.",
+      menu_footer_credit:'🌙 Erstellt von <span class="credit">Gece Web Atölyesi</span>.'
+    },
+    ru: {
+      back_link:"← Назад к Kahve Molası", menu_heading:"Меню", menu_subtitle:"Чтобы сделать заказ, обратитесь к нашему персоналу.",
+      menu_tab_hot:"Горячие напитки", menu_tab_cold:"Холодные напитки", menu_tab_sweet:"Десерты и снеки",
+      mi_filtre:"Фильтр-кофе", mi_americano:"Американо", mi_cappuccino:"Капучино", mi_latte:"Латте",
+      mi_sicakcikolata:"Горячий шоколад", mi_bitkicayi:"Травяной чай", mi_coldbrew:"Колд брю", mi_icelatte:"Айс латте",
+      mi_limonata:"Лимонад", mi_frozenkaramel:"Фрозен карамель", mi_cheesecake:"Чизкейк", mi_brownie:"Брауни",
+      mi_kruvasan:"Круассан", mi_simit:"Симит с сырной тарелкой",
+      menu_footer_disclaimer:"Это демонстрационное меню. Kahve Molası — вымышленное заведение.",
+      menu_footer_credit:'🌙 Создано <span class="credit">Gece Web Atölyesi</span>.'
+    }
+  };
+  function applyLanguage(lang){
+    var dict = TRANSLATIONS[lang] || TRANSLATIONS.tr;
+    document.querySelectorAll('[data-i18n]').forEach(function(elm){
+      var key = elm.getAttribute('data-i18n');
+      if (dict[key] != null) elm.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(elm){
+      var key = elm.getAttribute('data-i18n-html');
+      if (dict[key] != null) elm.innerHTML = dict[key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.setAttribute('lang', lang);
+  }
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ applyLanguage(btn.getAttribute('data-lang')); });
+  });
+
   var tabButtons = document.querySelectorAll('.menu-tab');
   var panels = document.querySelectorAll('.menu-panel');
   tabButtons.forEach(function(btn){

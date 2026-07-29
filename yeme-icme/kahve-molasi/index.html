@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kahve Molası — Moda, Kadıköy</title>
 <meta name="description" content="Kahve Molası — Moda'da küçük, sıcak bir kahve durağı. Taze demlenmiş kahveler, ev yapımı tatlılar, sessiz bir köşe.">
+<meta property="og:title" content="Kahve Molası">
+<meta property="og:description" content="Moda'da küçük, sıcak bir kahve durağı. Taze demlenmiş kahveler, ev yapımı tatlılar.">
+<meta property="og:type" content="business.business">
+<!-- Google Tag (Ads/Analytics): Bir hesabın olduğunda buraya kendi kimliğini (G-XXXXXXXXXX veya AW-XXXXXXXXXX) yapıştır:
+<script async src="https://www.googletagmanager.com/gtag/js?id=TAG_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'TAG_ID');
+</script>
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;900&family=Caveat:wght@500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
@@ -106,12 +118,18 @@
   }
   .nav-toggle .icon{width:20px;height:20px;}
 
+  .nav-right{display:flex;align-items:center;gap:1.3rem;}
   #nav-links{display:flex;align-items:center;gap:1.8rem;}
   #nav-links a{font-weight:600;font-size:.95rem;color:var(--cream-dim);transition:color .2s ease;}
   #nav-links a:hover{color:var(--cream);}
+  .lang-switch{display:flex;gap:.3rem;}
+  .lang-btn{background:none;border:1px solid var(--slate-line);color:var(--cream-dim);border-radius:6px;padding:.25rem .5rem;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Karla',sans-serif;}
+  .lang-btn.active{border-color:var(--caramel);color:var(--caramel);}
+  .lang-btn:hover{color:var(--cream);}
 
   /* ---------- Hero ---------- */
   .hero{
+    position:relative;
     min-height:92vh;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
     padding:8rem 1.5rem 4rem;
@@ -138,6 +156,12 @@
   .hero h1{font-weight:900;font-size:clamp(3rem,9vw,5.4rem);line-height:1.03;margin:.3rem 0;}
   .hero p{max-width:34rem;color:var(--cream-dim);font-size:1.08rem;margin:1rem auto 2rem;}
   .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+  .scroll-cue{position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);color:var(--cream-dim);}
+  .scroll-cue .icon{width:26px;height:26px;}
+  @media (prefers-reduced-motion:no-preference){
+    .scroll-cue{animation:bob 2s ease-in-out infinite;}
+    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+  }
 
   /* ---------- Reveal ---------- */
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
@@ -275,7 +299,7 @@
       max-height:0;overflow:hidden;transition:max-height .3s ease;
       padding-inline:1.5rem;
     }
-    #nav-links.open{max-height:320px;padding-block:1rem;}
+    #nav-links.open{max-height:380px;padding-block:1rem;}
     #nav-links a{padding:.75rem 0;width:100%;border-bottom:1px solid var(--slate-line);}
   }
 
@@ -290,16 +314,24 @@
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4,8 h14 v6 a7,6 0 0 1 -14,0 z"/><path d="M18,10 q5,0 5,4 q0,4 -5,4"/><line x1="7" y1="4" x2="7" y2="6"/><line x1="11" y1="3" x2="11" y2="6"/></svg>
       Kahve Molası
     </a>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menüyü aç/kapat">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-    <nav id="nav-links">
-      <a href="#hakkimizda">Hakkımızda</a>
-      <a href="#menu">Menü</a>
-      <a href="#saatler">Saatler</a>
-      <a href="#konum">Konum</a>
-      <a href="#iletisim">İletişim</a>
-    </nav>
+    <div class="nav-right">
+      <span class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn active" data-lang="tr">TR</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="de">DE</button>
+        <button type="button" class="lang-btn" data-lang="ru">RU</button>
+      </span>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menüyü aç/kapat">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav id="nav-links">
+        <a href="#hakkimizda" data-i18n="nav_about">Hakkımızda</a>
+        <a href="#menu" data-i18n="nav_menu">Menü</a>
+        <a href="#saatler" data-i18n="nav_hours">Saatler</a>
+        <a href="#konum" data-i18n="nav_location">Konum</a>
+        <a href="#iletisim" data-i18n="nav_contact">İletişim</a>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -318,20 +350,23 @@
     </svg>
     <span class="eyebrow">Moda · Kadıköy</span>
     <h1>Kahve Molası</h1>
-    <p>Şehrin telaşına küçük bir mola. Taze demlenmiş kahveler, ev yapımı tatlılar ve oturup nefes alabileceğiniz sessiz bir köşe.</p>
+    <p data-i18n="hero_tagline">Şehrin telaşına küçük bir mola. Taze demlenmiş kahveler, ev yapımı tatlılar ve oturup nefes alabileceğiniz sessiz bir köşe.</p>
     <div class="hero-actions">
-      <a href="#menu" class="btn btn-primary">Menüyü Gör</a>
-      <a href="#konum" class="btn btn-secondary">Konumu Gör</a>
+      <a href="#menu" class="btn btn-primary" data-i18n="hero_btn_menu">Menüyü Gör</a>
+      <a href="#konum" class="btn btn-secondary" data-i18n="hero_btn_location">Konumu Gör</a>
     </div>
+    <a href="#hakkimizda" class="scroll-cue" aria-label="Aşağı kaydır">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6,9 l6,6 l6,-6"/></svg>
+    </a>
   </section>
 
   <section class="about" id="hakkimizda">
     <div class="container about-grid">
       <div class="reveal">
-        <span class="eyebrow">Hakkımızda</span>
-        <h2 class="section-title">Kapıdan girer girmez telefonu unutun.</h2>
-        <p>Kahve Molası, Moda'nın sakin sokaklarından birinde küçük bir soluklanma noktası. Sıcak bir fincanla pencere kenarına yerleşin, saatinize bakmayı unutun.</p>
-        <p>Kahvelerimizi özenle seçtiğimiz çekirdeklerden demliyor, tatlılarımızı her sabah kendi mutfağımızda hazırlıyoruz. Ne kadar kalırsanız kalın, sizi aceleye getirmeyiz.</p>
+        <span class="eyebrow" data-i18n="about_eyebrow">Hakkımızda</span>
+        <h2 class="section-title" data-i18n="about_heading">Kapıdan girer girmez telefonu unutun.</h2>
+        <p data-i18n="about_p1">Kahve Molası, Moda'nın sakin sokaklarından birinde küçük bir soluklanma noktası. Sıcak bir fincanla pencere kenarına yerleşin, saatinize bakmayı unutun.</p>
+        <p data-i18n="about_p2">Kahvelerimizi özenle seçtiğimiz çekirdeklerden demliyor, tatlılarımızı her sabah kendi mutfağımızda hazırlıyoruz. Ne kadar kalırsanız kalın, sizi aceleye getirmeyiz.</p>
       </div>
       <div class="about-art reveal">
         <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -353,29 +388,29 @@
   <section class="gallery" id="galeri">
     <div class="container">
       <div class="reveal" style="text-align:center;">
-        <span class="eyebrow">Galeri</span>
-        <h2 class="section-title">Köşemizden</h2>
+        <span class="eyebrow" data-i18n="gallery_eyebrow">Galeri</span>
+        <h2 class="section-title" data-i18n="gallery_heading">Köşemizden</h2>
       </div>
       <div class="gallery-grid">
         <div class="tile reveal">
           <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="4" width="22" height="24" rx="2"/><line x1="16" y1="4" x2="16" y2="28"/><line x1="5" y1="16" x2="27" y2="16"/></svg></div>
-          <h3>Pencere Kenarı</h3>
-          <p>Sabah ışığının en güzel düştüğü masa.</p>
+          <h3 data-i18n="g1_title">Pencere Kenarı</h3>
+          <p data-i18n="g1_cap">Sabah ışığının en güzel düştüğü masa.</p>
         </div>
         <div class="tile reveal">
           <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><polygon points="8,8 24,8 17,22 15,22"/><circle cx="16" cy="26" r="1.4" fill="currentColor" stroke="none"/><circle cx="13" cy="29" r="1.1" fill="currentColor" stroke="none"/></svg></div>
-          <h3>Filtre Demleme</h3>
-          <p>Her fincan, damla damla özenle hazırlanır.</p>
+          <h3 data-i18n="g2_title">Filtre Demleme</h3>
+          <p data-i18n="g2_cap">Her fincan, damla damla özenle hazırlanır.</p>
         </div>
         <div class="tile reveal">
           <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="14" width="20" height="12" rx="6"/><circle cx="12" cy="14" r="1.5" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="23" cy="15" r="1.5" fill="currentColor" stroke="none"/></svg></div>
-          <h3>Ev Yapımı Tatlılar</h3>
-          <p>Her sabah kendi mutfağımızda, taze taze.</p>
+          <h3 data-i18n="g3_title">Ev Yapımı Tatlılar</h3>
+          <p data-i18n="g3_cap">Her sabah kendi mutfağımızda, taze taze.</p>
         </div>
         <div class="tile reveal">
           <div class="tile-icon"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="20" width="22" height="5" rx="1.5"/><rect x="7" y="14" width="18" height="5" rx="1.5"/><rect x="9" y="8" width="14" height="5" rx="1.5"/></svg></div>
-          <h3>Sessiz Bir Köşe</h3>
-          <p>Kitabınızla ya da hiçbir şeyle baş başa.</p>
+          <h3 data-i18n="g4_title">Sessiz Bir Köşe</h3>
+          <p data-i18n="g4_cap">Kitabınızla ya da hiçbir şeyle baş başa.</p>
         </div>
       </div>
     </div>
@@ -384,37 +419,37 @@
   <section class="menu" id="menu">
     <div class="container">
       <div class="menu-heading reveal">
-        <h2>Menü</h2>
+        <h2 data-i18n="menu_heading">Menü</h2>
         <svg class="chalk-swash" viewBox="0 0 200 20" aria-hidden="true"><path d="M4,10 Q30,2 60,10 T120,10 T196,10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
       </div>
 
       <div class="menu-tabs reveal">
-        <button class="menu-tab active" data-target="panel-sicak">Sıcak İçecekler</button>
-        <button class="menu-tab" data-target="panel-soguk">Soğuk İçecekler</button>
-        <button class="menu-tab" data-target="panel-tatli">Tatlı &amp; Atıştırmalık</button>
+        <button class="menu-tab active" data-target="panel-sicak" data-i18n="menu_tab_hot">Sıcak İçecekler</button>
+        <button class="menu-tab" data-target="panel-soguk" data-i18n="menu_tab_cold">Soğuk İçecekler</button>
+        <button class="menu-tab" data-target="panel-tatli" data-i18n="menu_tab_sweet">Tatlı &amp; Atıştırmalık</button>
       </div>
 
       <div class="menu-panel active reveal" id="panel-sicak">
-        <div class="menu-item"><span class="item-name">Filtre Kahve</span><span class="dots"></span><span class="item-price">95₺</span></div>
-        <div class="menu-item"><span class="item-name">Americano</span><span class="dots"></span><span class="item-price">110₺</span></div>
-        <div class="menu-item"><span class="item-name">Cappuccino</span><span class="dots"></span><span class="item-price">130₺</span></div>
-        <div class="menu-item"><span class="item-name">Latte</span><span class="dots"></span><span class="item-price">140₺</span></div>
-        <div class="menu-item"><span class="item-name">Sıcak Çikolata</span><span class="dots"></span><span class="item-price">145₺</span></div>
-        <div class="menu-item"><span class="item-name">Bitki Çayı</span><span class="dots"></span><span class="item-price">90₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_filtre">Filtre Kahve</span><span class="dots"></span><span class="item-price">95₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_americano">Americano</span><span class="dots"></span><span class="item-price">110₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_cappuccino">Cappuccino</span><span class="dots"></span><span class="item-price">130₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_latte">Latte</span><span class="dots"></span><span class="item-price">140₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_sicakcikolata">Sıcak Çikolata</span><span class="dots"></span><span class="item-price">145₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_bitkicayi">Bitki Çayı</span><span class="dots"></span><span class="item-price">90₺</span></div>
       </div>
 
       <div class="menu-panel" id="panel-soguk">
-        <div class="menu-item"><span class="item-name">Cold Brew</span><span class="dots"></span><span class="item-price">135₺</span></div>
-        <div class="menu-item"><span class="item-name">Ice Latte</span><span class="dots"></span><span class="item-price">150₺</span></div>
-        <div class="menu-item"><span class="item-name">Limonata</span><span class="dots"></span><span class="item-price">110₺</span></div>
-        <div class="menu-item"><span class="item-name">Frozen Karamel</span><span class="dots"></span><span class="item-price">160₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_coldbrew">Cold Brew</span><span class="dots"></span><span class="item-price">135₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_icelatte">Ice Latte</span><span class="dots"></span><span class="item-price">150₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_limonata">Limonata</span><span class="dots"></span><span class="item-price">110₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_frozenkaramel">Frozen Karamel</span><span class="dots"></span><span class="item-price">160₺</span></div>
       </div>
 
       <div class="menu-panel" id="panel-tatli">
-        <div class="menu-item"><span class="item-name">Cheesecake</span><span class="dots"></span><span class="item-price">170₺</span></div>
-        <div class="menu-item"><span class="item-name">Brownie</span><span class="dots"></span><span class="item-price">140₺</span></div>
-        <div class="menu-item"><span class="item-name">Kruvasan</span><span class="dots"></span><span class="item-price">130₺</span></div>
-        <div class="menu-item"><span class="item-name">Simit &amp; Peynir Tabağı</span><span class="dots"></span><span class="item-price">120₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_cheesecake">Cheesecake</span><span class="dots"></span><span class="item-price">170₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_brownie">Brownie</span><span class="dots"></span><span class="item-price">140₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_kruvasan">Kruvasan</span><span class="dots"></span><span class="item-price">130₺</span></div>
+        <div class="menu-item"><span class="item-name" data-i18n="mi_simit">Simit &amp; Peynir Tabağı</span><span class="dots"></span><span class="item-price">120₺</span></div>
       </div>
 
       <div class="qr-block reveal">
@@ -422,8 +457,8 @@
           <div id="qr-holder"></div>
         </div>
         <div class="qr-text">
-          <h3>Masanızdan Görüntüleyin</h3>
-          <p>QR kodu telefon kameranızla okutun, menü anında karşınıza gelsin.</p>
+          <h3 data-i18n="qr_heading">Masanızdan Görüntüleyin</h3>
+          <p data-i18n="qr_desc">QR kodu telefon kameranızla okutun, menü anında karşınıza gelsin.</p>
           <p class="qr-fallback-url" id="qr-fallback"></p>
         </div>
       </div>
@@ -433,17 +468,17 @@
   <section class="details">
     <div class="container details-grid">
       <div class="reveal" id="saatler">
-        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="15.5" y2="14"/></svg>Çalışma Saatleri</h3>
-        <div class="hours-row"><span>Pazartesi – Cuma</span><span>07:00 – 22:00</span></div>
-        <div class="hours-row"><span>Cumartesi – Pazar</span><span>08:00 – 23:00</span></div>
+        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="15.5" y2="14"/></svg><span data-i18n="hours_heading">Çalışma Saatleri</span></h3>
+        <div class="hours-row"><span data-i18n="hours_weekday">Pazartesi – Cuma</span><span>07:00 – 22:00</span></div>
+        <div class="hours-row"><span data-i18n="hours_weekend">Cumartesi – Pazar</span><span>08:00 – 23:00</span></div>
       </div>
       <div class="reveal" id="konum">
-        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>Konum</h3>
+        <h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg><span data-i18n="location_heading">Konum</span></h3>
         <div class="location-card">
           <svg class="icon" viewBox="0 0 32 40" aria-hidden="true"><circle cx="16" cy="14" r="12"/><polygon points="16,38 8,20 24,20"/><circle cx="16" cy="14" r="4" fill="currentColor" stroke="none"/></svg>
           <div>
             <p class="addr">Moda, Kadıköy / İstanbul</p>
-            <p class="note">(örnek / kurgusal konum)</p>
+            <p class="note" data-i18n="location_note">(örnek / kurgusal konum)</p>
           </div>
         </div>
       </div>
@@ -453,13 +488,13 @@
   <section class="contact" id="iletisim">
     <div class="container">
       <div class="contact-card reveal">
-        <span class="eyebrow">İletişim</span>
-        <h2 class="section-title">Bize Uğrayın</h2>
-        <p>Sorularınız ve rezervasyon için bize yazın.</p>
+        <span class="eyebrow" data-i18n="contact_eyebrow">İletişim</span>
+        <h2 class="section-title" data-i18n="contact_heading">Bize Uğrayın</h2>
+        <p data-i18n="contact_subtext">Sorularınız ve rezervasyon için bize yazın.</p>
         <div class="contact-actions">
-          <a href="https://wa.me/905000000000" class="btn btn-primary">
+          <a href="https://wa.me/905000000000" class="btn btn-primary" onclick="if(typeof gtag==='function'){gtag('event','conversion',{'send_to':'TAG_ID/CONVERSION_LABEL'});}">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="stroke:var(--espresso-deep);width:18px;height:18px;"><path d="M4,4 h16 v12 h-9 l-4,4 v-4 h-3 z"/></svg>
-            WhatsApp'tan Yaz
+            <span data-i18n="contact_whatsapp_btn">WhatsApp'tan Yaz</span>
           </a>
           <a href="#" class="ig-link">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8,7 L10,4 h4 l2,3"/><circle cx="12" cy="13.5" r="3.5"/></svg>
@@ -473,11 +508,136 @@
 </main>
 
 <footer class="site-footer">
-  <p>Bu bir demo sitesidir. Kahve Molası kurgusal bir işletmedir ve gerçek bir mekânla bağlantısı yoktur.</p>
-  <p>🌙 Bu demoyu <span class="footer-cta">Gece Web Atölyesi</span> hazırladı — işletmeniz için böyle bir site ister misiniz? Instagram: @gecewebatolyesi</p>
+  <p data-i18n="footer_disclaimer">Bu bir demo sitesidir. Kahve Molası kurgusal bir işletmedir ve gerçek bir mekânla bağlantısı yoktur.</p>
+  <p data-i18n-html="footer_credit">🌙 Bu demoyu <span class="footer-cta">Gece Web Atölyesi</span> hazırladı — işletmeniz için böyle bir site ister misiniz? Instagram: @gecewebatolyesi</p>
   <p class="copy">© 2026 Kahve Molası (demo)</p>
 </footer>
 
+<script>
+  var LANG = 'tr';
+  var TRANSLATIONS = {
+    tr: {
+      nav_about:"Hakkımızda", nav_menu:"Menü", nav_hours:"Saatler", nav_location:"Konum", nav_contact:"İletişim",
+      hero_tagline:"Şehrin telaşına küçük bir mola. Taze demlenmiş kahveler, ev yapımı tatlılar ve oturup nefes alabileceğiniz sessiz bir köşe.",
+      hero_btn_menu:"Menüyü Gör", hero_btn_location:"Konumu Gör",
+      about_eyebrow:"Hakkımızda", about_heading:"Kapıdan girer girmez telefonu unutun.",
+      about_p1:"Kahve Molası, Moda'nın sakin sokaklarından birinde küçük bir soluklanma noktası. Sıcak bir fincanla pencere kenarına yerleşin, saatinize bakmayı unutun.",
+      about_p2:"Kahvelerimizi özenle seçtiğimiz çekirdeklerden demliyor, tatlılarımızı her sabah kendi mutfağımızda hazırlıyoruz. Ne kadar kalırsanız kalın, sizi aceleye getirmeyiz.",
+      gallery_eyebrow:"Galeri", gallery_heading:"Köşemizden",
+      g1_title:"Pencere Kenarı", g1_cap:"Sabah ışığının en güzel düştüğü masa.",
+      g2_title:"Filtre Demleme", g2_cap:"Her fincan, damla damla özenle hazırlanır.",
+      g3_title:"Ev Yapımı Tatlılar", g3_cap:"Her sabah kendi mutfağımızda, taze taze.",
+      g4_title:"Sessiz Bir Köşe", g4_cap:"Kitabınızla ya da hiçbir şeyle baş başa.",
+      menu_heading:"Menü", menu_tab_hot:"Sıcak İçecekler", menu_tab_cold:"Soğuk İçecekler", menu_tab_sweet:"Tatlı & Atıştırmalık",
+      mi_filtre:"Filtre Kahve", mi_americano:"Americano", mi_cappuccino:"Cappuccino", mi_latte:"Latte",
+      mi_sicakcikolata:"Sıcak Çikolata", mi_bitkicayi:"Bitki Çayı", mi_coldbrew:"Cold Brew", mi_icelatte:"Ice Latte",
+      mi_limonata:"Limonata", mi_frozenkaramel:"Frozen Karamel", mi_cheesecake:"Cheesecake", mi_brownie:"Brownie",
+      mi_kruvasan:"Kruvasan", mi_simit:"Simit & Peynir Tabağı",
+      qr_heading:"Masanızdan Görüntüleyin", qr_desc:"QR kodu telefon kameranızla okutun, menü anında karşınıza gelsin.",
+      hours_heading:"Çalışma Saatleri", hours_weekday:"Pazartesi – Cuma", hours_weekend:"Cumartesi – Pazar",
+      location_heading:"Konum", location_note:"(örnek / kurgusal konum)",
+      contact_eyebrow:"İletişim", contact_heading:"Bize Uğrayın", contact_subtext:"Sorularınız ve rezervasyon için bize yazın.",
+      contact_whatsapp_btn:"WhatsApp'tan Yaz",
+      footer_disclaimer:"Bu bir demo sitesidir. Kahve Molası kurgusal bir işletmedir ve gerçek bir mekânla bağlantısı yoktur.",
+      footer_credit:'🌙 Bu demoyu <span class="footer-cta">Gece Web Atölyesi</span> hazırladı — işletmeniz için böyle bir site ister misiniz? Instagram: @gecewebatolyesi'
+    },
+    en: {
+      nav_about:"About", nav_menu:"Menu", nav_hours:"Hours", nav_location:"Location", nav_contact:"Contact",
+      hero_tagline:"A little break from the city's rush. Freshly brewed coffee, homemade treats, and a quiet corner to breathe.",
+      hero_btn_menu:"View Menu", hero_btn_location:"View Location",
+      about_eyebrow:"About Us", about_heading:"The moment you walk in, forget your phone.",
+      about_p1:"Kahve Molası is a small resting point on one of Moda's quiet streets. Settle by the window with a warm cup and forget to check the time.",
+      about_p2:"We brew our coffee from carefully selected beans and prepare our desserts fresh every morning in our own kitchen. Stay as long as you like — we won't rush you.",
+      gallery_eyebrow:"Gallery", gallery_heading:"From Our Corner",
+      g1_title:"Window Seat", g1_cap:"The table where morning light falls best.",
+      g2_title:"Filter Brew", g2_cap:"Every cup, carefully brewed drop by drop.",
+      g3_title:"Homemade Treats", g3_cap:"Fresh every morning, made in our own kitchen.",
+      g4_title:"A Quiet Corner", g4_cap:"Alone with your book, or with nothing at all.",
+      menu_heading:"Menu", menu_tab_hot:"Hot Drinks", menu_tab_cold:"Cold Drinks", menu_tab_sweet:"Sweets & Snacks",
+      mi_filtre:"Filter Coffee", mi_americano:"Americano", mi_cappuccino:"Cappuccino", mi_latte:"Latte",
+      mi_sicakcikolata:"Hot Chocolate", mi_bitkicayi:"Herbal Tea", mi_coldbrew:"Cold Brew", mi_icelatte:"Iced Latte",
+      mi_limonata:"Lemonade", mi_frozenkaramel:"Frozen Caramel", mi_cheesecake:"Cheesecake", mi_brownie:"Brownie",
+      mi_kruvasan:"Croissant", mi_simit:"Simit & Cheese Plate",
+      qr_heading:"View From Your Table", qr_desc:"Scan the QR code with your phone camera and the menu opens instantly.",
+      hours_heading:"Opening Hours", hours_weekday:"Monday – Friday", hours_weekend:"Saturday – Sunday",
+      location_heading:"Location", location_note:"(example / fictional location)",
+      contact_eyebrow:"Contact", contact_heading:"Come Visit Us", contact_subtext:"Message us for questions or reservations.",
+      contact_whatsapp_btn:"Message on WhatsApp",
+      footer_disclaimer:"This is a demo website. Kahve Molası is a fictional business with no connection to any real establishment.",
+      footer_credit:'🌙 This demo was made by <span class="footer-cta">Gece Web Atölyesi</span> — want a website like this for your business? Instagram: @gecewebatolyesi'
+    },
+    de: {
+      nav_about:"Über uns", nav_menu:"Speisekarte", nav_hours:"Öffnungszeiten", nav_location:"Standort", nav_contact:"Kontakt",
+      hero_tagline:"Eine kleine Pause vom Trubel der Stadt. Frisch gebrühter Kaffee, hausgemachte Leckereien und eine ruhige Ecke zum Durchatmen.",
+      hero_btn_menu:"Speisekarte ansehen", hero_btn_location:"Standort ansehen",
+      about_eyebrow:"Über uns", about_heading:"Sobald Sie eintreten, vergessen Sie Ihr Handy.",
+      about_p1:"Kahve Molası ist ein kleiner Ruhepunkt in einer der ruhigen Straßen von Moda. Setzen Sie sich mit einer warmen Tasse ans Fenster und vergessen Sie die Zeit.",
+      about_p2:"Wir brühen unseren Kaffee aus sorgfältig ausgewählten Bohnen und bereiten unsere Süßspeisen jeden Morgen frisch in unserer eigenen Küche zu. Bleiben Sie, so lange Sie möchten.",
+      gallery_eyebrow:"Galerie", gallery_heading:"Aus unserer Ecke",
+      g1_title:"Fensterplatz", g1_cap:"Der Tisch, an dem das Morgenlicht am schönsten fällt.",
+      g2_title:"Filterkaffee", g2_cap:"Jede Tasse wird sorgfältig Tropfen für Tropfen zubereitet.",
+      g3_title:"Hausgemachte Leckereien", g3_cap:"Jeden Morgen frisch, in unserer eigenen Küche zubereitet.",
+      g4_title:"Eine ruhige Ecke", g4_cap:"Allein mit Ihrem Buch – oder mit gar nichts.",
+      menu_heading:"Speisekarte", menu_tab_hot:"Heiße Getränke", menu_tab_cold:"Kalte Getränke", menu_tab_sweet:"Süßes & Snacks",
+      mi_filtre:"Filterkaffee", mi_americano:"Americano", mi_cappuccino:"Cappuccino", mi_latte:"Latte",
+      mi_sicakcikolata:"Heiße Schokolade", mi_bitkicayi:"Kräutertee", mi_coldbrew:"Cold Brew", mi_icelatte:"Ice Latte",
+      mi_limonata:"Limonade", mi_frozenkaramel:"Frozen Karamell", mi_cheesecake:"Cheesecake", mi_brownie:"Brownie",
+      mi_kruvasan:"Croissant", mi_simit:"Simit & Käseteller",
+      qr_heading:"Vom Tisch aus ansehen", qr_desc:"Scannen Sie den QR-Code mit Ihrer Handykamera, und die Speisekarte öffnet sich sofort.",
+      hours_heading:"Öffnungszeiten", hours_weekday:"Montag – Freitag", hours_weekend:"Samstag – Sonntag",
+      location_heading:"Standort", location_note:"(Beispiel-/fiktiver Standort)",
+      contact_eyebrow:"Kontakt", contact_heading:"Besuchen Sie uns", contact_subtext:"Schreiben Sie uns bei Fragen oder für Reservierungen.",
+      contact_whatsapp_btn:"Über WhatsApp schreiben",
+      footer_disclaimer:"Dies ist eine Demo-Website. Kahve Molası ist ein fiktives Unternehmen ohne Bezug zu einem echten Geschäft.",
+      footer_credit:'🌙 Diese Demo wurde von <span class="footer-cta">Gece Web Atölyesi</span> erstellt — möchten Sie auch so eine Website für Ihr Unternehmen? Instagram: @gecewebatolyesi'
+    },
+    ru: {
+      nav_about:"О нас", nav_menu:"Меню", nav_hours:"Часы работы", nav_location:"Расположение", nav_contact:"Контакты",
+      hero_tagline:"Небольшая передышка от городской суеты. Свежесваренный кофе, домашняя выпечка и тихий уголок, где можно перевести дух.",
+      hero_btn_menu:"Смотреть меню", hero_btn_location:"Показать на карте",
+      about_eyebrow:"О нас", about_heading:"Как только вы войдёте, забудьте о телефоне.",
+      about_p1:"Kahve Molası — небольшое место для отдыха на одной из тихих улиц района Мода. Устройтесь у окна с тёплой чашкой и забудьте о времени.",
+      about_p2:"Мы завариваем кофе из тщательно отобранных зёрен, а десерты готовим каждое утро свежими на своей кухне. Оставайтесь сколько захотите — мы никуда не торопим.",
+      gallery_eyebrow:"Галерея", gallery_heading:"Наш уголок",
+      g1_title:"У окна", g1_cap:"Столик, где утренний свет особенно красив.",
+      g2_title:"Фильтр-кофе", g2_cap:"Каждая чашка готовится бережно, капля за каплей.",
+      g3_title:"Домашняя выпечка", g3_cap:"Каждое утро свежая, приготовлена на нашей кухне.",
+      g4_title:"Тихий уголок", g4_cap:"Наедине с книгой или просто с самим собой.",
+      menu_heading:"Меню", menu_tab_hot:"Горячие напитки", menu_tab_cold:"Холодные напитки", menu_tab_sweet:"Десерты и снеки",
+      mi_filtre:"Фильтр-кофе", mi_americano:"Американо", mi_cappuccino:"Капучино", mi_latte:"Латте",
+      mi_sicakcikolata:"Горячий шоколад", mi_bitkicayi:"Травяной чай", mi_coldbrew:"Колд брю", mi_icelatte:"Айс латте",
+      mi_limonata:"Лимонад", mi_frozenkaramel:"Фрозен карамель", mi_cheesecake:"Чизкейк", mi_brownie:"Брауни",
+      mi_kruvasan:"Круассан", mi_simit:"Симит с сырной тарелкой",
+      qr_heading:"Смотрите со своего столика", qr_desc:"Отсканируйте QR-код камерой телефона — меню откроется мгновенно.",
+      hours_heading:"Часы работы", hours_weekday:"Понедельник – пятница", hours_weekend:"Суббота – воскресенье",
+      location_heading:"Расположение", location_note:"(пример / вымышленное место)",
+      contact_eyebrow:"Контакты", contact_heading:"Загляните к нам", contact_subtext:"Пишите нам по вопросам и для бронирования.",
+      contact_whatsapp_btn:"Написать в WhatsApp",
+      footer_disclaimer:"Это демонстрационный сайт. Kahve Molası — вымышленное заведение, не связанное с реальным местом.",
+      footer_credit:'🌙 Это демо создано <span class="footer-cta">Gece Web Atölyesi</span> — хотите такой же сайт для своего бизнеса? Instagram: @gecewebatolyesi'
+    }
+  };
+
+  function applyLanguage(lang){
+    LANG = lang;
+    var dict = TRANSLATIONS[lang] || TRANSLATIONS.tr;
+    document.querySelectorAll('[data-i18n]').forEach(function(elm){
+      var key = elm.getAttribute('data-i18n');
+      if (dict[key] != null) elm.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(elm){
+      var key = elm.getAttribute('data-i18n-html');
+      if (dict[key] != null) elm.innerHTML = dict[key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.setAttribute('lang', lang);
+  }
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ applyLanguage(btn.getAttribute('data-lang')); });
+  });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
   // QR code -> points to menu.html next to this file, works on any domain/folder it's hosted in
