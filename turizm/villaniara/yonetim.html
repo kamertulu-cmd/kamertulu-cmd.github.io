@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yönetim Paneli (Demo) | Villaniara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-sea:#0d2438; --night-deep:#081824; --panel:#123048;
+    --terrace-gold:#e2a857; --gold-deep:#c78938; --bougainvillea:#c9707a;
+    --limewash:#ece6d8; --stone-dim:#a9b8bb; --rule:#1f4560;
+    --ok:#7fae8e; --no:#c9707a;
+    --max:1000px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--night-sea);color:var(--limewash);font-family:'Outfit',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Cormorant',serif;margin:0;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:var(--max);margin-inline:auto;padding-inline:1.5rem;}
+  a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--terrace-gold);outline-offset:2px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .eyebrow{display:inline-block;font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--terrace-gold);margin-bottom:.5rem;}
+  .icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem 0;background:rgba(8,24,36,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:1160px;margin-inline:auto;padding-inline:1.5rem;}
+  .logo{display:flex;align-items:center;gap:.6rem;font-family:'Cormorant',serif;font-weight:700;font-size:1.4rem;}
+  .logo svg{width:22px;height:27px;}
+  .back-link{font-size:.9rem;color:var(--stone-dim);font-weight:500;}
+  .back-link:hover{color:var(--limewash);}
+  .demo-tag{background:var(--bougainvillea);color:var(--night-deep);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .6rem;border-radius:100px;}
+
+  .panel-hero{padding:8rem 0 2rem;}
+  .panel-hero h1{font-weight:700;font-size:clamp(2rem,5vw,2.8rem);margin-bottom:.6rem;}
+  .panel-hero p{color:var(--stone-dim);max-width:38rem;}
+
+  section.block{padding:2.5rem 0;border-top:1px solid var(--rule);}
+  .section-title{font-weight:600;font-size:1.6rem;margin-bottom:1.3rem;}
+
+  .app-card{background:var(--panel);border:1px solid var(--rule);border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center;transition:opacity .3s ease;}
+  .app-card.decided{opacity:.55;}
+  .app-info h3{font-size:1.2rem;font-weight:600;margin-bottom:.3rem;}
+  .app-meta{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.82rem;color:var(--stone-dim);}
+  .app-meta span{display:flex;align-items:center;gap:.35rem;}
+  .app-actions{display:flex;gap:.6rem;align-items:center;flex-shrink:0;}
+  .btn-sm{padding:.55rem 1.1rem;border-radius:100px;font-weight:600;font-size:.85rem;cursor:pointer;border:1.5px solid transparent;}
+  .btn-approve{background:var(--ok);color:var(--night-deep);}
+  .btn-reject{background:transparent;border-color:var(--no);color:var(--no);}
+  .status-badge{font-size:.85rem;font-weight:600;padding:.4rem .9rem;border-radius:100px;}
+  .status-badge.approved{background:rgba(127,174,142,.15);color:var(--ok);}
+  .status-badge.rejected{background:rgba(201,112,122,.15);color:var(--no);}
+
+  .villa-select-row{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;margin-bottom:1.4rem;}
+  .villa-select-row select{background:var(--panel);border:1px solid var(--rule);color:var(--limewash);border-radius:10px;padding:.6rem .9rem;font-family:'Outfit',sans-serif;font-size:.9rem;}
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+  .cal-head h3{font-size:1.2rem;font-weight:600;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;}
+  .cal-dow{text-align:center;font-size:.7rem;color:var(--stone-dim);text-transform:uppercase;letter-spacing:.06em;padding-bottom:.3rem;}
+  .cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-family:'IBM Plex Mono',monospace;font-size:.88rem;background:var(--panel);border:1.5px solid var(--rule);cursor:pointer;color:var(--limewash);}
+  .cal-day.blocked{background:rgba(201,112,122,.15);border-color:var(--bougainvillea);color:var(--bougainvillea);text-decoration:line-through;}
+  .cal-day.empty{background:none;border:none;cursor:default;}
+  .cal-legend{display:flex;gap:1.3rem;margin-top:1rem;font-size:.8rem;color:var(--stone-dim);}
+  .cal-legend span{display:flex;align-items:center;gap:.4rem;}
+  .dot{width:10px;height:10px;border-radius:3px;display:inline-block;}
+  .cal-hint{font-size:.8rem;color:var(--stone-dim);margin-top:1rem;}
+  .cal-hint strong{color:var(--terrace-gold);}
+
+  .site-footer{padding:2.8rem 1.5rem;text-align:center;border-top:1px solid var(--rule);}
+  .site-footer p{margin:.4rem 0;font-size:.8rem;color:var(--stone-dim);}
+  .site-footer .credit{color:var(--terrace-gold);font-weight:600;}
+
+  @media (max-width:640px){ .app-card{flex-direction:column;align-items:flex-start;} .app-actions{width:100%;} .btn-sm{flex:1;} }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 60 72" aria-hidden="true"><path d="M4,70 V34 C4,14 16,4 30,4 C44,4 56,14 56,34 V70" fill="none" stroke="#e2a857" stroke-width="4"/><line x1="4" y1="70" x2="56" y2="70" stroke="#e2a857" stroke-width="4"/></svg>
+      Villaniara
+    </a>
+    <a href="index.html" class="back-link">← Siteye Dön</a>
+  </div>
+</header>
+
+<main class="container">
+  <div class="panel-hero">
+    <span class="eyebrow">İç Kullanım</span>
+    <h1>Yönetim Paneli <span class="demo-tag">DEMO</span></h1>
+    <p>Bu ekran, ekibin başvuruları nasıl değerlendirdiğini ve villa müsaitliğini nasıl yönettiğini gösteren bir örnektir. Değişiklikler yalnızca bu oturumda geçerlidir, kaydedilmez.</p>
+  </div>
+
+  <section class="block" id="applications">
+    <h2 class="section-title">Bekleyen Başvurular</h2>
+    <div id="app-list"></div>
+  </section>
+
+  <section class="block">
+    <h2 class="section-title">Villa Müsaitlik Yönetimi</h2>
+    <div class="villa-select-row">
+      <label for="villa-select" style="color:var(--stone-dim);font-size:.85rem;">Villa:</label>
+      <select id="villa-select">
+        <option value="TR-BDR-4471">Sunset Terrace — Bodrum</option>
+        <option value="TR-KLK-2290">Villa Zeytin — Kalkan</option>
+        <option value="TR-FTY-3157">Mavi Yakamoz — Fethiye</option>
+      </select>
+    </div>
+    <div class="cal-head"><h3 id="cal-month-label">Ay</h3></div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-legend">
+      <span><span class="dot" style="background:var(--panel);border:1.5px solid var(--rule);"></span>Müsait</span>
+      <span><span class="dot" style="background:rgba(201,112,122,.25);border:1.5px solid var(--bougainvillea);"></span>Kapalı</span>
+    </div>
+    <p class="cal-hint">Bir güne tıklayarak <strong>açık / kapalı</strong> durumunu değiştirebilirsiniz — villa başka bir kanaldan (Airbnb, doğrudan misafir vb.) kiralandığında burayı kullanın.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>🌙 Bu site <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır — portföy amaçlı bir demodur.</p>
+</footer>
+
+<script>
+  var APPLICATIONS = [
+    { name:"Ahmet Kaya", villa:"Mavi Rüzgar", location:"Çeşme", phone:"0532 xxx xx xx", commission:15, when:"2 gün önce" },
+    { name:"Elif Şahin", villa:"Zeytinlik Ev", location:"Kalkan", phone:"0533 xxx xx xx", commission:18, when:"5 saat önce" },
+    { name:"Can Öztürk", villa:"Deniz Fenerine Bakan", location:"Fethiye", phone:"0535 xxx xx xx", commission:12, when:"1 gün önce" }
+  ];
+
+  var appList = document.getElementById('app-list');
+  appList.innerHTML = APPLICATIONS.map(function(a, i){
+    return '<div class="app-card" id="app-' + i + '">' +
+      '<div class="app-info"><h3>' + a.villa + '</h3>' +
+      '<div class="app-meta">' +
+        '<span>' + a.name + '</span>' +
+        '<span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>' + a.location + '</span>' +
+        '<span>' + a.phone + '</span>' +
+        '<span>Komisyon: %' + a.commission + '</span>' +
+        '<span>' + a.when + '</span>' +
+      '</div></div>' +
+      '<div class="app-actions" id="app-actions-' + i + '">' +
+        '<button type="button" class="btn-sm btn-approve" onclick="decide(' + i + ', true)">Onayla</button>' +
+        '<button type="button" class="btn-sm btn-reject" onclick="decide(' + i + ', false)">Reddet</button>' +
+      '</div></div>';
+  }).join('');
+
+  function decide(i, approved){
+    var card = document.getElementById('app-' + i);
+    var actions = document.getElementById('app-actions-' + i);
+    card.classList.add('decided');
+    actions.innerHTML = approved
+      ? '<span class="status-badge approved">✓ Onaylandı</span>'
+      : '<span class="status-badge rejected">✗ Reddedildi</span>';
+  }
+
+  function seededRandom(str){
+    var h = 0;
+    for (var i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) >>> 0; }
+    return (h % 1000) / 1000;
+  }
+  var MONTH_NAMES = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  var DOW_LABELS = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+
+  var villaSelect = document.getElementById('villa-select');
+  var calGrid = document.getElementById('cal-grid');
+  var calMonthLabel = document.getElementById('cal-month-label');
+
+  function renderCalendar(villaLicense){
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth();
+    calMonthLabel.textContent = MONTH_NAMES[month] + ' ' + year;
+
+    var firstDay = new Date(year, month, 1);
+    var daysInMonth = new Date(year, month+1, 0).getDate();
+    var startWeekday = (firstDay.getDay() + 6) % 7;
+
+    var html = DOW_LABELS.map(function(l){ return '<div class="cal-dow">' + l + '</div>'; }).join('');
+    for (var i=0; i<startWeekday; i++){ html += '<div class="cal-day empty"></div>'; }
+    for (var d=1; d<=daysInMonth; d++){
+      var blocked = seededRandom(villaLicense + '-availability-' + year + '-' + month + '-' + d) < 0.3;
+      html += '<button type="button" class="cal-day' + (blocked ? ' blocked' : '') + '" data-day="' + d + '">' + d + '</button>';
+    }
+    calGrid.innerHTML = html;
+
+    calGrid.querySelectorAll('.cal-day:not(.empty)').forEach(function(btn){
+      btn.addEventListener('click', function(){ btn.classList.toggle('blocked'); });
+    });
+  }
+
+  renderCalendar(villaSelect.value);
+  villaSelect.addEventListener('change', function(){ renderCalendar(villaSelect.value); });
+</script>
+</body>
+</html>

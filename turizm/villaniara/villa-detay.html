@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunset Terrace — Bodrum | Villaniara</title>
+<meta name="description" content="Bodrum'da 8 misafirlik, lisanslı özel villa. Deniz manzaralı teras, özel havuz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-sea:#0d2438; --night-deep:#081824; --panel:#123048;
+    --terrace-gold:#e2a857; --gold-deep:#c78938; --bougainvillea:#c9707a;
+    --limewash:#ece6d8; --stone-dim:#a9b8bb; --rule:#1f4560;
+    --max:1160px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--night-sea);color:var(--limewash);font-family:'Outfit',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Cormorant',serif;margin:0;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;margin:0;padding:0;}
+  .container{max-width:var(--max);margin-inline:auto;padding-inline:1.5rem;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--terrace-gold);outline-offset:3px;border-radius:2px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .eyebrow{display:inline-block;font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--terrace-gold);margin-bottom:.7rem;}
+  .section-title{font-weight:600;font-size:clamp(1.7rem,4vw,2.3rem);color:var(--limewash);margin-bottom:1.3rem;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.7rem;border-radius:100px;font-weight:600;font-size:.95rem;cursor:pointer;border:1.5px solid transparent;transition:transform .2s ease, background .2s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--terrace-gold);color:var(--night-deep);}
+  .btn-primary:hover{background:var(--gold-deep);}
+  .btn-secondary{background:transparent;border-color:var(--stone-dim);color:var(--limewash);}
+  .btn[disabled]{opacity:.5;cursor:not-allowed;transform:none;}
+  .icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem 0;background:rgba(8,24,36,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .logo{display:flex;align-items:center;gap:.6rem;font-family:'Cormorant',serif;font-weight:700;font-size:1.4rem;color:var(--limewash);}
+  .logo svg{width:22px;height:27px;}
+  .back-link{font-size:.9rem;color:var(--stone-dim);font-weight:500;}
+  .back-link:hover{color:var(--limewash);}
+
+  .villa-hero{padding:8rem 0 3rem;}
+  .hero-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:1.6rem;}
+  .villa-hero h1{font-weight:700;font-size:clamp(2.2rem,5vw,3.2rem);}
+  .license-chip{display:inline-flex;align-items:center;gap:.5rem;background:var(--panel);border:1px solid var(--terrace-gold);border-radius:100px;padding:.5rem 1.1rem;font-size:.82rem;}
+  .license-chip .icon{stroke:var(--terrace-gold);width:16px;height:16px;}
+  .license-chip .mono{color:var(--terrace-gold);font-weight:600;}
+
+  .scene-wrap{border-radius:28px;overflow:hidden;border:1px solid var(--rule);margin-bottom:2.5rem;}
+  .meta-row{display:flex;gap:1.6rem;flex-wrap:wrap;color:var(--stone-dim);font-size:.92rem;margin-bottom:.5rem;}
+  .meta-row span{display:flex;align-items:center;gap:.4rem;}
+
+  .detail-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:3rem;padding:3rem 0;border-top:1px solid var(--rule);}
+  .detail-grid p{color:var(--stone-dim);margin:0 0 1rem;}
+  .facts-card{background:var(--panel);border:1px solid var(--rule);border-radius:20px;padding:1.6rem;height:fit-content;}
+  .facts-row{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px dashed var(--rule);font-size:.9rem;}
+  .facts-row:last-child{border-bottom:none;}
+  .facts-row span:first-child{color:var(--stone-dim);}
+  .facts-row span:last-child{font-weight:600;}
+
+  .pricing{padding:3rem 0;border-top:1px solid var(--rule);}
+  .price-table{width:100%;border-collapse:collapse;margin-top:1.2rem;}
+  .price-table th{text-align:left;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--stone-dim);font-weight:600;padding:.7rem 0;border-bottom:1px solid var(--rule);}
+  .price-table td{padding:1rem 0;border-bottom:1px solid var(--rule);}
+  .price-table td:last-child{text-align:right;font-weight:600;color:var(--terrace-gold);}
+
+  .amenities{padding:3rem 0;border-top:1px solid var(--rule);}
+  .amenity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:1.2rem;}
+  .amenity{display:flex;align-items:center;gap:.7rem;background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:.9rem 1.1rem;font-size:.9rem;}
+  .amenity .icon{stroke:var(--terrace-gold);flex-shrink:0;}
+
+  .availability{padding:3rem 0;border-top:1px solid var(--rule);}
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;}
+  .cal-head h3{font-size:1.3rem;font-weight:600;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;}
+  .cal-dow{text-align:center;font-size:.72rem;color:var(--stone-dim);text-transform:uppercase;letter-spacing:.06em;padding-bottom:.4rem;}
+  .cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-family:'IBM Plex Mono',monospace;font-size:.9rem;background:var(--panel);border:1.5px solid var(--rule);cursor:pointer;color:var(--limewash);}
+  .cal-day.blocked{opacity:.35;cursor:not-allowed;text-decoration:line-through;}
+  .cal-day.selected{background:var(--terrace-gold);color:var(--night-deep);border-color:var(--terrace-gold);}
+  .cal-day.empty{background:none;border:none;cursor:default;}
+  .cal-legend{display:flex;gap:1.3rem;margin-top:1rem;font-size:.8rem;color:var(--stone-dim);}
+  .cal-legend span{display:flex;align-items:center;gap:.4rem;}
+  .dot{width:10px;height:10px;border-radius:3px;display:inline-block;}
+
+  .reserve-band{padding:4rem 0 5rem;text-align:center;}
+  .reserve-card{max-width:560px;margin-inline:auto;border:1px solid var(--terrace-gold);border-radius:24px;padding:2.6rem 2rem;background:radial-gradient(60% 100% at 50% 0%, rgba(226,168,87,.1), transparent 70%);}
+  .reserve-card p{color:var(--stone-dim);margin:.6rem 0 1.6rem;}
+  #selected-date-note{font-size:.85rem;color:var(--terrace-gold);margin-bottom:1rem;min-height:1.2em;}
+
+  .site-footer{padding:2.8rem 1.5rem;text-align:center;border-top:1px solid var(--rule);}
+  .site-footer p{margin:.4rem 0;font-size:.82rem;color:var(--stone-dim);}
+  .site-footer .credit{color:var(--terrace-gold);font-weight:600;}
+
+  @media (max-width:860px){ .detail-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 60 72" aria-hidden="true"><path d="M4,70 V34 C4,14 16,4 30,4 C44,4 56,14 56,34 V70" fill="none" stroke="#e2a857" stroke-width="4"/><line x1="4" y1="70" x2="56" y2="70" stroke="#e2a857" stroke-width="4"/></svg>
+      Villaniara
+    </a>
+    <a href="index.html#villalar" class="back-link">← Tüm Villalar</a>
+  </div>
+</header>
+
+<main>
+  <section class="villa-hero container">
+    <div class="hero-top">
+      <div>
+        <span class="eyebrow">Bodrum</span>
+        <h1>Sunset Terrace</h1>
+      </div>
+      <div class="license-chip">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,12 l2,2 l4,-4"/><circle cx="12" cy="12" r="9"/></svg>
+        Turizm İşletme Lisans No: <span class="mono">TR-BDR-4471</span>
+      </div>
+    </div>
+    <div class="meta-row">
+      <span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17,10 a4,4 0 1 0 -8,0 a4,4 0 0 0 8,0 Z"/><path d="M3,20 c0,-4 4,-6 10,-6 s10,2 10,6"/></svg>8 misafir</span>
+      <span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="18" height="9" rx="1.5"/><path d="M3,10 V7 a2,2 0 0 1 2,-2 h4 v5"/><path d="M12,10 V5 h5 a2,2 0 0 1 2,2 v3"/></svg>4 yatak odası</span>
+      <span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>Bodrum, Muğla</span>
+    </div>
+
+    <div class="scene-wrap">
+      <svg viewBox="0 0 1160 420" preserveAspectRatio="xMidYMid slice" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a3f5c"/><stop offset="60%" stop-color="#0d2438"/><stop offset="100%" stop-color="#081824"/>
+          </linearGradient>
+        </defs>
+        <rect width="1160" height="420" fill="url(#dg)"/>
+        <circle cx="1000" cy="80" r="26" fill="#ece6d8"/><circle cx="1012" cy="70" r="22" fill="#0d2438"/>
+        <circle cx="150" cy="60" r="1.6" fill="#ece6d8"/><circle cx="300" cy="100" r="1.3" fill="#ece6d8"/><circle cx="500" cy="50" r="1.4" fill="#ece6d8"/>
+        <rect x="0" y="230" width="1160" height="90" fill="#081824"/>
+        <rect x="120" y="255" width="34" height="46" rx="2" fill="#e2a857" opacity=".85"/>
+        <rect x="180" y="255" width="34" height="46" rx="2" fill="#e2a857" opacity=".4"/>
+        <rect x="900" y="255" width="34" height="46" rx="2" fill="#e2a857" opacity=".7"/>
+        <rect x="960" y="255" width="34" height="46" rx="2" fill="#e2a857" opacity=".5"/>
+        <rect x="0" y="320" width="1160" height="100" fill="#123048"/>
+        <rect x="0" y="320" width="1160" height="6" fill="#e2a857" opacity=".6"/>
+        <path d="M60,300 Q580,250 1100,300" fill="none" stroke="#4a6478" stroke-width="2"/>
+        <circle cx="150" cy="285" r="4" fill="#e2a857"/><circle cx="350" cy="265" r="4" fill="#e2a857"/><circle cx="580" cy="255" r="4" fill="#e2a857"/><circle cx="810" cy="265" r="4" fill="#e2a857"/><circle cx="1010" cy="285" r="4" fill="#e2a857"/>
+      </svg>
+    </div>
+
+    <div class="detail-grid">
+      <div>
+        <h2 class="section-title">Villa Hakkında</h2>
+        <p>Sunset Terrace, Bodrum'un sakin bir koyunda, gün batımına dönük geniş bir terasa sahip. Özel havuz, deniz manzaralı yatak odaları ve gecenin serinliğinde oturup sohbet edebileceğiniz bir pergola köşesi sizi bekliyor.</p>
+        <p>Villa, 4 yatak odası ve 8 kişilik kapasitesiyle geniş aileler veya arkadaş grupları için uygun. Günlük temizlik hizmeti talep üzerine sağlanabilir.</p>
+      </div>
+      <div class="facts-card">
+        <div class="facts-row"><span>Misafir</span><span>8 kişi</span></div>
+        <div class="facts-row"><span>Yatak Odası</span><span>4</span></div>
+        <div class="facts-row"><span>Bölge</span><span>Bodrum</span></div>
+        <div class="facts-row"><span>Lisans No</span><span class="mono">TR-BDR-4471</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing container">
+    <span class="eyebrow">Fiyatlandırma</span>
+    <h2 class="section-title">Dönemsel Fiyatlar</h2>
+    <table class="price-table">
+      <thead><tr><th>Dönem</th><th>Tarih Aralığı</th><th>Gecelik</th></tr></thead>
+      <tbody>
+        <tr><td>Yüksek Sezon</td><td>01 Haziran – 15 Eylül</td><td class="mono">22.000₺</td></tr>
+        <tr><td>Ara Sezon</td><td>16 Eylül – 31 Ekim, 01 Nisan – 31 Mayıs</td><td class="mono">16.500₺</td></tr>
+        <tr><td>Düşük Sezon</td><td>01 Kasım – 31 Mart</td><td class="mono">11.900₺</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="amenities container">
+    <span class="eyebrow">Olanaklar</span>
+    <h2 class="section-title">Villada Neler Var</h2>
+    <div class="amenity-grid">
+      <div class="amenity"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2,17 q2,-3 4,0 t4,0 t4,0 t4,0"/><path d="M2,21 q2,-3 4,0 t4,0 t4,0 t4,0"/><circle cx="18" cy="6" r="3"/></svg>Özel Havuz</div>
+      <div class="amenity"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>Deniz Manzarası</div>
+      <div class="amenity"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5,12 a7,7 0 0 1 14,0"/><path d="M2,12 a10,10 0 0 1 20,0"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>Ücretsiz Wi-Fi</div>
+      <div class="amenity"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Mutfak</div>
+      <div class="amenity"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3,9 h18"/></svg>Özel Otopark</div>
+      <div class="amenity"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,3 v3 M12,18 v3 M3,12 h3 M18,12 h3"/><circle cx="12" cy="12" r="5"/></svg>Klima</div>
+    </div>
+  </section>
+
+  <section class="availability container">
+    <span class="eyebrow">Müsaitlik</span>
+    <div class="cal-head">
+      <h3 id="cal-month-label">Ay</h3>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-legend">
+      <span><span class="dot" style="background:var(--panel);border:1.5px solid var(--rule);"></span>Müsait</span>
+      <span><span class="dot" style="background:var(--rule);opacity:.5;"></span>Dolu</span>
+      <span><span class="dot" style="background:var(--terrace-gold);"></span>Seçili</span>
+    </div>
+  </section>
+
+  <section class="reserve-band container">
+    <div class="reserve-card">
+      <span class="eyebrow">Rezervasyon</span>
+      <h2 class="section-title">Bu Villada Kalmak İster misiniz?</h2>
+      <p>Takvimden bir giriş tarihi seçin, WhatsApp'tan bize ulaşın.</p>
+      <p id="selected-date-note"></p>
+      <a href="#" id="whatsapp-reserve" class="btn btn-primary" target="_blank" rel="noopener">WhatsApp'tan Rezervasyon Talep Et</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>🌙 Bu site <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır — portföy amaçlı bir demodur.</p>
+  <p>Villaniara kurgusal bir işletmedir; villa, fiyat ve lisans bilgileri örnek amaçlıdır.</p>
+</footer>
+
+<script>
+  var VILLA_NAME = "Sunset Terrace";
+  var VILLA_LICENSE = "TR-BDR-4471";
+  var WHATSAPP_NUMBER = "905000000000";
+  var MONTH_NAMES = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  var DOW_LABELS = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+
+  function seededRandom(str){
+    var h = 0;
+    for (var i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) >>> 0; }
+    return (h % 1000) / 1000;
+  }
+
+  var today = new Date();
+  var year = today.getFullYear();
+  var month = today.getMonth();
+  document.getElementById('cal-month-label').textContent = MONTH_NAMES[month] + ' ' + year;
+
+  var firstDay = new Date(year, month, 1);
+  var daysInMonth = new Date(year, month+1, 0).getDate();
+  var startWeekday = (firstDay.getDay() + 6) % 7;
+
+  var html = DOW_LABELS.map(function(l){ return '<div class="cal-dow">' + l + '</div>'; }).join('');
+  for (var i=0; i<startWeekday; i++){ html += '<div class="cal-day empty"></div>'; }
+  for (var d=1; d<=daysInMonth; d++){
+    var occupied = seededRandom(VILLA_LICENSE + '-availability-' + year + '-' + month + '-' + d) < 0.3;
+    html += '<button type="button" class="cal-day' + (occupied ? ' blocked' : '') + '" data-day="' + d + '"' + (occupied ? ' disabled' : '') + '>' + d + '</button>';
+  }
+  document.getElementById('cal-grid').innerHTML = html;
+
+  var selectedDay = null;
+  var waLink = document.getElementById('whatsapp-reserve');
+  var noteEl = document.getElementById('selected-date-note');
+
+  function buildWhatsappUrl(){
+    var lines = ["Merhaba, Villaniara üzerinden " + VILLA_NAME + " için rezervasyon talebim var.", ''];
+    lines.push('Lisans No: ' + VILLA_LICENSE);
+    if (selectedDay){
+      lines.push('Tercih edilen giriş tarihi: ' + selectedDay + ' ' + MONTH_NAMES[month] + ' ' + year);
+    }
+    lines.push('', 'Müsaitliği ve fiyatı teyit eder misiniz?');
+    return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+  }
+  waLink.href = buildWhatsappUrl();
+
+  document.querySelectorAll('.cal-day:not(.blocked):not(.empty)').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.cal-day').forEach(function(b){ b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      selectedDay = btn.getAttribute('data-day');
+      noteEl.textContent = 'Seçili giriş tarihi: ' + selectedDay + ' ' + MONTH_NAMES[month] + ' ' + year;
+      waLink.href = buildWhatsappUrl();
+    });
+  });
+</script>
+</body>
+</html>

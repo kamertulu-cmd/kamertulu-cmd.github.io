@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evinizi Listeleyin | Villaniara</title>
+<meta name="description" content="Villanızı Villaniara'da listeleyin — başvurunuz birkaç dakika sürer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-sea:#0d2438; --night-deep:#081824; --panel:#123048;
+    --terrace-gold:#e2a857; --gold-deep:#c78938; --bougainvillea:#c9707a;
+    --limewash:#ece6d8; --stone-dim:#a9b8bb; --rule:#1f4560;
+    --max:760px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--night-sea);color:var(--limewash);font-family:'Outfit',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Cormorant',serif;margin:0;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:var(--max);margin-inline:auto;padding-inline:1.5rem;}
+  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--terrace-gold);outline-offset:2px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .eyebrow{display:inline-block;font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--terrace-gold);margin-bottom:.7rem;}
+  .icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.1rem 0;background:rgba(8,24,36,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:1160px;margin-inline:auto;padding-inline:1.5rem;}
+  .logo{display:flex;align-items:center;gap:.6rem;font-family:'Cormorant',serif;font-weight:700;font-size:1.4rem;color:var(--limewash);}
+  .logo svg{width:22px;height:27px;}
+  .back-link{font-size:.9rem;color:var(--stone-dim);font-weight:500;}
+  .back-link:hover{color:var(--limewash);}
+
+  .form-hero{padding:8rem 0 2rem;text-align:center;}
+  .form-hero h1{font-weight:700;font-size:clamp(2.2rem,6vw,3rem);margin-bottom:.8rem;}
+  .form-hero p{color:var(--stone-dim);max-width:32rem;margin:0 auto;}
+
+  form{padding:1rem 0 5rem;}
+  fieldset{border:1px solid var(--rule);border-radius:18px;padding:1.6rem;margin:0 0 1.4rem;}
+  legend{padding:0 .6rem;font-family:'Cormorant',serif;font-weight:600;font-size:1.15rem;color:var(--terrace-gold);}
+  label{display:block;font-size:.85rem;color:var(--stone-dim);margin:1rem 0 .4rem;}
+  label:first-of-type{margin-top:0;}
+  input[type=text], input[type=tel], input[type=email], input[type=url], textarea{
+    width:100%;background:var(--night-deep);border:1px solid var(--rule);border-radius:10px;color:var(--limewash);
+    padding:.75rem .9rem;font-family:'Outfit',sans-serif;font-size:.95rem;
+  }
+  textarea{resize:vertical;min-height:100px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem;}
+  .period-row{display:grid;grid-template-columns:1fr 1fr .7fr auto;gap:.6rem;align-items:center;margin-bottom:.7rem;}
+  .period-row input{margin:0;}
+  .remove-period{background:var(--night-deep);border:1px solid var(--rule);color:var(--stone-dim);border-radius:8px;width:38px;height:38px;font-size:1.1rem;line-height:1;cursor:pointer;flex-shrink:0;}
+  .remove-period:hover{color:var(--bougainvillea);border-color:var(--bougainvillea);}
+  .add-period-btn{background:none;border:1.5px dashed var(--rule);color:var(--stone-dim);border-radius:10px;padding:.7rem;width:100%;font-family:'Outfit',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;margin-top:.3rem;}
+  .add-period-btn:hover{border-color:var(--terrace-gold);color:var(--terrace-gold);}
+  @media (max-width:600px){ .period-row{grid-template-columns:1fr;} .remove-period{width:100%;} }
+  .hint{font-size:.78rem;color:var(--stone-dim);margin-top:.4rem;line-height:1.5;}
+  .hint strong{color:var(--terrace-gold);font-weight:600;}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 1.8rem;border-radius:100px;font-weight:600;font-size:1rem;cursor:pointer;border:1.5px solid transparent;width:100%;transition:transform .2s ease, background .2s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--terrace-gold);color:var(--night-deep);}
+  .btn-primary:hover{background:var(--gold-deep);}
+  .btn-primary[disabled]{opacity:.5;cursor:not-allowed;transform:none;}
+
+  .confirm-note{display:none;margin-top:1.2rem;padding:1.1rem 1.3rem;border:1px solid var(--terrace-gold);border-radius:14px;background:rgba(226,168,87,.08);font-size:.88rem;color:var(--limewash);}
+  .confirm-note.show{display:block;}
+  .confirm-note .icon{stroke:var(--terrace-gold);margin-bottom:.5rem;}
+
+  .site-footer{padding:2.8rem 1.5rem;text-align:center;border-top:1px solid var(--rule);}
+  .site-footer p{margin:.4rem 0;font-size:.8rem;color:var(--stone-dim);}
+  .site-footer .credit{color:var(--terrace-gold);font-weight:600;}
+
+  @media (max-width:600px){ .row2, .row3{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 60 72" aria-hidden="true"><path d="M4,70 V34 C4,14 16,4 30,4 C44,4 56,14 56,34 V70" fill="none" stroke="#e2a857" stroke-width="4"/><line x1="4" y1="70" x2="56" y2="70" stroke="#e2a857" stroke-width="4"/></svg>
+      Villaniara
+    </a>
+    <a href="index.html" class="back-link">← Ana Sayfa</a>
+  </div>
+</header>
+
+<main class="container">
+  <div class="form-hero">
+    <span class="eyebrow">Ev Sahipleri İçin</span>
+    <h1>Evinizi Listeleyin</h1>
+    <p>Villanızı anlatın, biz doğru misafirle buluşturalım. Başvurunuz ekibimiz tarafından incelendikten sonra sizinle iletişime geçilir.</p>
+  </div>
+
+  <form id="apply-form">
+    <fieldset>
+      <legend>İletişim &amp; Hesap Bilgileri</legend>
+      <label for="f-name">Ad Soyad</label>
+      <input type="text" id="f-name" required>
+      <div class="row2">
+        <div>
+          <label for="f-phone">Telefon</label>
+          <input type="tel" id="f-phone" placeholder="05XX XXX XX XX" required>
+        </div>
+        <div>
+          <label for="f-email">E-posta</label>
+          <input type="email" id="f-email" required>
+        </div>
+      </div>
+      <label for="f-iban">Hesap Bilgileri (IBAN)</label>
+      <input type="text" id="f-iban" placeholder="TR__ ____ ____ ____ ____ ____ __">
+      <div class="hint">Komisyon sonrası ödemeleriniz bu hesaba yapılır. Bu bilgi yalnızca onay sonrası ekibimizle paylaşılır.</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Villa Bilgileri</legend>
+      <label for="f-villa-name">Villa Adı</label>
+      <input type="text" id="f-villa-name" required>
+      <label for="f-location">Konum</label>
+      <input type="text" id="f-location" placeholder="Örn: Bodrum, Yalıkavak" required>
+      <label for="f-desc">Villa Açıklaması</label>
+      <textarea id="f-desc" required></textarea>
+      <label for="f-video">Tanıtım Videosu (link)</label>
+      <input type="url" id="f-video" placeholder="YouTube veya Google Drive linki">
+      <div class="hint">Dosya yükleme yerine bir video linki paylaşmanız yeterli.</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Dönemsel Fiyatlar &amp; Komisyon</legend>
+      <label style="margin-top:0;">Dönemsel Fiyatlar</label>
+      <div class="hint" style="margin:0 0 .8rem;">Her satıra bir tarih aralığı ve o dönemin gecelik fiyatını girin. İhtiyaç kadar dönem ekleyebilirsiniz.</div>
+      <div id="periods-container"></div>
+      <button type="button" class="add-period-btn" id="add-period-btn">+ Yeni Dönem Ekle</button>
+      <label for="f-commission">Önerdiğiniz Komisyon Oranı (%)</label>
+      <input type="text" id="f-commission" placeholder="Örn: 15">
+      <div class="hint">Bu oran, Villaniara'nın her rezervasyondan alacağı pay için bir başlangıç noktasıdır — kesin oran görüşme sonrası netleşir.</div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary" id="submit-btn">Başvuruyu Gönder</button>
+    <div class="confirm-note" id="confirm-note">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9,12 l2,2 l4,-4"/><circle cx="12" cy="12" r="9"/></svg>
+      <div><strong>Başvurunuz alındı.</strong> WhatsApp üzerinden ekibimize iletildi — <strong id="confirm-email"></strong> adresine de bir onay e-postası gönderilecektir. En kısa sürede size dönüş yapacağız.</div>
+    </div>
+  </form>
+</main>
+
+<footer class="site-footer">
+  <p>🌙 Bu site <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır — portföy amaçlı bir demodur.</p>
+  <p>Bu form kurgusaldır; gönderiler gerçek bir veritabanına kaydedilmez.</p>
+</footer>
+
+<script>
+  var WHATSAPP_NUMBER = "905000000000";
+  var form = document.getElementById('apply-form');
+  var submitBtn = document.getElementById('submit-btn');
+  var confirmNote = document.getElementById('confirm-note');
+  var confirmEmail = document.getElementById('confirm-email');
+
+  function val(id){ return document.getElementById(id).value.trim(); }
+
+  var periodsContainer = document.getElementById('periods-container');
+  function addPeriodRow(){
+    var row = document.createElement('div');
+    row.className = 'period-row';
+    row.innerHTML =
+      '<input type="text" class="period-start" placeholder="Başlangıç (örn: 01 Haziran)">' +
+      '<input type="text" class="period-end" placeholder="Bitiş (örn: 15 Eylül)">' +
+      '<input type="text" class="period-price" placeholder="Gecelik ₺">' +
+      '<button type="button" class="remove-period" aria-label="Bu dönemi kaldır">&times;</button>';
+    row.querySelector('.remove-period').addEventListener('click', function(){ row.remove(); });
+    periodsContainer.appendChild(row);
+  }
+  for (var pi = 0; pi < 5; pi++){ addPeriodRow(); }
+  document.getElementById('add-period-btn').addEventListener('click', addPeriodRow);
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var periodLines = [];
+    document.querySelectorAll('.period-row').forEach(function(row){
+      var start = row.querySelector('.period-start').value.trim();
+      var end = row.querySelector('.period-end').value.trim();
+      var price = row.querySelector('.period-price').value.trim();
+      if (start || end || price){
+        periodLines.push('- ' + (start || '?') + ' – ' + (end || '?') + ': ' + (price || '?') + '₺/gece');
+      }
+    });
+    if (!periodLines.length) periodLines.push('- (belirtilmedi)');
+
+    var lines = [
+      "Merhaba, Villaniara'da villamı listelemek istiyorum.", '',
+      'Ad Soyad: ' + val('f-name'),
+      'Telefon: ' + val('f-phone'),
+      'E-posta: ' + val('f-email'),
+      '', 'Villa Adı: ' + val('f-villa-name'),
+      'Konum: ' + val('f-location'),
+      'Açıklama: ' + val('f-desc'),
+      'Video: ' + (val('f-video') || '(belirtilmedi)'),
+      '', 'Dönemsel Fiyatlar:'
+    ].concat(periodLines).concat([
+      '',
+      'Önerilen Komisyon: %' + (val('f-commission') || '-'),
+      '',
+      'Hesap Bilgisi (IBAN) ayrıca paylaşılacaktır.'
+    ]);
+    var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+
+    confirmEmail.textContent = val('f-email') || 'belirttiğiniz e-posta';
+    confirmNote.classList.add('show');
+    submitBtn.textContent = 'Başvuru Gönderildi ✓';
+    submitBtn.disabled = true;
+
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>
