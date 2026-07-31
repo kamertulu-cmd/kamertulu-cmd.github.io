@@ -62,10 +62,12 @@
   .hero .eyebrow{font-size:.85rem;}
   .hero h1{font-weight:700;font-size:clamp(2.8rem,8vw,4.6rem);line-height:1.05;margin-bottom:1rem;}
   .hero p.tagline{max-width:34rem;color:var(--stone-dim);font-size:1.1rem;margin:0 auto 2.2rem;}
-  .search-bar{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;background:var(--panel);border:1px solid var(--rule);border-radius:100px;padding:.6rem;}
-  .search-bar select, .search-bar input{background:none;border:none;color:var(--limewash);font-family:'Outfit',sans-serif;font-size:.92rem;padding:.5rem 1rem;}
+  .search-bar{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;align-items:center;background:var(--panel);border:1px solid var(--rule);border-radius:100px;padding:.6rem;}
+  .search-bar select, .search-bar input{background:none;border:none;color:var(--limewash);font-family:'Outfit',sans-serif;font-size:.92rem;padding:.5rem 1rem;color-scheme:dark;}
   .search-bar select:focus, .search-bar input:focus{outline:none;}
-  @media (max-width:640px){.search-bar{border-radius:20px;flex-direction:column;}}
+  .search-dates{display:flex;gap:.4rem;align-items:center;}
+  .search-dates[hidden]{display:none;}
+  @media (max-width:640px){.search-bar{border-radius:20px;flex-direction:column;} .search-dates{flex-direction:column;width:100%;} .search-dates input{width:100%;}}
 
   /* Regions */
   .regions{background:var(--night-deep);padding:6rem 0;}
@@ -129,10 +131,10 @@
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <nav id="nav-links">
-        <a href="#villalar">Villalar</a>
-        <a href="#bolgeler">Bölgeler</a>
-        <a href="basvuru.html">Evinizi Listeleyin</a>
-        <a href="#iletisim">İletişim</a>
+        <a href="#villalar" data-i18n="nav_villalar">Villalar</a>
+        <a href="#bolgeler" data-i18n="nav_bolgeler">Bölgeler</a>
+        <a href="basvuru.html" data-i18n="nav_list_home">Evinizi Listeleyin</a>
+        <a href="#iletisim" data-i18n="nav_contact">İletişim</a>
       </nav>
     </div>
   </div>
@@ -176,46 +178,49 @@
       </g>
     </svg>
     <span class="eyebrow">Bodrum &#183; Kalkan &#183; Fethiye &#183; Çeşme</span>
-    <h1>Ege'nin Özel Villalarında Tatil</h1>
-    <p class="tagline">Özenle seçilmiş, lisanslı villalarda; sadece size ait bir teras, sadece size ait bir gece.</p>
+    <h1 data-i18n="hero_h1">Ege'nin Özel Villalarında Tatil</h1>
+    <p class="tagline" data-i18n="hero_tagline">Özenle seçilmiş, lisanslı villalarda; sadece size ait bir teras, sadece size ait bir gece.</p>
     <div class="search-bar">
-      <select aria-label="Bölge">
-        <option>Bölge seçin</option>
+      <select id="search-region" aria-label="Bölge">
+        <option value="" data-i18n="search_region_default">Bölge seçin</option>
         <option>Bodrum</option>
         <option>Kalkan</option>
         <option>Fethiye</option>
         <option>Çeşme</option>
       </select>
-      <input type="text" placeholder="Tarih aralığı" aria-label="Tarih">
-      <a href="#villalar" class="btn btn-primary">Villa Bul</a>
+      <div class="search-dates" id="search-dates" hidden>
+        <input type="date" id="search-checkin" aria-label="Giriş Tarihi">
+        <input type="date" id="search-checkout" aria-label="Çıkış Tarihi">
+      </div>
+      <a href="#villalar" class="btn btn-primary" data-i18n="search_btn">Villa Bul</a>
     </div>
   </section>
 
   <section class="regions" id="bolgeler">
     <div class="container">
-      <span class="eyebrow">Bölgeler</span>
-      <h2 class="section-title">Nereye Gitmek İstersiniz?</h2>
-      <p class="section-lead">Her bölge kendi karakterini taşır — sakin bir koydan canlı bir marinaya.</p>
+      <span class="eyebrow" data-i18n="regions_eyebrow">Bölgeler</span>
+      <h2 class="section-title" data-i18n="regions_heading">Nereye Gitmek İstersiniz?</h2>
+      <p class="section-lead" data-i18n="regions_lead">Her bölge kendi karakterini taşır — sakin bir koydan canlı bir marinaya.</p>
       <div class="region-grid">
         <div class="region-card">
           <div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3,18 L9,9 L14,15 L17,11 L21,18 Z"/></svg></div>
           <h3>Bodrum</h3>
-          <p>Marina ve gün batımı</p>
+          <p data-i18n="region_bodrum">Marina ve gün batımı</p>
         </div>
         <div class="region-card">
           <div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2,16 Q6,10 12,16 T22,16"/><path d="M2,20 Q6,14 12,20 T22,20"/></svg></div>
           <h3>Kalkan</h3>
-          <p>Sakin koylar</p>
+          <p data-i18n="region_kalkan">Sakin koylar</p>
         </div>
         <div class="region-card">
           <div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12,3 L14,9 L20,9 L15,13 L17,19 L12,15 L7,19 L9,13 L4,9 L10,9 Z"/></svg></div>
           <h3>Fethiye</h3>
-          <p>Doğayla iç içe</p>
+          <p data-i18n="region_fethiye">Doğayla iç içe</p>
         </div>
         <div class="region-card">
           <div class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12,6 v6 l4,2"/></svg></div>
           <h3>Çeşme</h3>
-          <p>Rüzgar ve şarap bağları</p>
+          <p data-i18n="region_cesme">Rüzgar ve şarap bağları</p>
         </div>
       </div>
     </div>
@@ -223,9 +228,9 @@
 
   <section class="villas" id="villalar">
     <div class="container">
-      <span class="eyebrow">Öne Çıkanlar</span>
-      <h2 class="section-title">Seçili Villalar</h2>
-      <p class="section-lead">Tümü lisanslı, tümü doğrulanmış — sadece bir örnek seçki.</p>
+      <span class="eyebrow" data-i18n="villas_eyebrow">Öne Çıkanlar</span>
+      <h2 class="section-title" data-i18n="villas_heading">Seçili Villalar</h2>
+      <p class="section-lead" data-i18n="villas_lead">Tümü lisanslı, tümü doğrulanmış — sadece bir örnek seçki.</p>
       <div class="villa-grid" id="villa-grid"></div>
     </div>
   </section>
@@ -233,22 +238,23 @@
   <section class="list-cta">
     <div class="container">
       <div class="list-cta-card">
-        <span class="eyebrow">Ev Sahipleri İçin</span>
-        <h2 class="section-title">Villanız Boş mu Duruyor?</h2>
-        <p>Villanızı anlatın, biz doğru misafirle buluşturalım. Başvurunuz birkaç dakika sürer.</p>
-        <a href="basvuru.html" class="btn btn-primary">Evinizi Listeleyin</a>
+        <span class="eyebrow" data-i18n="listcta_eyebrow">Ev Sahipleri İçin</span>
+        <h2 class="section-title" data-i18n="listcta_heading">Villanız Boş mu Duruyor?</h2>
+        <p data-i18n="listcta_p">Villanızı anlatın, biz doğru misafirle buluşturalım. Başvurunuz birkaç dakika sürer.</p>
+        <a href="basvuru.html" class="btn btn-primary" data-i18n="nav_list_home">Evinizi Listeleyin</a>
       </div>
     </div>
   </section>
 </main>
 
 <footer class="site-footer" id="iletisim">
-  <p>🌙 Bu site <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır — portföy amaçlı bir demodur.</p>
-  <p>Villaniara kurgusal bir işletmedir; listelenen villalar ve lisans numaraları örnek amaçlıdır.</p>
+  <p data-i18n-html="footer_credit">🌙 Bu site <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır — portföy amaçlı bir demodur.</p>
+  <p data-i18n="footer_disclaimer">Villaniara kurgusal bir işletmedir; listelenen villalar ve lisans numaraları örnek amaçlıdır.</p>
   <p class="copy">© 2026 Villaniara</p>
 </footer>
 
 <script>
+  var LANG = 'tr';
   var VILLALAR = [
     { name:"Sunset Terrace", region:"Bodrum", guests:8, price:"18.500₺", license:"TR-BDR-4471" },
     { name:"Villa Zeytin", region:"Kalkan", guests:6, price:"14.200₺", license:"TR-KLK-2290" },
@@ -257,6 +263,73 @@
     { name:"Villa Defne", region:"Bodrum", guests:7, price:"16.900₺", license:"TR-BDR-4488" },
     { name:"Koy Manzara", region:"Kalkan", guests:9, price:"19.750₺", license:"TR-KLK-2311" }
   ];
+
+  var TRANSLATIONS = {
+    tr:{
+      nav_villalar:"Villalar", nav_bolgeler:"Bölgeler", nav_list_home:"Evinizi Listeleyin", nav_contact:"İletişim",
+      hero_h1:"Ege'nin Özel Villalarında Tatil",
+      hero_tagline:"Özenle seçilmiş, lisanslı villalarda; sadece size ait bir teras, sadece size ait bir gece.",
+      search_region_default:"Bölge seçin", search_btn:"Villa Bul",
+      regions_eyebrow:"Bölgeler", regions_heading:"Nereye Gitmek İstersiniz?",
+      regions_lead:"Her bölge kendi karakterini taşır — sakin bir koydan canlı bir marinaya.",
+      region_bodrum:"Marina ve gün batımı", region_kalkan:"Sakin koylar", region_fethiye:"Doğayla iç içe", region_cesme:"Rüzgar ve şarap bağları",
+      villas_eyebrow:"Öne Çıkanlar", villas_heading:"Seçili Villalar",
+      villas_lead:"Tümü lisanslı, tümü doğrulanmış — sadece bir örnek seçki.",
+      guest_label:"misafir", license_badge:"Lisanslı", per_night:"/ gece",
+      listcta_eyebrow:"Ev Sahipleri İçin", listcta_heading:"Villanız Boş mu Duruyor?",
+      listcta_p:"Villanızı anlatın, biz doğru misafirle buluşturalım. Başvurunuz birkaç dakika sürer.",
+      footer_credit:'🌙 Bu site <span class="credit">Gece Web Atölyesi</span> tarafından hazırlanmıştır — portföy amaçlı bir demodur.',
+      footer_disclaimer:"Villaniara kurgusal bir işletmedir; listelenen villalar ve lisans numaraları örnek amaçlıdır."
+    },
+    en:{
+      nav_villalar:"Villas", nav_bolgeler:"Regions", nav_list_home:"List Your Home", nav_contact:"Contact",
+      hero_h1:"A Holiday in the Aegean's Private Villas",
+      hero_tagline:"In carefully selected, licensed villas — a terrace all your own, a night all your own.",
+      search_region_default:"Select region", search_btn:"Find a Villa",
+      regions_eyebrow:"Regions", regions_heading:"Where Would You Like to Go?",
+      regions_lead:"Each region has its own character — from a quiet cove to a lively marina.",
+      region_bodrum:"Marina and sunsets", region_kalkan:"Quiet coves", region_fethiye:"Close to nature", region_cesme:"Wind and vineyards",
+      villas_eyebrow:"Featured", villas_heading:"Selected Villas",
+      villas_lead:"All licensed, all verified — just a sample selection.",
+      guest_label:"guests", license_badge:"Licensed", per_night:"/ night",
+      listcta_eyebrow:"For Homeowners", listcta_heading:"Is Your Villa Sitting Empty?",
+      listcta_p:"Tell us about your villa, and we'll match you with the right guests. Your application takes just a few minutes.",
+      footer_credit:'🌙 This site was made by <span class="credit">Gece Web Atölyesi</span> — a portfolio demo.',
+      footer_disclaimer:"Villaniara is a fictional business; listed villas and license numbers are for illustrative purposes."
+    },
+    de:{
+      nav_villalar:"Villen", nav_bolgeler:"Regionen", nav_list_home:"Ihr Zuhause listen", nav_contact:"Kontakt",
+      hero_h1:"Urlaub in den exklusiven Villen der Ägäis",
+      hero_tagline:"In sorgfältig ausgewählten, lizenzierten Villen — eine Terrasse nur für Sie, eine Nacht nur für Sie.",
+      search_region_default:"Region wählen", search_btn:"Villa finden",
+      regions_eyebrow:"Regionen", regions_heading:"Wohin möchten Sie reisen?",
+      regions_lead:"Jede Region hat ihren eigenen Charakter — von einer ruhigen Bucht bis zu einer lebendigen Marina.",
+      region_bodrum:"Marina und Sonnenuntergänge", region_kalkan:"Ruhige Buchten", region_fethiye:"Naturverbunden", region_cesme:"Wind und Weinberge",
+      villas_eyebrow:"Empfohlen", villas_heading:"Ausgewählte Villen",
+      villas_lead:"Alle lizenziert, alle geprüft — nur eine Beispielauswahl.",
+      guest_label:"Gäste", license_badge:"Lizenziert", per_night:"/ Nacht",
+      listcta_eyebrow:"Für Eigentümer", listcta_heading:"Steht Ihre Villa leer?",
+      listcta_p:"Erzählen Sie uns von Ihrer Villa, wir finden den richtigen Gast für Sie. Ihre Bewerbung dauert nur wenige Minuten.",
+      footer_credit:'🌙 Diese Seite wurde von <span class="credit">Gece Web Atölyesi</span> erstellt — eine Portfolio-Demo.',
+      footer_disclaimer:"Villaniara ist ein fiktives Unternehmen; die aufgeführten Villen und Lizenznummern dienen nur zur Veranschaulichung."
+    },
+    ru:{
+      nav_villalar:"Виллы", nav_bolgeler:"Регионы", nav_list_home:"Разместите свой дом", nav_contact:"Контакты",
+      hero_h1:"Отдых на частных виллах Эгейского моря",
+      hero_tagline:"В тщательно отобранных, лицензированных виллах — терраса только для вас, ночь только для вас.",
+      search_region_default:"Выберите регион", search_btn:"Найти виллу",
+      regions_eyebrow:"Регионы", regions_heading:"Куда бы вы хотели поехать?",
+      regions_lead:"У каждого региона свой характер — от тихой бухты до оживлённой марины.",
+      region_bodrum:"Марина и закаты", region_kalkan:"Тихие бухты", region_fethiye:"В гармонии с природой", region_cesme:"Ветер и виноградники",
+      villas_eyebrow:"Рекомендуемые", villas_heading:"Избранные виллы",
+      villas_lead:"Все лицензированы, все проверены — это лишь пример подборки.",
+      guest_label:"гостей", license_badge:"Лицензировано", per_night:"/ ночь",
+      listcta_eyebrow:"Для владельцев", listcta_heading:"Ваша вилла простаивает?",
+      listcta_p:"Расскажите нам о своей вилле, и мы найдём подходящего гостя. Заявка займёт всего несколько минут.",
+      footer_credit:'🌙 Этот сайт создан <span class="credit">Gece Web Atölyesi</span> — демонстрационное портфолио.',
+      footer_disclaimer:"Villaniara — вымышленная компания; перечисленные виллы и номера лицензий приведены в иллюстративных целях."
+    }
+  };
 
   function villaSceneSvg(seed){
     var hue = (seed * 47) % 360;
@@ -270,17 +343,63 @@
       '</svg>';
   }
 
-  document.getElementById('villa-grid').innerHTML = VILLALAR.map(function(v, i){
-    var href = v.name === 'Sunset Terrace' ? 'villa-detay.html' : '#';
-    return '<a class="villa-card" href="' + href + '">' +
-      '<div class="villa-scene">' + villaSceneSvg(i+1) + '</div>' +
-      '<div class="villa-body">' +
-      '<div class="villa-region">' + v.region + '</div>' +
-      '<h3>' + v.name + '</h3>' +
-      '<div class="villa-meta"><span>' + v.guests + ' misafir</span><span class="license-badge">Lisanslı</span></div>' +
-      '<div class="villa-price mono">' + v.price + ' <span>/ gece</span></div>' +
-      '</div></a>';
-  }).join('');
+  function renderVillaGrid(){
+    var dict = TRANSLATIONS[LANG] || TRANSLATIONS.tr;
+    document.getElementById('villa-grid').innerHTML = VILLALAR.map(function(v, i){
+      var href = v.name === 'Sunset Terrace' ? 'villa-detay.html' : '#';
+      return '<a class="villa-card" href="' + href + '">' +
+        '<div class="villa-scene">' + villaSceneSvg(i+1) + '</div>' +
+        '<div class="villa-body">' +
+        '<div class="villa-region">' + v.region + '</div>' +
+        '<h3>' + v.name + '</h3>' +
+        '<div class="villa-meta"><span>' + v.guests + ' ' + dict.guest_label + '</span><span class="license-badge">' + dict.license_badge + '</span></div>' +
+        '<div class="villa-price mono">' + v.price + ' <span>' + dict.per_night + '</span></div>' +
+        '</div></a>';
+    }).join('');
+  }
+
+  function applyLanguage(lang){
+    LANG = lang;
+    var dict = TRANSLATIONS[lang] || TRANSLATIONS.tr;
+    document.querySelectorAll('[data-i18n]').forEach(function(elm){
+      var key = elm.getAttribute('data-i18n');
+      if (dict[key] != null) elm.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(elm){
+      var key = elm.getAttribute('data-i18n-html');
+      if (dict[key] != null) elm.innerHTML = dict[key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    document.documentElement.setAttribute('lang', lang);
+    renderVillaGrid();
+  }
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ applyLanguage(btn.getAttribute('data-lang')); });
+  });
+
+  var regionSelect = document.getElementById('search-region');
+  var searchDates = document.getElementById('search-dates');
+  var checkinInput = document.getElementById('search-checkin');
+  var checkoutInput = document.getElementById('search-checkout');
+  var todayStr = new Date().toISOString().slice(0,10);
+  checkinInput.min = todayStr;
+  regionSelect.addEventListener('change', function(){
+    if (regionSelect.value){
+      searchDates.hidden = false;
+    } else {
+      searchDates.hidden = true;
+    }
+  });
+  checkinInput.addEventListener('change', function(){
+    var next = new Date(checkinInput.value);
+    next.setDate(next.getDate() + 1);
+    checkoutInput.min = next.toISOString().slice(0,10);
+    if (checkoutInput.value && checkoutInput.value <= checkinInput.value){
+      checkoutInput.value = next.toISOString().slice(0,10);
+    }
+  });
 
   var nav = document.querySelector('.site-nav');
   function onScroll(){ if (window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
@@ -290,6 +409,8 @@
     var o = links.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(o));
   });
   links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); }); });
+
+  applyLanguage('tr');
 </script>
 </body>
 </html>
