@@ -40,11 +40,25 @@
   section.block{padding:2.5rem 0;border-top:1px solid var(--rule);}
   .section-title{font-weight:600;font-size:1.6rem;margin-bottom:1.3rem;}
 
-  .app-card{background:var(--panel);border:1px solid var(--rule);border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center;transition:opacity .3s ease;}
+  .app-card{background:var(--panel);border:1px solid var(--rule);border-radius:16px;padding:1.5rem 1.7rem;margin-bottom:1.2rem;transition:opacity .3s ease;}
   .app-card.decided{opacity:.55;}
-  .app-info h3{font-size:1.2rem;font-weight:600;margin-bottom:.3rem;}
-  .app-meta{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.82rem;color:var(--stone-dim);}
-  .app-meta span{display:flex;align-items:center;gap:.35rem;}
+  .app-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.1rem;padding-bottom:1.1rem;border-bottom:1px solid var(--rule);}
+  .app-header h3{font-size:1.3rem;font-weight:600;margin-bottom:.3rem;}
+  .app-header .app-location{display:flex;align-items:center;gap:.35rem;font-size:.85rem;color:var(--stone-dim);}
+  .app-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem 1.6rem;margin-bottom:1.1rem;}
+  .app-field label{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--stone-dim);margin-bottom:.2rem;}
+  .app-field span{font-size:.92rem;color:var(--limewash);}
+  .app-desc{font-size:.88rem;color:var(--stone-dim);line-height:1.6;margin-bottom:1.1rem;}
+  .app-desc strong{color:var(--limewash);font-weight:600;}
+  .app-links{display:flex;gap:1rem;margin-bottom:1.1rem;font-size:.85rem;}
+  .app-links a{color:var(--terrace-gold);font-weight:600;}
+  .app-periods{margin-bottom:1.1rem;}
+  .app-periods label{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--stone-dim);margin-bottom:.4rem;}
+  .app-periods ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.3rem;}
+  .app-periods li{font-size:.88rem;color:var(--limewash);font-family:'IBM Plex Mono',monospace;}
+  .app-footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-top:1rem;border-top:1px solid var(--rule);}
+  .app-commission{font-size:.9rem;color:var(--terrace-gold);font-weight:600;}
+  .app-when{font-size:.78rem;color:var(--stone-dim);}
   .app-actions{display:flex;gap:.6rem;align-items:center;flex-shrink:0;}
   .btn-sm{padding:.55rem 1.1rem;border-radius:100px;font-weight:600;font-size:.85rem;cursor:pointer;border:1.5px solid transparent;}
   .btn-approve{background:var(--ok);color:var(--night-deep);}
@@ -56,6 +70,14 @@
   .villa-select-row{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;margin-bottom:1.4rem;}
   .villa-select-row select{background:var(--panel);border:1px solid var(--rule);color:var(--limewash);border-radius:10px;padding:.6rem .9rem;font-family:'Outfit',sans-serif;font-size:.9rem;}
   .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+
+  .res-card{background:var(--panel);border:1px solid var(--rule);border-radius:16px;padding:1.2rem 1.6rem;margin-bottom:.9rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;}
+  .res-main h3{font-size:1.1rem;font-weight:600;margin-bottom:.2rem;}
+  .res-meta{display:flex;flex-wrap:wrap;gap:1rem;font-size:.82rem;color:var(--stone-dim);}
+  .res-dates{font-family:'IBM Plex Mono',monospace;font-size:.9rem;color:var(--limewash);text-align:right;}
+  .res-total{color:var(--terrace-gold);font-weight:600;font-size:.95rem;}
+  .res-status{font-size:.78rem;font-weight:600;padding:.3rem .8rem;border-radius:100px;background:rgba(127,174,142,.15);color:var(--ok);white-space:nowrap;}
+  @media (max-width:640px){ .res-dates{text-align:left;} }
   .cal-head h3{font-size:1.2rem;font-weight:600;}
   .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;}
   .cal-dow{text-align:center;font-size:.7rem;color:var(--stone-dim);text-transform:uppercase;letter-spacing:.06em;padding-bottom:.3rem;}
@@ -72,7 +94,7 @@
   .site-footer p{margin:.4rem 0;font-size:.8rem;color:var(--stone-dim);}
   .site-footer .credit{color:var(--terrace-gold);font-weight:600;}
 
-  @media (max-width:640px){ .app-card{flex-direction:column;align-items:flex-start;} .app-actions{width:100%;} .btn-sm{flex:1;} }
+  @media (max-width:640px){ .app-header{flex-direction:column;} .app-footer{flex-direction:column;align-items:flex-start;} .app-actions{width:100%;} .btn-sm{flex:1;} }
 </style>
 </head>
 <body>
@@ -97,6 +119,11 @@
   <section class="block" id="applications">
     <h2 class="section-title">Bekleyen Başvurular</h2>
     <div id="app-list"></div>
+  </section>
+
+  <section class="block" id="reservations">
+    <h2 class="section-title">Gelen Rezervasyonlar</h2>
+    <div id="reservation-list"></div>
   </section>
 
   <section class="block">
@@ -125,26 +152,58 @@
 
 <script>
   var APPLICATIONS = [
-    { name:"Ahmet Kaya", villa:"Mavi Rüzgar", location:"Çeşme", phone:"0532 xxx xx xx", commission:15, when:"2 gün önce" },
-    { name:"Elif Şahin", villa:"Zeytinlik Ev", location:"Kalkan", phone:"0533 xxx xx xx", commission:18, when:"5 saat önce" },
-    { name:"Can Öztürk", villa:"Deniz Fenerine Bakan", location:"Fethiye", phone:"0535 xxx xx xx", commission:12, when:"1 gün önce" }
+    { name:"Ahmet Kaya", phone:"0532 445 12 87", email:"ahmet.kaya@example.com", iban:"TR12 0006 4000 0011 2345 6789 01",
+      villa:"Mavi Rüzgar", location:"Çeşme",
+      desc:"Rüzgar sörfçüleri için ideal, sahile 200m mesafede, 3 yatak odalı, geniş bahçeli bir ev.",
+      photos:"drive.google.com/mavi-ruzgar-fotograflar", video:"youtube.com/watch?v=ornek1",
+      periods:[{start:"01 Haziran", end:"15 Eylül", price:"12.500"}, {start:"01 Kasım", end:"31 Mart", price:"7.200"}],
+      commission:15, when:"2 gün önce" },
+    { name:"Elif Şahin", phone:"0533 218 90 45", email:"elif.sahin@example.com", iban:"TR33 0001 0012 3456 7890 12 34",
+      villa:"Zeytinlik Ev", location:"Kalkan",
+      desc:"Zeytin ağaçları arasında, deniz manzaralı, sakin bir tatil evi. Çiftler için uygun.",
+      photos:"drive.google.com/zeytinlik-ev-fotograflar", video:"",
+      periods:[{start:"01 Mayıs", end:"30 Eylül", price:"15.800"}],
+      commission:18, when:"5 saat önce" },
+    { name:"Can Öztürk", phone:"0535 762 33 10", email:"can.ozturk@example.com", iban:"TR55 0002 0006 5432 1098 76 54",
+      villa:"Deniz Fenerine Bakan", location:"Fethiye",
+      desc:"Tarihi deniz fenerine nazır, geniş teraslı, romantik bir kaçamak için ideal.",
+      photos:"drive.google.com/deniz-feneri-fotograflar", video:"youtube.com/watch?v=ornek2",
+      periods:[{start:"01 Haziran", end:"31 Ağustos", price:"18.200"}, {start:"01 Eylül", end:"31 Mayıs", price:"10.500"}],
+      commission:12, when:"1 gün önce" }
   ];
 
   var appList = document.getElementById('app-list');
   appList.innerHTML = APPLICATIONS.map(function(a, i){
+    var periodsHtml = a.periods.map(function(p){
+      return '<li>' + p.start + ' – ' + p.end + ': ' + p.price + '₺/gece</li>';
+    }).join('');
+    var linksHtml = '';
+    if (a.photos) linksHtml += '<a href="https://' + a.photos + '" target="_blank" rel="noopener">📷 Fotoğraflar</a>';
+    if (a.video) linksHtml += '<a href="https://' + a.video + '" target="_blank" rel="noopener">🎬 Video</a>';
+    if (!a.photos && !a.video) linksHtml = '<span style="color:var(--stone-dim);font-size:.85rem;">Fotoğraf/video paylaşılmadı</span>';
+
     return '<div class="app-card" id="app-' + i + '">' +
-      '<div class="app-info"><h3>' + a.villa + '</h3>' +
-      '<div class="app-meta">' +
-        '<span>' + a.name + '</span>' +
-        '<span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>' + a.location + '</span>' +
-        '<span>' + a.phone + '</span>' +
-        '<span>Komisyon: %' + a.commission + '</span>' +
-        '<span>' + a.when + '</span>' +
-      '</div></div>' +
-      '<div class="app-actions" id="app-actions-' + i + '">' +
-        '<button type="button" class="btn-sm btn-approve" onclick="decide(' + i + ', true)">Onayla</button>' +
-        '<button type="button" class="btn-sm btn-reject" onclick="decide(' + i + ', false)">Reddet</button>' +
-      '</div></div>';
+      '<div class="app-header">' +
+        '<div><h3>' + a.villa + '</h3><div class="app-location"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12,7 v5 l3,2"/></svg>' + a.location + '</div></div>' +
+        '<div class="app-actions" id="app-actions-' + i + '">' +
+          '<button type="button" class="btn-sm btn-approve" onclick="decide(' + i + ', true)">Onayla</button>' +
+          '<button type="button" class="btn-sm btn-reject" onclick="decide(' + i + ', false)">Reddet</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="app-fields">' +
+        '<div class="app-field"><label>Ad Soyad</label><span>' + a.name + '</span></div>' +
+        '<div class="app-field"><label>Telefon</label><span class="mono">' + a.phone + '</span></div>' +
+        '<div class="app-field"><label>E-posta</label><span>' + a.email + '</span></div>' +
+        '<div class="app-field"><label>IBAN</label><span class="mono">' + a.iban + '</span></div>' +
+      '</div>' +
+      '<div class="app-desc"><strong>Açıklama:</strong> ' + a.desc + '</div>' +
+      '<div class="app-links">' + linksHtml + '</div>' +
+      '<div class="app-periods"><label>Dönemsel Fiyatlar</label><ul>' + periodsHtml + '</ul></div>' +
+      '<div class="app-footer">' +
+        '<span class="app-commission">Önerilen Komisyon: %' + a.commission + '</span>' +
+        '<span class="app-when">' + a.when + '</span>' +
+      '</div>' +
+    '</div>';
   }).join('');
 
   function decide(i, approved){
@@ -155,6 +214,27 @@
       ? '<span class="status-badge approved">✓ Onaylandı</span>'
       : '<span class="status-badge rejected">✗ Reddedildi</span>';
   }
+
+  var RESERVATIONS = [
+    { villa:"Sunset Terrace", region:"Bodrum", guest:"Zeynep Arslan", email:"zeynep.a@example.com", phone:"0536 555 44 33",
+      checkin:"10 Ağustos 2026", checkout:"14 Ağustos 2026", nights:4, total:"88.000₺", status:"Onaylandı" },
+    { villa:"Villa Zeytin", region:"Kalkan", guest:"Murat Yıldız", email:"murat.y@example.com", phone:"0542 118 27 60",
+      checkin:"22 Ağustos 2026", checkout:"25 Ağustos 2026", nights:3, total:"49.500₺", status:"Onaylandı" },
+    { villa:"Mavi Yakamoz", region:"Fethiye", guest:"Selin Koç", email:"selin.koc@example.com", phone:"0554 903 77 12",
+      checkin:"05 Eylül 2026", checkout:"09 Eylül 2026", nights:4, total:"66.000₺", status:"Onaylandı" }
+  ];
+  var resList = document.getElementById('reservation-list');
+  resList.innerHTML = RESERVATIONS.map(function(r){
+    return '<div class="res-card">' +
+      '<div class="res-main"><h3>' + r.villa + '</h3>' +
+        '<div class="res-meta"><span>' + r.region + '</span><span>' + r.guest + '</span><span>' + r.phone + '</span><span>' + r.email + '</span></div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:1.2rem;">' +
+        '<div class="res-dates">' + r.checkin + ' → ' + r.checkout + '<br><span class="res-total">' + r.total + '</span> <span style="color:var(--stone-dim);font-size:.78rem;">(' + r.nights + ' gece)</span></div>' +
+        '<span class="res-status">' + r.status + '</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 
   function seededRandom(str){
     var h = 0;
