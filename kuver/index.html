@@ -1,1 +1,674 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Küver — Restoranlar için alerjen uyum platformu</title>
+<meta name="description" content="Küver, restoranların alerjen sorumluluğunu yöneten uyum platformudur. Malzeme bazlı alerjen takibi, QR menü ve denetime hazır kayıt.">
+<style>
+:root{
+  --ink:#16232B; --primary:#0F4C4A; --primary2:#1A6E6A; --accent:#C2571A;
+  --muted:#5D6B72; --light:#EEF3F2; --light2:#F7F9F9; --line:#DCE6E4;
+  --green:#1E7A4C; --red:#A32A22; --amber:#B07405; --white:#fff;
+  --radius:12px; --maxw:1140px;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{line-height:1.2;letter-spacing:-.02em}
 
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px;letter-spacing:-.03em;color:var(--primary)}
+.logo-mark{width:28px;height:28px;border-radius:7px;background:var(--primary);position:relative;flex:0 0 auto}
+.logo-mark::before{content:"";position:absolute;inset:7px 6px auto 6px;height:2.5px;border-radius:2px;background:var(--accent)}
+.logo-mark::after{content:"";position:absolute;inset:auto 6px 7px 6px;height:2.5px;border-radius:2px;background:rgba(255,255,255,.75);box-shadow:0 -5px 0 rgba(255,255,255,.45)}
+.nav-links{display:flex;gap:28px;align-items:center;font-size:14.5px;color:var(--muted);font-weight:500}
+.nav-links a:hover{color:var(--primary)}
+.btn{display:inline-block;padding:11px 20px;border-radius:9px;font-weight:600;font-size:14.5px;border:1px solid transparent;cursor:pointer;transition:.15s;font-family:inherit}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:#0b3a38}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:#fff}
+.btn-ghost:hover{border-color:var(--primary2);color:var(--primary)}
+.btn-lg{padding:14px 26px;font-size:16px}
+
+.hero{padding:88px 0 76px;background:
+  radial-gradient(900px 420px at 12% -8%,#E7F0EE 0%,transparent 62%),
+  radial-gradient(700px 380px at 92% 6%,#FBEEE2 0%,transparent 60%)}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+  padding:6px 13px;border-radius:100px;font-size:13px;font-weight:600;color:var(--primary);margin-bottom:22px}
+.pill span{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.hero h1{font-size:52px;font-weight:800;margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero p.lead{font-size:18.5px;color:var(--muted);max-width:520px;margin-bottom:30px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.hero-note{font-size:13.5px;color:var(--muted)}
+
+.phone{width:290px;margin:0 auto;background:#fff;border:9px solid #16232B;border-radius:34px;
+  box-shadow:0 26px 60px rgba(15,76,74,.18);overflow:hidden}
+.phone-top{background:var(--primary);color:#fff;padding:14px 16px}
+.phone-top .r{font-size:15px;font-weight:700}
+.phone-top .s{font-size:11.5px;opacity:.8}
+.phone-body{padding:12px;background:var(--light2);max-height:330px;overflow:hidden}
+.mi{background:#fff;border:1px solid var(--line);border-left-width:4px;border-radius:9px;padding:9px 11px;margin-bottom:8px}
+.mi b{font-size:13.5px;display:block}
+.mi small{font-size:11.5px;color:var(--muted)}
+.mi.ok{border-left-color:var(--green)}
+.mi.warn{border-left-color:var(--amber)}
+.mi.bad{border-left-color:var(--red)}
+.tagx{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:20px;margin-top:5px}
+.tagx.ok{background:#E6F3EC;color:var(--green)}
+.tagx.warn{background:#FBF2E0;color:var(--amber)}
+.tagx.bad{background:#F8E9E8;color:var(--red)}
+
+section{padding:82px 0}
+.sec-head{max-width:660px;margin-bottom:44px}
+.kicker{font-size:12.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+h2{font-size:36px;font-weight:800;margin-bottom:14px}
+.sec-head p{font-size:17px;color:var(--muted)}
+.alt{background:var(--light2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+.probs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.prob{padding:28px 26px;border-right:1px solid var(--line)}
+.prob:last-child{border-right:0}
+.prob .n{font-size:30px;font-weight:800;color:var(--accent);letter-spacing:-.03em}
+.prob h4{font-size:15.5px;margin:8px 0 6px}
+.prob p{font-size:14px;color:var(--muted)}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.tree{background:#0F2E2D;color:#DCE9E7;border-radius:var(--radius);padding:24px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.6px;line-height:1.85;overflow-x:auto;white-space:pre}
+.tree .y{color:#F0A868}.tree .g{color:#7FD1A8}.tree .m{color:#8FA5A3}
+.checks{list-style:none;margin-top:8px}
+.checks li{position:relative;padding-left:30px;margin-bottom:15px;font-size:15px;color:var(--muted)}
+.checks li b{color:var(--ink);display:block;font-size:15.5px;margin-bottom:2px}
+.checks li::before{content:"";position:absolute;left:0;top:5px;width:18px;height:18px;border-radius:50%;
+  background:var(--light);border:1.5px solid var(--primary2)}
+.checks li::after{content:"";position:absolute;left:6px;top:10px;width:5px;height:9px;
+  border:solid var(--primary2);border-width:0 2px 2px 0;transform:rotate(45deg)}
+
+.demo{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(15,76,74,.05)}
+.demo-bar{background:var(--primary);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.demo-bar b{font-size:15.5px}
+.demo-bar small{opacity:.82;font-size:13px}
+.demo-body{display:grid;grid-template-columns:250px 1fr}
+.demo-side{border-right:1px solid var(--line);padding:22px;background:var(--light2)}
+.demo-side h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px}
+.alg{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;cursor:pointer;font-size:14px;user-select:none}
+.alg:hover{background:#E9F0EE}
+.alg input{accent-color:var(--primary);width:15px;height:15px;cursor:pointer}
+.demo-main{padding:22px}
+.demo-empty{color:var(--muted);font-size:14.5px;padding:8px 0 14px}
+.dish{border:1px solid var(--line);border-left-width:4px;border-radius:10px;padding:14px 16px;margin-bottom:11px;transition:.18s}
+.dish-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.dish b{font-size:15.5px}
+.dish .desc{font-size:13.5px;color:var(--muted);margin-top:2px}
+.dish .why{font-size:13px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);color:var(--muted)}
+.dish .why strong{color:var(--ink)}
+.badge{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.dish.ok{border-left-color:var(--green)} .badge.ok{background:#E6F3EC;color:var(--green)}
+.dish.warn{border-left-color:var(--amber)} .badge.warn{background:#FBF2E0;color:var(--amber)}
+.dish.bad{border-left-color:var(--red)} .badge.bad{background:#F8E9E8;color:var(--red)}
+.dish.none{border-left-color:var(--line)} .badge.none{background:var(--light);color:var(--muted)}
+.fixbtn{margin-top:9px;font-size:12.5px;font-weight:600;color:var(--primary);background:#E9F2F0;
+  border:1px solid #CFE2DE;border-radius:7px;padding:6px 11px;cursor:pointer;font-family:inherit}
+.fixbtn:hover{background:#DCEAE7}
+
+.horizons{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.hz{border:1px solid var(--line);border-radius:var(--radius);padding:26px;background:#fff;position:relative;overflow:hidden}
+.hz::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--c)}
+.hz .lab{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--c)}
+.hz h3{font-size:19px;margin:9px 0 4px}
+.hz .when{font-size:13px;color:var(--muted);margin-bottom:13px}
+.hz ul{list-style:none;font-size:14px;color:var(--muted)}
+.hz li{padding-left:15px;position:relative;margin-bottom:6px}
+.hz li::before{content:"—";position:absolute;left:0;color:var(--c)}
+.hz.now{box-shadow:0 6px 24px rgba(15,76,74,.09)}
+.hz .tag-now{position:absolute;top:20px;right:20px;font-size:11px;font-weight:800;background:var(--primary);
+  color:#fff;padding:3px 9px;border-radius:20px;letter-spacing:.04em}
+
+.prices{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:start}
+.pr{border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px;background:#fff}
+.pr.feat{border-color:var(--primary);box-shadow:0 10px 34px rgba(15,76,74,.12);position:relative}
+.pr.feat .rib{position:absolute;top:-11px;left:22px;background:var(--accent);color:#fff;font-size:11px;
+  font-weight:800;padding:4px 11px;border-radius:20px;letter-spacing:.04em}
+.pr h3{font-size:17px;margin-bottom:6px}
+.pr .amt{font-size:31px;font-weight:800;letter-spacing:-.03em;margin:10px 0 2px}
+.pr .amt span{font-size:14px;font-weight:600;color:var(--muted)}
+.pr .sub{font-size:12.5px;color:var(--muted);margin-bottom:18px;min-height:34px}
+.pr ul{list-style:none;font-size:13.8px;color:var(--muted);margin-bottom:20px}
+.pr li{padding-left:19px;position:relative;margin-bottom:8px}
+.pr li::before{content:"✓";position:absolute;left:0;color:var(--primary2);font-weight:700}
+.pr li.off{color:#9AA8AD}.pr li.off::before{content:"–";color:#C3CFD2}
+.pr .btn{width:100%;text-align:center}
+
+.cta{background:var(--primary);color:#fff;border-radius:18px;padding:56px 48px;text-align:center}
+.cta h2{color:#fff;font-size:33px}
+.cta p{color:#BFD6D3;font-size:17px;max-width:560px;margin:0 auto 28px}
+.cta .btn-primary{background:#fff;color:var(--primary)}
+.cta .btn-primary:hover{background:#E8F1EF}
+.cta .btn-ghost{background:transparent;border-color:rgba(255,255,255,.4);color:#fff}
+.cta .btn-ghost:hover{border-color:#fff;color:#fff}
+
+footer{padding:52px 0 34px;border-top:1px solid var(--line);margin-top:82px}
+.foot{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.foot-col h5{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink);margin-bottom:11px}
+.foot-col a{display:block;margin-bottom:7px}
+.foot-col a:hover{color:var(--primary)}
+.foot-bot{margin-top:38px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media(max-width:940px){
+  .hero-grid,.split{grid-template-columns:1fr;gap:40px}
+  .hero h1{font-size:40px}
+  .horizons,.probs{grid-template-columns:1fr}
+  .prob{border-right:0;border-bottom:1px solid var(--line)}
+  .prices{grid-template-columns:repeat(2,1fr)}
+  .demo-body{grid-template-columns:1fr}
+  .demo-side{border-right:0;border-bottom:1px solid var(--line)}
+  .nav-links{display:none}
+  h2{font-size:29px}
+  .cta{padding:42px 24px}
+}
+@media(max-width:560px){
+  .prices{grid-template-columns:1fr}
+  .hero h1{font-size:33px}
+  section{padding:58px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a href="#" class="logo"><span class="logo-mark"></span>Küver</a>
+    <div class="nav-links">
+      <a href="#nasil">Nasıl çalışır</a>
+      <a href="#deneyin">Deneyin</a>
+      <a href="#yol">Yol haritası</a>
+      <a href="#fiyat">Fiyatlar</a>
+    </div>
+    <a href="#iletisim" class="btn btn-primary">Demo talep et</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="pill"><span></span>14 zorunlu alerjen · yasal uyum</div>
+      <h1>Menüsünde ne olduğunu <em>gerçekten</em> bilen restoran olun.</h1>
+      <p class="lead">Küver, restoranların alerjen sorumluluğunu yöneten uyum platformudur.
+        Alerjeni yemeğe değil malzemeye bağlar; şef tarifi değiştirdiğinde menü kendiliğinden güncellenir.</p>
+      <div class="hero-cta">
+        <a href="#iletisim" class="btn btn-primary btn-lg">Ücretsiz başlayın</a>
+        <a href="#deneyin" class="btn btn-ghost btn-lg">Canlı örneği görün</a>
+      </div>
+      <p class="hero-note">Kurulum ücreti yok · Kredi kartı istemiyoruz · 10 ürüne kadar ücretsiz</p>
+    </div>
+
+    <div class="phone" aria-hidden="true">
+      <div class="phone-top">
+        <div class="r">Meydan Kafe</div>
+        <div class="s">Süt ve gluten alerjisi seçili</div>
+      </div>
+      <div class="phone-body">
+        <div class="mi ok"><b>Mercimek Çorbası</b><small>Kırmızı mercimek, havuç, soğan</small>
+          <div class="tagx ok">Size uygun</div></div>
+        <div class="mi warn"><b>Mantı</b><small>Yoğurt sos ve tereyağı sos ile</small>
+          <div class="tagx warn">Sos çıkarılırsa uygun</div></div>
+        <div class="mi bad"><b>Kaşarlı Pide</b><small>Hamur, kaşar peyniri</small>
+          <div class="tagx bad">Gluten · Süt</div></div>
+        <div class="mi ok"><b>Izgara Köfte</b><small>Dana kıyma, baharat</small>
+          <div class="tagx ok">Size uygun</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Sorun</div>
+      <h2>Alerjen bilgisi restoranların en zayıf halkası</h2>
+      <p>Türk Gıda Kodeksi, ambalajsız gıdalarda da 14 zorunlu alerjenin misafire bildirilmesini şart koşuyor.
+        Uygulamada bu yükümlülük çoğu işletmede menünün altındaki küçük bir dipnotla geçiştiriliyor.</p>
+    </div>
+    <div class="probs">
+      <div class="prob">
+        <div class="n">01</div>
+        <h4>Bilgi garsonun hafızasında</h4>
+        <p>Misafir "bunda süt var mı?" diye soruyor, cevap o gün çalışan kişinin bildiğine kalıyor.
+          Vardiya değişince bilgi de değişiyor.</p>
+      </div>
+      <div class="prob">
+        <div class="n">02</div>
+        <h4>Tarif değişiyor, menü değişmiyor</h4>
+        <p>Şef sosun içeriğini değiştiriyor. Menüdeki alerjen etiketini kimse güncellemiyor,
+          çünkü hangi yemekleri etkilediği bilinmiyor.</p>
+      </div>
+      <div class="prob">
+        <div class="n">03</div>
+        <h4>Bir sorun çıkarsa kayıt yok</h4>
+        <p>Alerjik reaksiyon yaşanırsa, işletmenin elinde "o gün misafire tam olarak neyi gösterdik"
+          sorusunun belgelenmiş bir cevabı bulunmuyor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="nasil">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Çözüm</div>
+      <h2>Alerjeni yemeğe değil, malzemeye bağlıyoruz</h2>
+      <p>Bir tabak tek katmanlı değildir. Küver, mutfağın gerçekte nasıl çalıştığını modeller:
+        ana ürün, yarı mamuller, soslar ve yan ürünler ayrı ayrı tanımlanır.</p>
+    </div>
+
+    <div class="split">
+      <div class="tree"><span class="y">MANTI</span> <span class="m">(ana ürün)</span>
+├── Hamur ......... <span class="g">YARI MAMUL</span> → un, yumurta, su
+├── İç harç ....... <span class="g">YARI MAMUL</span> → kıyma, soğan
+├── Yoğurt sos .... <span class="g">YARI MAMUL</span> → yoğurt, sarımsak
+│                   <span class="m">[çıkarılabilir]</span>
+├── Tereyağı sos .. <span class="g">YARI MAMUL</span> → tereyağı, salça
+│                   <span class="m">[çıkarılabilir]</span>
+└── Yanında ekmek . <span class="g">YAN ÜRÜN</span>   → ekmek
+                    <span class="m">[opsiyonel]</span>
+
+<span class="m">Hesaplanan alerjenler:</span> <span class="y">gluten · yumurta · süt</span></div>
+      <div>
+        <ul class="checks">
+          <li><b>Tek noktadan güncelleme</b>
+            Yoğurt sosa tahin eklendiğinde, o sosu kullanan bütün ürünlerde susam alerjeni anında belirir.
+            Panel uyarır: "Bu değişiklik 9 ürünü etkiliyor."</li>
+          <li><b>Çıkarılabilir bileşen</b>
+            Süt alerjisi olan misafire "bu ürün size uygun değil" demek yerine,
+            "yoğurt ve tereyağı sos çıkarılırsa uygun" diyoruz. Kaybedilecek sipariş satışa dönüşür.</li>
+          <li><b>Hızlı kurulum</b>
+            Restoran 40 ürünü tek tek girmez; 12 yarı mamul tanımlar, ürünler onları birleştirir.
+            Menü giriş süresi 40 dakikaya iner.</li>
+          <li><b>Denetime hazır kayıt</b>
+            Her yayınlama bir versiyon yaratır. "12 Mart 2026'da menümüz şuydu" raporu tek tıkla alınır.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="deneyin">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Canlı örnek</div>
+      <h2>Misafirin gördüğü ekran</h2>
+      <p>Soldan alerjenlerinizi seçin. Menünün nasıl yeniden renklendiğini ve hangi ürünlerin
+        bileşen çıkarılarak uygun hale geldiğini görün.</p>
+    </div>
+
+    <div class="demo">
+      <div class="demo-bar">
+        <div><b>Meydan Kafe</b><br><small>Küver ile hazırlanmıştır · Menü v14 · 3 Ağustos 2026</small></div>
+        <button class="btn" id="resetBtn" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.35);color:#fff">Seçimi temizle</button>
+      </div>
+      <div class="demo-body">
+        <div class="demo-side">
+          <h4>Alerjenlerim</h4>
+          <div id="algList"></div>
+        </div>
+        <div class="demo-main">
+          <div class="demo-empty" id="demoEmpty">Henüz alerjen seçilmedi — menünün tamamı gösteriliyor.</div>
+          <div id="menuList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="yol">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Yol haritası</div>
+      <h2>Menüyle başlıyoruz, restoranın tamamına uzanıyoruz</h2>
+      <p>Küver bugün alerjen ve menü tarafını çözüyor. Topladığımız reçete verisi, yarın
+        hiçbir kasa sisteminin yapamayacağı bir sipariş deneyimini mümkün kılıyor.</p>
+    </div>
+    <div class="horizons">
+      <div class="hz now" style="--c:#0F4C4A">
+        <div class="tag-now">ŞİMDİ</div>
+        <div class="lab">Ufuk 1</div>
+        <h3>Alerjen &amp; QR menü</h3>
+        <div class="when">Yayında</div>
+        <ul>
+          <li>Malzeme ve reçete yönetimi</li>
+          <li>14 alerjen otomatik hesabı</li>
+          <li>QR menü ve alerjen filtresi</li>
+          <li>Uyum kaydı ve denetim raporu</li>
+        </ul>
+      </div>
+      <div class="hz" style="--c:#1A6E6A">
+        <div class="lab">Ufuk 2</div>
+        <h3>Ekip &amp; ölçek</h3>
+        <div class="when">2026 sonu</div>
+        <ul>
+          <li>Personel eğitim modülü</li>
+          <li>Çok şubeli işletme yönetimi</li>
+          <li>Menü analitiği</li>
+          <li>Denetim arşivi</li>
+        </ul>
+      </div>
+      <div class="hz" style="--c:#6B3FA0">
+        <div class="lab">Ufuk 3</div>
+        <h3>Sipariş &amp; kasa</h3>
+        <div class="when">2027</div>
+        <ul>
+          <li>Masadan sipariş, garson çağırma</li>
+          <li><strong>Mutfak fişinde otomatik alerjen uyarısı</strong></li>
+          <li>Adisyon ve kasa yönetimi</li>
+          <li>Mevcut POS sistemleriyle entegrasyon</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fiyat">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Fiyatlandırma</div>
+      <h2>Şeffaf ve öngörülebilir</h2>
+      <p>Fiyatlar aylık ve KDV hariçtir. Yıllık ödemede %20 indirim uygulanır. İstediğiniz zaman iptal edebilirsiniz.</p>
+    </div>
+    <div class="prices">
+      <div class="pr">
+        <h3>Başlangıç</h3>
+        <div class="amt">₺0</div>
+        <div class="sub">Ürünü denemek ve küçük bir menüyü yayına almak için</div>
+        <ul>
+          <li>10 ürün, 5 reçete</li>
+          <li>1 kullanıcı</li>
+          <li>QR menü ve alerjen filtresi</li>
+          <li class="off">Kendi markanız</li>
+          <li class="off">Uyum kaydı</li>
+        </ul>
+        <a href="#iletisim" class="btn btn-ghost">Ücretsiz başlayın</a>
+      </div>
+
+      <div class="pr feat">
+        <div class="rib">EN ÇOK TERCİH EDİLEN</div>
+        <h3>Profesyonel</h3>
+        <div class="amt">₺749<span> / ay</span></div>
+        <div class="sub">Tek şubeli işletmeler için tam alerjen uyumu</div>
+        <ul>
+          <li>150 ürün, 60 reçete</li>
+          <li>3 kullanıcı — Sahip, Menü Editörü, Şef</li>
+          <li>Çıkarılabilir bileşen özelliği</li>
+          <li>Kendi logonuz ve renkleriniz</li>
+          <li>Uyum kaydı ve denetim PDF'i</li>
+          <li>3 dil desteği</li>
+        </ul>
+        <a href="#iletisim" class="btn btn-primary">Demo talep et</a>
+      </div>
+
+      <div class="pr">
+        <h3>İşletme</h3>
+        <div class="amt">₺1.890<span> / ay</span></div>
+        <div class="sub">Çok şubeli işletmeler ve büyüyen ekipler için</div>
+        <ul>
+          <li>Sınırsız ürün ve reçete</li>
+          <li>Sınırsız kullanıcı + Personel rolü</li>
+          <li>5 şubeye kadar</li>
+          <li>Personel eğitim modülü</li>
+          <li>Özel alan adı</li>
+          <li>Öncelikli destek</li>
+        </ul>
+        <a href="#iletisim" class="btn btn-ghost">Demo talep et</a>
+      </div>
+
+      <div class="pr">
+        <h3>Zincir</h3>
+        <div class="amt">Görüşmeli</div>
+        <div class="sub">Zincir ve franchise işletmeler için</div>
+        <ul>
+          <li>Sınırsız şube</li>
+          <li>Kurumsal oturum açma (SSO)</li>
+          <li>API erişimi</li>
+          <li>POS entegrasyonu</li>
+          <li>Hizmet seviyesi taahhüdü</li>
+          <li>Hesap yöneticisi</li>
+        </ul>
+        <a href="#iletisim" class="btn btn-ghost">Bize ulaşın</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="iletisim">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Menünüzü 40 dakikada Küver'e taşıyalım</h2>
+      <p>Mevcut menünüzün fotoğrafını gönderin, taslak menüyü biz hazırlayalım.
+        Kurulum ücreti yok, taahhüt yok.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="mailto:merhaba@kuver.com.tr" class="btn btn-primary btn-lg">Demo talep et</a>
+        <a href="#" class="btn btn-ghost btn-lg">Bizi arayın</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div style="max-width:290px">
+        <a href="#" class="logo" style="margin-bottom:12px"><span class="logo-mark"></span>Küver</a>
+        <p style="font-size:14px">Restoranların alerjen sorumluluğunu yöneten uyum platformu.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Ürün</h5>
+        <a href="#nasil">Nasıl çalışır</a>
+        <a href="#deneyin">Canlı örnek</a>
+        <a href="#fiyat">Fiyatlar</a>
+        <a href="#yol">Yol haritası</a>
+      </div>
+      <div class="foot-col">
+        <h5>Kaynaklar</h5>
+        <a href="#">14 zorunlu alerjen</a>
+        <a href="#">Mevzuat rehberi</a>
+        <a href="#">Kurulum kılavuzu</a>
+        <a href="#">Sık sorulanlar</a>
+      </div>
+      <div class="foot-col">
+        <h5>Şirket</h5>
+        <a href="#">Hakkımızda</a>
+        <a href="#iletisim">İletişim</a>
+        <a href="#">KVKK aydınlatma metni</a>
+        <a href="#">Kullanım koşulları</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Küver. Tüm hakları saklıdır.</span>
+      <span>Alerjen bilgisi bilgilendirme amaçlıdır; ciddi alerji durumlarında personele danışın.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+var ALERJENLER = [
+  {id:'gluten', ad:'Gluten'},
+  {id:'sut',    ad:'Süt'},
+  {id:'yumurta',ad:'Yumurta'},
+  {id:'susam',  ad:'Susam'},
+  {id:'yemis',  ad:'Sert kabuklu yemiş'},
+  {id:'balik',  ad:'Balık'},
+  {id:'soya',   ad:'Soya'},
+  {id:'hardal', ad:'Hardal'}
+];
+
+var MENU = [
+  {ad:'Mercimek Çorbası', desc:'Kırmızı mercimek, havuç, soğan', bilesen:[
+    {ad:'Çorba tabanı', alr:[], cik:false},
+    {ad:'Yanında kruton', alr:['gluten'], cik:true}
+  ]},
+  {ad:'Mantı', desc:'El açması hamur, dana kıyma', bilesen:[
+    {ad:'Hamur', alr:['gluten','yumurta'], cik:false},
+    {ad:'İç harç', alr:[], cik:false},
+    {ad:'Yoğurt sos', alr:['sut'], cik:true},
+    {ad:'Tereyağı sos', alr:['sut'], cik:true}
+  ]},
+  {ad:'Izgara Köfte', desc:'Dana kıyma, baharat, közlenmiş biber', bilesen:[
+    {ad:'Köfte harcı', alr:[], cik:false},
+    {ad:'Yanında pide', alr:['gluten'], cik:true}
+  ]},
+  {ad:'Sezar Salata', desc:'Marul, tavuk, parmesan, sezar sos', bilesen:[
+    {ad:'Yeşillik ve tavuk', alr:[], cik:false},
+    {ad:'Parmesan', alr:['sut'], cik:true},
+    {ad:'Sezar sos', alr:['yumurta','balik','hardal'], cik:true},
+    {ad:'Kruton', alr:['gluten'], cik:true}
+  ]},
+  {ad:'Kaşarlı Pide', desc:'Hamur, bol kaşar peyniri', bilesen:[
+    {ad:'Pide hamuru', alr:['gluten'], cik:false},
+    {ad:'Kaşar peyniri', alr:['sut'], cik:false}
+  ]},
+  {ad:'Humus', desc:'Nohut, tahin, limon, zeytinyağı', bilesen:[
+    {ad:'Humus', alr:['susam'], cik:false},
+    {ad:'Yanında lavaş', alr:['gluten'], cik:true}
+  ]},
+  {ad:'Fırın Levrek', desc:'Levrek fileto, sebze garnitür', bilesen:[
+    {ad:'Levrek', alr:['balik'], cik:false},
+    {ad:'Sebze garnitür', alr:[], cik:false}
+  ]},
+  {ad:'Cevizli Baklava', desc:'Yufka, ceviz, şerbet', bilesen:[
+    {ad:'Yufka', alr:['gluten'], cik:false},
+    {ad:'Ceviz içi', alr:['yemis'], cik:false},
+    {ad:'Yanında kaymak', alr:['sut'], cik:true}
+  ]},
+  {ad:'Meyve Tabağı', desc:'Mevsim meyveleri', bilesen:[
+    {ad:'Meyveler', alr:[], cik:false}
+  ]}
+];
+
+var secili = {};
+var cikarilan = {};
+
+var algList = document.getElementById('algList');
+algList.innerHTML = ALERJENLER.map(function(a){
+  return '<label class="alg"><input type="checkbox" value="' + a.id + '"> ' + a.ad + '</label>';
+}).join('');
+
+algList.addEventListener('change', function(e){
+  if(e.target.tagName !== 'INPUT') return;
+  if(e.target.checked){ secili[e.target.value] = true; }
+  else { delete secili[e.target.value]; }
+  cizMenu();
+});
+
+document.getElementById('resetBtn').addEventListener('click', function(){
+  secili = {}; cikarilan = {};
+  var boxes = algList.querySelectorAll('input');
+  for(var i = 0; i < boxes.length; i++){ boxes[i].checked = false; }
+  cizMenu();
+});
+
+function seciliMi(id){ return secili[id] === true; }
+function adiniBul(id){
+  for(var i = 0; i < ALERJENLER.length; i++){
+    if(ALERJENLER[i].id === id) return ALERJENLER[i].ad;
+  }
+  return id;
+}
+
+function cizMenu(){
+  var bos = Object.keys(secili).length === 0;
+  document.getElementById('demoEmpty').style.display = bos ? 'block' : 'none';
+
+  var html = MENU.map(function(yemek, yi){
+    var aktif = [];
+    for(var bi = 0; bi < yemek.bilesen.length; bi++){
+      if(!cikarilan[yi + ':' + bi]) aktif.push(bi);
+    }
+
+    var sabit = {}, carpisanVar = false;
+    aktif.forEach(function(bi){
+      var b = yemek.bilesen[bi];
+      b.alr.forEach(function(a){
+        if(seciliMi(a)){
+          carpisanVar = true;
+          if(!b.cik){ sabit[a] = true; }
+        }
+      });
+    });
+
+    var durum = 'none', rozet = 'Tüm bileşenler listelendi';
+    if(!bos){
+      if(!carpisanVar){ durum = 'ok'; rozet = 'Size uygun'; }
+      else if(Object.keys(sabit).length === 0){ durum = 'warn'; rozet = 'Bileşen çıkarılırsa uygun'; }
+      else { durum = 'bad'; rozet = Object.keys(sabit).map(adiniBul).join(' · '); }
+    }
+
+    var why = '';
+    if(!bos && carpisanVar){
+      var satir = aktif.map(function(bi){
+        var b = yemek.bilesen[bi];
+        var cak = b.alr.filter(seciliMi);
+        if(!cak.length) return null;
+        return '<strong>' + b.ad + '</strong> → ' + cak.map(adiniBul).join(', ');
+      }).filter(Boolean).join(' &nbsp;·&nbsp; ');
+      why = '<div class="why">' + satir + '</div>';
+    }
+
+    var fix = '';
+    if(!bos && durum === 'warn'){
+      var hedef = aktif.filter(function(bi){
+        var b = yemek.bilesen[bi];
+        return b.cik && b.alr.some(seciliMi);
+      });
+      if(hedef.length){
+        fix = '<button class="fixbtn" data-y="' + yi + '" data-b="' + hedef.join(',') + '">' +
+              hedef.map(function(bi){ return yemek.bilesen[bi].ad; }).join(' ve ') +
+              ' olmadan göster</button>';
+      }
+    }
+
+    var cikBu = [];
+    for(var k = 0; k < yemek.bilesen.length; k++){
+      if(cikarilan[yi + ':' + k]) cikBu.push(k);
+    }
+    var geri = '';
+    if(cikBu.length){
+      geri = '<div class="why" style="color:#1E7A4C">Çıkarıldı: ' +
+             cikBu.map(function(bi){ return yemek.bilesen[bi].ad; }).join(', ') +
+             ' <button class="fixbtn" style="margin-left:8px" data-geri="' + yi + '">Geri al</button></div>';
+    }
+
+    return '<div class="dish ' + durum + '">' +
+      '<div class="dish-h"><div><b>' + yemek.ad + '</b><div class="desc">' + yemek.desc + '</div></div>' +
+      '<span class="badge ' + durum + '">' + rozet + '</span></div>' +
+      why + fix + geri + '</div>';
+  }).join('');
+
+  document.getElementById('menuList').innerHTML = html;
+}
+
+document.getElementById('menuList').addEventListener('click', function(e){
+  var btn = e.target.closest ? e.target.closest('.fixbtn') : null;
+  if(!btn) return;
+  if(btn.hasAttribute('data-geri')){
+    var yg = btn.getAttribute('data-geri');
+    Object.keys(cikarilan).forEach(function(k){
+      if(k.indexOf(yg + ':') === 0) delete cikarilan[k];
+    });
+  } else {
+    var yi = btn.getAttribute('data-y');
+    btn.getAttribute('data-b').split(',').forEach(function(bi){ cikarilan[yi + ':' + bi] = true; });
+  }
+  cizMenu();
+});
+
+cizMenu();
+</script>
+</body>
+</html>
